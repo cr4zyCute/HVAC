@@ -219,7 +219,9 @@ const initialCmsData = {
           </div>
         </div>
         <button id="media-modal-close" class="text-text-muted hover:text-brand-primary p-6 rounded-md hover:bg-neutral-surface transition-colors" title="Close modal">
-          ✕
+          <svg width="14" height="14" class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
 
@@ -271,10 +273,16 @@ const initialCmsData = {
   <div id="button-inline-popover" class="hidden fixed z-50 bg-neutral-surface rounded-xl border border-brand-accent shadow-2xl p-16 w-[320px] sm:w-[360px] max-w-[90vw] animate-fade-in">
     <div class="flex items-center justify-between pb-10 mb-12 border-b border-neutral-border">
       <span class="text-caption font-bold font-heading text-brand-primary flex items-center gap-6">
-        <span>🔘</span>
+        <svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+        </svg>
         <span id="popover-btn-title">Configure Button</span>
       </span>
-      <button type="button" id="popover-btn-close" class="text-text-muted hover:text-brand-primary p-2">✕</button>
+      <button type="button" id="popover-btn-close" class="text-text-muted hover:text-brand-primary p-2">
+        <svg width="14" height="14" class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
     <div class="space-y-12">
       <div>
@@ -297,10 +305,16 @@ const initialCmsData = {
   <div id="image-inline-popover" class="hidden fixed z-50 bg-neutral-surface rounded-xl border border-brand-accent shadow-2xl p-16 w-[320px] sm:w-[360px] max-w-[90vw] animate-fade-in">
     <div class="flex items-center justify-between pb-10 mb-12 border-b border-neutral-border">
       <span class="text-caption font-bold font-heading text-brand-primary flex items-center gap-6">
-        <span>🖼</span>
+        <svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
         <span>Image Options</span>
       </span>
-      <button type="button" id="popover-img-close" class="text-text-muted hover:text-brand-primary p-2">✕</button>
+      <button type="button" id="popover-img-close" class="text-text-muted hover:text-brand-primary p-2">
+        <svg width="14" height="14" class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
     <div class="space-y-12">
       <div class="h-100 rounded-md overflow-hidden bg-neutral-surface-alt border border-neutral-border flex items-center justify-center">
@@ -322,30 +336,70 @@ const initialCmsData = {
   </div>
 
   <!-- Sticky Top Editor Toolbar -->
-  <header class="sticky top-0 z-40 bg-neutral-surface/95 backdrop-blur-md border-b border-neutral-border px-16 lg:px-24 py-12 mb-20 shadow-sm">
-    <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-12">
+  <header class="sticky top-0 z-40 bg-neutral-surface/95 backdrop-blur-md border-b border-neutral-border px-16 lg:px-24 py-12 mb-20 shadow-sm space-y-12">
+    <!-- Top Row: Document Title, Live Sync Status & Primary Actions -->
+    <div class="flex flex-wrap items-center justify-between gap-12">
       <!-- Title & Live Status -->
-      <div class="flex flex-wrap items-center gap-10 sm:gap-12 min-w-0">
-        <h1 class="text-h4 sm:text-h3 font-heading font-extrabold text-brand-primary tracking-tight break-words">
+      <div class="flex items-center gap-12 min-w-0">
+        <h1 class="text-h4 font-heading font-extrabold text-brand-primary tracking-tight truncate">
           Homepage Content Management
         </h1>
-        <span class="hidden xs:inline-flex px-8 py-2 rounded-full text-caption font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 whitespace-nowrap">
-          DIRECT INLINE VISUAL EDITOR
-        </span>
-        <div class="hidden sm:inline-flex items-center gap-6 text-caption text-text-muted">
+        <div class="inline-flex items-center gap-6 px-10 py-4 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shrink-0">
           <span class="w-6 h-6 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>SSE Real-Time Sync</span>
+          <span class="hidden sm:inline">Live SSE Sync</span>
+          <span class="sm:hidden">Live</span>
         </div>
       </div>
 
-      <!-- Action & Viewport Controls -->
-      <div class="flex flex-wrap items-center gap-10">
-        <!-- Viewport Mode Switcher -->
-        <div class="bg-neutral-surface-alt border border-neutral-border rounded-lg p-2 flex items-center gap-2 shrink-0">
+      <!-- Action Cluster: Save Status, Preview Site, Save Changes -->
+      <div class="flex items-center gap-10 shrink-0">
+        <!-- Save Status Badge -->
+        <div
+          id="save-status-pill"
+          class="h-36 px-12 rounded-md bg-emerald-50 border border-emerald-200 text-caption font-semibold text-emerald-800 inline-flex items-center gap-6 transition-all whitespace-nowrap shrink-0 select-none"
+        >
+          <span class="w-6 h-6 rounded-full bg-emerald-500 shrink-0"></span>
+          <span id="save-status-label" class="whitespace-nowrap">All changes saved</span>
+        </div>
+
+        <!-- Preview Public Site Button -->
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-36 px-14 rounded-md bg-white hover:bg-neutral-surface-alt border border-neutral-border hover:border-neutral-border-focus text-brand-primary text-small font-semibold inline-flex items-center gap-8 transition-colors shadow-sm whitespace-nowrap shrink-0"
+          title="Open public website in a new tab"
+        >
+          <svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          <span class="whitespace-nowrap">Preview Site</span>
+        </a>
+
+        <!-- Save Changes Primary Button -->
+        <button
+          type="button"
+          id="btn-global-save"
+          class="h-36 px-16 rounded-md bg-brand-primary hover:bg-brand-secondary text-white text-small font-semibold shadow-sm inline-flex items-center gap-8 transition-all disabled:opacity-50 whitespace-nowrap shrink-0 active:scale-98"
+        >
+          <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          <span id="btn-save-text" class="whitespace-nowrap">Save Changes</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Row: Canvas Controls (Viewport Switcher + Section Navigation) -->
+    <div class="flex flex-wrap items-center justify-between gap-12 pt-10 border-t border-neutral-border">
+      <!-- Viewport Mode Switcher -->
+      <div class="flex items-center gap-10">
+        <span class="text-caption font-bold text-text-muted uppercase tracking-wider text-[11px] hidden sm:inline">Viewport:</span>
+        <div class="bg-neutral-surface-alt border border-neutral-border rounded-lg p-4 flex items-center gap-4 shrink-0">
           <button
             type="button"
             id="btn-view-desktop"
-            class="px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
+            class="h-32 px-12 rounded-md text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
             title="Full Desktop View"
           >
             <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -356,7 +410,7 @@ const initialCmsData = {
           <button
             type="button"
             id="btn-view-tablet"
-            class="px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
+            class="h-32 px-12 rounded-md text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
             title="Tablet View (768px)"
           >
             <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -367,7 +421,7 @@ const initialCmsData = {
           <button
             type="button"
             id="btn-view-mobile"
-            class="px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
+            class="h-32 px-12 rounded-md text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
             title="Mobile View (390px)"
           >
             <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,11 +430,14 @@ const initialCmsData = {
             <span>Mobile</span>
           </button>
         </div>
+      </div>
 
-        <!-- Section Quick Jump -->
+      <!-- Section Quick Jump -->
+      <div class="flex items-center gap-10 min-w-0">
+        <span class="text-caption font-bold text-text-muted uppercase tracking-wider text-[11px] hidden sm:inline">Jump to:</span>
         <select
           id="section-jump-select"
-          class="h-34 px-10 text-caption font-semibold bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary outline-none cursor-pointer shrink-0"
+          class="h-36 px-12 text-caption font-semibold bg-neutral-surface border border-neutral-border rounded-lg text-text-primary focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none cursor-pointer shrink-0 min-w-[200px]"
           title="Jump to Section"
         >
           <option value="">Jump to Section...</option>
@@ -395,41 +452,6 @@ const initialCmsData = {
           <option value="section-financing">9. Financing Banner</option>
           <option value="section-final-cta">10. Final Call to Action</option>
         </select>
-
-        <!-- Save Status Pill -->
-        <div
-          id="save-status-pill"
-          class="inline-flex items-center justify-center gap-6 px-12 py-6 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all whitespace-nowrap shrink-0 min-w-[145px]"
-        >
-          <span class="w-6 h-6 rounded-full bg-emerald-500 shrink-0"></span>
-          <span id="save-status-label" class="whitespace-nowrap">All changes saved</span>
-        </div>
-
-        <!-- Save Changes Primary Button -->
-        <button
-          type="button"
-          id="btn-global-save"
-          class="h-36 px-16 bg-brand-primary hover:bg-brand-secondary text-white text-small font-semibold rounded-md shadow-sm flex items-center gap-8 transition-all disabled:opacity-50 whitespace-nowrap shrink-0"
-        >
-          <svg width="16" height="16" class="w-16 h-16 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-          </svg>
-          <span id="btn-save-text" class="whitespace-nowrap">Save Changes</span>
-        </button>
-
-        <!-- Preview Public Site Button -->
-        <a
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="h-36 px-12 bg-neutral-surface hover:bg-neutral-surface-alt border border-neutral-border text-brand-primary text-small font-semibold rounded-md flex items-center gap-6 transition-colors shadow-sm whitespace-nowrap shrink-0"
-          title="Open public website in a new tab"
-        >
-          <svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-          <span class="whitespace-nowrap">Preview Site</span>
-        </a>
       </div>
     </div>
   </header>
@@ -439,17 +461,23 @@ const initialCmsData = {
     <!-- Device Mode Spec & Control Pill -->
     <div id="device-spec-badge" class="hidden mb-16 items-center gap-12 px-14 py-6 rounded-full bg-slate-900 text-white text-caption font-semibold shadow-lg border border-slate-700 animate-fade-in">
       <div class="flex items-center gap-8">
-        <span id="device-spec-icon">📱</span>
+        <span id="device-spec-icon" class="inline-flex items-center justify-center">
+          <svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </span>
         <span id="device-spec-label">Mobile Template — iPhone 15 Pro (390px)</span>
       </div>
       <div class="h-12 w-[1px] bg-slate-700"></div>
       <button
         type="button"
         id="btn-toggle-device-height"
-        class="text-[11px] text-slate-300 hover:text-white px-8 py-2 rounded bg-slate-800 hover:bg-slate-700 transition-colors flex items-center gap-4 cursor-pointer"
+        class="text-[11px] text-slate-300 hover:text-white px-8 py-3 rounded-md bg-slate-800 hover:bg-slate-700 transition-colors flex items-center gap-6 cursor-pointer"
         title="Toggle between fixed device height and full page scroll"
       >
-        <span>📏</span>
+        <svg width="12" height="12" class="w-12 h-12 text-slate-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        </svg>
         <span id="label-toggle-device-height">Fit Device Window</span>
       </button>
     </div>
@@ -576,7 +604,11 @@ const initialCmsData = {
                 title="Click to edit button text and destination URL"
               >
                 <span class="btn-display-text">{hero.primary_btn_text || 'Schedule Service'}</span>
-                <span class="text-caption opacity-80">⚙️</span>
+                <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                  <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </span>
               </button>
 
               <!-- Secondary Button -->
@@ -593,7 +625,11 @@ const initialCmsData = {
                 title="Click to edit phone button and destination URL"
               >
                 <span class="btn-display-text">{hero.secondary_btn_text || 'Call (555) 014-7824'}</span>
-                <span class="text-caption opacity-80">⚙️</span>
+                <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                  <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </span>
               </button>
             </div>
 
@@ -645,8 +681,12 @@ const initialCmsData = {
               <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent"></div>
 
               <!-- In-place Image Edit Overlay Hover Pill -->
-              <div class="absolute top-16 right-16 px-12 py-6 bg-brand-primary/90 text-white rounded-md text-caption font-bold flex items-center gap-6 shadow-md border border-white/20">
-                <span>📷 Click to change image</span>
+              <div class="absolute top-16 right-16 px-10 py-5 bg-brand-primary/90 text-white rounded-md text-caption font-semibold flex items-center gap-6 shadow-md border border-white/20 backdrop-blur-sm">
+                <svg width="13" height="13" class="w-13 h-13 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Change Image</span>
               </div>
 
               <!-- Floating Workmanship Guarantee Card -->
@@ -867,7 +907,11 @@ const initialCmsData = {
                 title="Click to edit button"
               >
                 <span class="btn-display-text">{emergencyCta.primary_btn_text || 'Emergency Dispatch'}</span>
-                <span class="text-caption opacity-80">⚙️</span>
+                <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                  <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </span>
               </button>
 
               <button
@@ -882,7 +926,11 @@ const initialCmsData = {
                 title="Click to edit phone button"
               >
                 <span class="btn-display-text">{emergencyCta.secondary_btn_text || 'Call (555) 014-7824'}</span>
-                <span class="text-caption opacity-80">⚙️</span>
+                <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                  <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
@@ -970,7 +1018,11 @@ const initialCmsData = {
                 title="Click to edit button"
               >
                 <span class="btn-display-text">{whyUs.primary_btn_text || 'Read Our Full Story'}</span>
-                <span class="text-caption opacity-80">⚙️</span>
+                <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-brand-primary/10 text-brand-primary shrink-0">
+                  <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
@@ -990,8 +1042,12 @@ const initialCmsData = {
                 alt={whyUs.image_alt || 'Licensed HVAC technician inspecting furnace'}
                 class="w-full h-280 xs:h-340 sm:h-440 object-cover group-hover:opacity-95 transition-opacity"
               />
-              <div class="absolute top-16 right-16 px-12 py-6 bg-brand-primary/90 text-white rounded-md text-caption font-bold flex items-center gap-6 shadow-md border border-white/20">
-                <span>📷 Click to change image</span>
+              <div class="absolute top-16 right-16 px-10 py-5 bg-brand-primary/90 text-white rounded-md text-caption font-semibold flex items-center gap-6 shadow-md border border-white/20 backdrop-blur-sm">
+                <svg width="13" height="13" class="w-13 h-13 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>Change Image</span>
               </div>
               <div class="absolute bottom-12 left-12 right-12 sm:bottom-16 sm:left-16 sm:right-16 bg-brand-primary/95 text-white p-12 sm:p-14 rounded-lg text-caption font-semibold flex items-center gap-10">
                 <Icon name="check" size={18} class="text-emerald-400 shrink-0" />
@@ -1130,8 +1186,12 @@ const initialCmsData = {
             <!-- Neighborhood Tags -->
             <div class="flex flex-wrap gap-8 pt-8">
               {serviceAreas.map((area: string) => (
-                <span class="px-12 py-5 bg-white border border-neutral-border rounded-md text-caption font-semibold text-brand-primary">
-                  📍 {area}
+                <span class="px-12 py-5 bg-white border border-neutral-border rounded-md text-caption font-semibold text-brand-primary inline-flex items-center gap-6 shadow-xs">
+                  <svg width="12" height="12" class="w-12 h-12 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>{area}</span>
                 </span>
               ))}
             </div>
@@ -1150,7 +1210,11 @@ const initialCmsData = {
               title="Click to edit button"
             >
               <span class="btn-display-text">{serviceAreasSec.primary_btn_text || 'Check Your ZIP Code'}</span>
-              <span class="text-caption opacity-80">⚙️</span>
+              <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>
@@ -1301,7 +1365,11 @@ const initialCmsData = {
               title="Click to edit button"
             >
               <span class="btn-display-text">{financingCta.primary_btn_text || 'Explore Financing Plans'}</span>
-              <span class="text-caption opacity-80">⚙️</span>
+              <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>
@@ -1363,7 +1431,11 @@ const initialCmsData = {
               title="Click to edit button"
             >
               <span class="btn-display-text">{finalCta.primary_btn_text || 'Book Service Online'}</span>
-              <span class="text-caption opacity-80">⚙️</span>
+              <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </span>
             </button>
 
             <button
@@ -1378,7 +1450,11 @@ const initialCmsData = {
               title="Click to edit phone button"
             >
               <span class="btn-display-text">{finalCta.secondary_btn_text || 'Call (555) 014-7824'}</span>
-              <span class="text-caption opacity-80">⚙️</span>
+              <span class="inline-flex items-center justify-center w-20 h-20 rounded bg-white/20 text-white/90 shrink-0">
+                <svg width="11" height="11" class="w-11 h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>
@@ -1638,11 +1714,11 @@ const initialCmsData = {
     function setDirty(dirty) {
       isDirty = dirty;
       if (dirty) {
-        saveStatusPill.className = 'inline-flex items-center justify-center gap-6 px-12 py-6 rounded-full text-caption font-semibold bg-amber-50 text-amber-700 border border-amber-200 transition-all whitespace-nowrap shrink-0 min-w-[145px]';
+        saveStatusPill.className = 'h-36 px-12 rounded-md bg-amber-50 border border-amber-200 text-caption font-semibold text-amber-800 inline-flex items-center gap-6 transition-all whitespace-nowrap shrink-0 select-none';
         saveStatusPill.querySelector('span').className = 'w-6 h-6 rounded-full bg-amber-500 shrink-0';
         saveStatusLabel.textContent = 'Unsaved changes';
       } else {
-        saveStatusPill.className = 'inline-flex items-center justify-center gap-6 px-12 py-6 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all whitespace-nowrap shrink-0 min-w-[145px]';
+        saveStatusPill.className = 'h-36 px-12 rounded-md bg-emerald-50 border border-emerald-200 text-caption font-semibold text-emerald-800 inline-flex items-center gap-6 transition-all whitespace-nowrap shrink-0 select-none';
         saveStatusPill.querySelector('span').className = 'w-6 h-6 rounded-full bg-emerald-500 shrink-0';
         saveStatusLabel.textContent = 'All changes saved';
       }
@@ -1697,17 +1773,20 @@ const initialCmsData = {
       applyScreenHeightMode();
     });
 
+    const iconSvgTablet = `<svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`;
+    const iconSvgMobile = `<svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`;
+
     function setViewportMode(mode) {
       currentMode = mode;
       [btnDesktop, btnTablet, btnMobile].forEach(b => {
-        b.className = 'px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        b.className = 'h-32 px-12 rounded-md text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
       });
 
       canvasWrapper.classList.remove('preview-tablet-frame', 'preview-mobile-frame', 'device-screen-window-mobile', 'device-screen-window-tablet');
       deviceMockupFrame.classList.remove('mode-mobile-device', 'mode-tablet-device');
 
       if (mode === 'desktop') {
-        btnDesktop.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        btnDesktop.className = 'h-32 px-12 rounded-md text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
         deviceSpecBadge?.classList.add('hidden');
         deviceTopBar?.classList.add('hidden');
         deviceBottomBar?.classList.add('hidden');
@@ -1715,12 +1794,12 @@ const initialCmsData = {
         deviceMockupFrame.className = 'w-full transition-all duration-300 mx-auto';
         canvasWrapper.className = 'w-full bg-white rounded-xl shadow-lg border border-neutral-border overflow-hidden transition-all duration-300 mx-auto';
       } else if (mode === 'tablet') {
-        btnTablet.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        btnTablet.className = 'h-32 px-12 rounded-md text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
         if (deviceSpecBadge) {
           deviceSpecBadge.classList.remove('hidden');
           deviceSpecBadge.className = 'flex mb-16 items-center gap-12 px-14 py-6 rounded-full bg-slate-900 text-white text-caption font-semibold shadow-lg border border-slate-700 animate-fade-in';
         }
-        if (deviceSpecIcon) deviceSpecIcon.textContent = '📟';
+        if (deviceSpecIcon) deviceSpecIcon.innerHTML = iconSvgTablet;
         if (deviceSpecLabel) deviceSpecLabel.textContent = 'Tablet Template — iPad (768px)';
         deviceTopBar?.classList.remove('hidden');
         deviceTopMobile?.classList.add('hidden');
@@ -1732,12 +1811,12 @@ const initialCmsData = {
         canvasWrapper.className = 'w-full bg-white transition-all duration-300 mx-auto preview-tablet-frame';
         applyScreenHeightMode();
       } else if (mode === 'mobile') {
-        btnMobile.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        btnMobile.className = 'h-32 px-12 rounded-md text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
         if (deviceSpecBadge) {
           deviceSpecBadge.classList.remove('hidden');
           deviceSpecBadge.className = 'flex mb-16 items-center gap-12 px-14 py-6 rounded-full bg-slate-900 text-white text-caption font-semibold shadow-lg border border-slate-700 animate-fade-in';
         }
-        if (deviceSpecIcon) deviceSpecIcon.textContent = '📱';
+        if (deviceSpecIcon) deviceSpecIcon.innerHTML = iconSvgMobile;
         if (deviceSpecLabel) deviceSpecLabel.textContent = 'Mobile Template — iPhone 15 Pro (390px)';
         deviceTopBar?.classList.remove('hidden');
         deviceTopMobile?.classList.remove('hidden');
@@ -1833,8 +1912,8 @@ const initialCmsData = {
       });
     });
 
-    function closeButtonPopover() {
-      if (activeButtonTarget) {
+    function closeButtonPopover(applyChanges = true) {
+      if (activeButtonTarget && applyChanges) {
         const section = activeButtonTarget.getAttribute('data-section');
         const labelField = activeButtonTarget.getAttribute('data-label-field');
         const urlField = activeButtonTarget.getAttribute('data-url-field');
@@ -1859,13 +1938,35 @@ const initialCmsData = {
       btnPopover.classList.add('hidden');
       activeButtonTarget = null;
     });
-    btnPopoverDone?.addEventListener('click', closeButtonPopover);
+    btnPopoverDone?.addEventListener('click', () => closeButtonPopover(true));
+
+    // Prevent clicks inside the popover from bubbling to document click-outside listener
+    btnPopover?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    btnPopoverText?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        closeButtonPopover(true);
+      }
+    });
+    btnPopoverUrl?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        closeButtonPopover(true);
+      }
+    });
 
     // 3. DIRECT IN-PLACE IMAGE EDITING
     document.querySelectorAll('.direct-image-editable').forEach(imgWrapper => {
       imgWrapper.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        // If button popover is open, close it
+        if (btnPopover && !btnPopover.classList.contains('hidden')) {
+          closeButtonPopover(true);
+        }
         activeImageTarget = imgWrapper;
 
         const section = imgWrapper.getAttribute('data-section');
@@ -1884,8 +1985,8 @@ const initialCmsData = {
       });
     });
 
-    function closeImagePopover() {
-      if (activeImageTarget) {
+    function closeImagePopover(applyChanges = true) {
+      if (activeImageTarget && applyChanges) {
         const section = activeImageTarget.getAttribute('data-section');
         const newAlt = imgPopoverAlt.value.trim();
         if (cmsState[section]) {
@@ -1903,7 +2004,52 @@ const initialCmsData = {
       imgPopover.classList.add('hidden');
       activeImageTarget = null;
     });
-    imgPopoverDone?.addEventListener('click', closeImagePopover);
+    imgPopoverDone?.addEventListener('click', () => closeImagePopover(true));
+
+    // Prevent clicks inside image popover from bubbling
+    imgPopover?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    imgPopoverAlt?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        closeImagePopover(true);
+      }
+    });
+
+    // Global Click-Outside Listener to close any open popovers when clicking on anything outside
+    document.addEventListener('click', (e) => {
+      if (btnPopover && !btnPopover.classList.contains('hidden')) {
+        if (!btnPopover.contains(e.target) && !e.target.closest('.direct-button-editable')) {
+          closeButtonPopover(true);
+        }
+      }
+
+      if (imgPopover && !imgPopover.classList.contains('hidden')) {
+        if (!imgPopover.contains(e.target) && !e.target.closest('.direct-image-editable') && !e.target.closest('#media-modal')) {
+          closeImagePopover(true);
+        }
+      }
+    });
+
+    // Global Escape Key Listener to dismiss active popovers / modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (mediaModal && !mediaModal.classList.contains('hidden')) {
+          mediaModal.classList.add('hidden');
+          return;
+        }
+        if (btnPopover && !btnPopover.classList.contains('hidden')) {
+          closeButtonPopover(false);
+          return;
+        }
+        if (imgPopover && !imgPopover.classList.contains('hidden')) {
+          closeImagePopover(false);
+          return;
+        }
+      }
+    });
 
     // Media Modal Integration
     btnChooseMedia?.addEventListener('click', () => {
@@ -2140,7 +2286,7 @@ const initialCmsData = {
         const data = await res.json();
         if (data.success) {
           setDirty(false);
-          showToast('✓ Saved! Changes broadcasted to public website in real time.');
+          showToast('Saved! Changes broadcasted to public website in real time.');
         } else {
           showToast(data.error || 'Failed to save changes', true);
           setDirty(true);

@@ -220,7 +220,11 @@ const inactiveCount = Number(countsRes.rows[0]?.inactive || 0);
     <div class="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl max-w-xl w-full p-24 relative">
       <div class="flex items-center justify-between pb-16 border-b border-[#E2E8F0]">
         <h3 id="modal-title" class="text-base font-bold font-heading text-[#0F2238]">Add New Service</h3>
-        <button id="modal-close" class="text-[#94A3B8] hover:text-[#0F2238] text-lg font-bold cursor-pointer">&times;</button>
+        <button id="modal-close" class="text-[#94A3B8] hover:text-[#0F2238] p-6 rounded-md hover:bg-slate-100 transition-colors cursor-pointer" title="Close modal">
+          <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <form id="service-form" class="mt-16 space-y-16">
@@ -479,6 +483,41 @@ const inactiveCount = Number(countsRes.rows[0]?.inactive || 0);
     modalClose?.addEventListener('click', () => serviceModal.classList.add('hidden'));
     formCancel?.addEventListener('click', () => serviceModal.classList.add('hidden'));
     deleteCancel?.addEventListener('click', () => deleteModal.classList.add('hidden'));
+
+    // Prevent clicks inside modal content cards from bubbling to backdrop
+    serviceModal.querySelector('.bg-white')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    deleteModal.querySelector('.bg-white')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Close Modals on click outside (backdrop click)
+    serviceModal?.addEventListener('click', (e) => {
+      const card = serviceModal.querySelector('.bg-white');
+      if (card && !card.contains(e.target as Node)) {
+        serviceModal.classList.add('hidden');
+      }
+    });
+
+    deleteModal?.addEventListener('click', (e) => {
+      const card = deleteModal.querySelector('.bg-white');
+      if (card && !card.contains(e.target as Node)) {
+        deleteModal.classList.add('hidden');
+      }
+    });
+
+    // Escape Key Listener to dismiss open modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (serviceModal && !serviceModal.classList.contains('hidden')) {
+          serviceModal.classList.add('hidden');
+        }
+        if (deleteModal && !deleteModal.classList.contains('hidden')) {
+          deleteModal.classList.add('hidden');
+        }
+      }
+    });
 
     // Edit Service click
     document.querySelectorAll('.btn-edit-service').forEach(btn => {
