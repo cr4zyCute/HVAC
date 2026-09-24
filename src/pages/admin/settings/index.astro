@@ -1,0 +1,477 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+import { db, ensureDbInitialized } from '@/lib/db';
+
+await ensureDbInitialized();
+
+// Fetch all settings
+const res = await db.execute('SELECT key, value FROM site_settings');
+const settings: Record<string, string> = {};
+for (const row of res.rows) {
+  settings[row.key as string] = (row.value as string) || '';
+}
+---
+
+<AdminLayout
+  title="Global Business Settings"
+  activeSection="settings"
+  breadcrumbs={[{ label: 'Business Settings' }]}
+>
+  <div id="toast" class="hidden fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-lg text-small font-semibold text-white transition-all transform duration-300"></div>
+
+  <!-- Header -->
+  <div class="mb-32 flex flex-col md:flex-row md:items-center md:justify-between gap-16 pb-20 border-b border-neutral-border">
+    <div>
+      <div class="flex items-center gap-12 mb-6">
+        <h1 class="text-h2 font-heading font-extrabold text-brand-primary tracking-tight">Global Business Settings</h1>
+        <div id="global-save-status" class="inline-flex items-center gap-6 px-10 py-4 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all">
+          <span class="w-6 h-6 rounded-full bg-emerald-500"></span>
+          <span id="save-status-text">✓ All changes saved</span>
+        </div>
+      </div>
+      <p class="text-small text-text-muted">
+        Centralized business identity, hotlines, addresses, hours, and branding. Changes update the Header, Footer, Hero, and CTAs across the public website in real time.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-12">
+      <div class="inline-flex items-center gap-6 px-10 py-6 rounded-md bg-neutral-surface-alt border border-neutral-border text-caption text-text-muted">
+        <span class="w-6 h-6 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Real-Time Sync Active</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-neutral-surface rounded-lg border border-neutral-border shadow-sm p-24 sm:p-32">
+    <form id="settings-form" class="space-y-36">
+
+      <!-- Section 1: Business Identity & Branding -->
+      <div>
+        <h3 class="text-body font-heading font-bold text-brand-primary pb-8 border-b border-neutral-border flex items-center justify-between">
+          <span>1. Business Identity &amp; Branding</span>
+          <span class="text-caption font-normal text-text-muted">Displayed in header, footer, and page titles</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 mt-16">
+          <div>
+            <label for="company_name" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Official Company Name</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="company_name"
+              name="company_name"
+              value={settings['company_name'] || 'NorthStar Heating & Air Conditioning'}
+              placeholder="Enter official business name to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="license_number" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>HVAC Contractor License #</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="license_number"
+              name="license_number"
+              value={settings['license_number'] || 'MN HVAC License #HV-89421-B'}
+              placeholder="Enter state trade license number to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="brand_first" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Logo Text (First Half)</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="brand_first"
+              name="brand_first"
+              value={settings['brand_first'] || 'NorthStar'}
+              placeholder="Enter primary brand text to change (e.g. NorthStar)..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="brand_accent" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Logo Text Accent (Orange Half)</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="brand_accent"
+              name="brand_accent"
+              value={settings['brand_accent'] || 'HVAC'}
+              placeholder="Enter logo accent text to change (e.g. HVAC)..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="tagline" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Company Tagline</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="tagline"
+              name="tagline"
+              value={settings['tagline'] || 'Comfort You Can Count On'}
+              placeholder="Enter company tagline to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="description" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Company Short Description</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              rows="2"
+              placeholder="Enter short company description to change..."
+              class="w-full p-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            >{settings['description'] || 'Comfort You Can Count On. Licensed, insured, and certified technicians delivering precision heating, cooling repairs, and upfront flat-rate pricing.'}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Contact Numbers & Dispatch Hotline -->
+      <div>
+        <h3 class="text-body font-heading font-bold text-brand-primary pb-8 border-b border-neutral-border flex items-center justify-between">
+          <span>2. Contact Numbers &amp; Dispatch Hotline</span>
+          <span class="text-caption font-normal text-text-muted">Updates click-to-call numbers website-wide</span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 mt-16">
+          <div>
+            <label for="phone_primary" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Main Phone Hotline (Formatted)</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="phone_primary"
+              name="phone_primary"
+              value={settings['phone_primary'] || '(555) 014-7824'}
+              placeholder="Enter formatted phone hotline to change (e.g. (555) 014-7824)..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="phone_raw" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Raw Dial Number (No dashes/spaces)</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="phone_raw"
+              name="phone_raw"
+              value={settings['phone_raw'] || '5550147824'}
+              placeholder="Enter raw phone numbers only to change (e.g. 5550147824)..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="emergency_phone" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>24/7 Emergency Dispatch Phone</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="emergency_phone"
+              name="emergency_phone"
+              value={settings['emergency_phone'] || '(555) 014-7824'}
+              placeholder="Enter 24/7 dispatch phone to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="email_primary" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Customer Service Email</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="email"
+              id="email_primary"
+              name="email_primary"
+              value={settings['email_primary'] || 'dispatch@northstarhvac.example'}
+              placeholder="Enter customer service email to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Physical Address & Operating Territory -->
+      <div>
+        <h3 class="text-body font-heading font-bold text-brand-primary pb-8 border-b border-neutral-border">
+          3. Address, Hours &amp; Territory
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 mt-16">
+          <div class="sm:col-span-2">
+            <label for="address" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Physical Shop Address</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={settings['address'] || '742 Evergreen Terrace, Minneapolis, MN 55401'}
+              placeholder="Enter physical shop address to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="operating_hours" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Standard Business Hours</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="operating_hours"
+              name="operating_hours"
+              value={settings['operating_hours'] || 'Open 24 Hours / 7 Days a Week'}
+              placeholder="Enter standard business hours to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="emergency_hours" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Emergency Dispatch Schedule</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="emergency_hours"
+              name="emergency_hours"
+              value={settings['emergency_hours'] || '24/7 Available for Heating & Cooling Emergencies'}
+              placeholder="Enter emergency dispatch schedule to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="dispatch_notice" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Top Header Utility Notice</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="dispatch_notice"
+              name="dispatch_notice"
+              value={settings['dispatch_notice'] || 'Serving Residential & Light Commercial Across Metro Region'}
+              placeholder="Enter top header dispatch notice to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Social Media Links -->
+      <div>
+        <h3 class="text-body font-heading font-bold text-brand-primary pb-8 border-b border-neutral-border">
+          4. Social Media &amp; Profiles
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 mt-16">
+          <div>
+            <label for="social_facebook" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Facebook Page URL</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="url"
+              id="social_facebook"
+              name="social_facebook"
+              value={settings['social_facebook'] || 'https://facebook.com/northstarhvac'}
+              placeholder="Enter Facebook page URL to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="social_instagram" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Instagram Profile URL</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="url"
+              id="social_instagram"
+              name="social_instagram"
+              value={settings['social_instagram'] || 'https://instagram.com/northstarhvac'}
+              placeholder="Enter Instagram profile URL to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="social_linkedin" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>LinkedIn Page URL</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="url"
+              id="social_linkedin"
+              name="social_linkedin"
+              value={settings['social_linkedin'] || 'https://linkedin.com/company/northstarhvac'}
+              placeholder="Enter LinkedIn page URL to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label for="social_youtube" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>YouTube Channel URL</span>
+              <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="url"
+              id="social_youtube"
+              name="social_youtube"
+              value={settings['social_youtube'] || 'https://youtube.com/@northstarhvac'}
+              placeholder="Enter YouTube channel URL to change..."
+              class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: Legal & Footer -->
+      <div>
+        <h3 class="text-body font-heading font-bold text-brand-primary pb-8 border-b border-neutral-border">
+          5. Footer &amp; Legal Notices
+        </h3>
+        <div class="mt-16">
+          <label for="footer_copyright" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+            <span>Copyright Line</span>
+            <span class="text-[11px] font-normal text-brand-accent">Enter to change</span>
+          </label>
+          <input
+            type="text"
+            id="footer_copyright"
+            name="footer_copyright"
+            value={settings['footer_copyright'] || 'NorthStar HVAC Services. All rights reserved.'}
+            placeholder="Enter footer copyright text to change..."
+            class="h-40 w-full px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+          />
+        </div>
+      </div>
+
+      <div class="pt-24 border-t border-neutral-border flex items-center justify-end gap-16">
+        <button
+          type="submit"
+          id="btn-save-settings"
+          class="inline-flex items-center gap-8 h-44 px-28 bg-brand-accent hover:bg-brand-accent-hover text-white text-body font-bold rounded-md shadow-sm transition-all cursor-pointer"
+        >
+          <span id="btn-text">Save Site Settings</span>
+          <svg id="btn-spinner" class="hidden animate-spin h-16 w-16 text-white" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const csrfToken = (window as any).__CSRF_TOKEN__ || '';
+    const form = document.getElementById('settings-form') as HTMLFormElement;
+    const saveBtn = document.getElementById('btn-save-settings') as HTMLButtonElement;
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const globalSaveStatus = document.getElementById('global-save-status');
+    const saveStatusText = document.getElementById('save-status-text');
+
+    let hasUnsavedChanges = false;
+
+    function setUnsaved(dirty: boolean) {
+      hasUnsavedChanges = dirty;
+      if (!globalSaveStatus || !saveStatusText) return;
+
+      if (dirty) {
+        globalSaveStatus.className = 'inline-flex items-center gap-6 px-10 py-4 rounded-full text-caption font-semibold bg-amber-50 text-amber-700 border border-amber-300 transition-all';
+        globalSaveStatus.innerHTML = '<span class="w-6 h-6 rounded-full bg-amber-500 animate-pulse"></span><span id="save-status-text">● Unsaved changes</span>';
+      } else {
+        globalSaveStatus.className = 'inline-flex items-center gap-6 px-10 py-4 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all';
+        globalSaveStatus.innerHTML = '<span class="w-6 h-6 rounded-full bg-emerald-500"></span><span id="save-status-text">✓ All changes saved</span>';
+      }
+    }
+
+    form?.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', () => setUnsaved(true));
+      input.addEventListener('change', () => setUnsaved(true));
+    });
+
+    window.addEventListener('beforeunload', (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return e.returnValue;
+      }
+    });
+
+    function showToast(message: string, isError = false) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.className = `fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-lg text-small font-semibold text-white transition-all transform duration-300 ${
+        isError ? 'bg-brand-emergency' : 'bg-brand-primary'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      saveBtn.disabled = true;
+      if (btnText) btnText.textContent = 'Saving...';
+      btnSpinner?.classList.remove('hidden');
+
+      const formData = new FormData(form);
+      const settingsPayload: Record<string, string> = {};
+      formData.forEach((value, key) => {
+        settingsPayload[key] = String(value).trim();
+      });
+
+      try {
+        const res = await fetch('/api/admin/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
+          },
+          body: JSON.stringify(settingsPayload)
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save site settings');
+        }
+
+        setUnsaved(false);
+        showToast('✓ Settings updated! Changes broadcasted in real time across the website.');
+      } catch (err: any) {
+        showToast(err.message, true);
+      } finally {
+        saveBtn.disabled = false;
+        if (btnText) btnText.textContent = 'Save Site Settings';
+        btnSpinner?.classList.add('hidden');
+      }
+    });
+  </script>
+</AdminLayout>

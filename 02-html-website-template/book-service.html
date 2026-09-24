@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Service Online — NorthStar HVAC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background-color: #F8FAFC;">
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-symbol">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z" fill="#FFFFFF"/><circle cx="12" cy="11" r="2" fill="#E65100"/></svg>
+        </div>
+        <div>
+          <div class="logo-text">NorthStar<span>HVAC</span></div>
+          <div class="logo-sub">COMFORT YOU CAN COUNT ON</div>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="service-detail.html" class="nav-link">Services</a>
+        <a href="book-service.html" class="nav-link active">Book Online</a>
+      </nav>
+
+      <div class="header-cta-group">
+        <a href="tel:5550147824" class="btn btn-sm btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (555) 014-7824
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Booking Container -->
+  <main class="section">
+    <div class="container" style="max-width: 760px;">
+      <div class="section-header text-center">
+        <div class="section-overline">ONLINE SCHEDULING</div>
+        <h1 class="section-title">Schedule a Certified HVAC Technician</h1>
+        <p class="section-subtitle" style="margin: 0 auto;">Select your issue and preferred arrival window. Upfront flat-rate pricing with zero surprise charges.</p>
+      </div>
+
+      <div class="card" style="padding: 40px; border-radius: 16px;">
+        <form id="standalone-book-form">
+          <h3 style="font-size: 18px; font-weight: 700; color: #0F2238; margin-bottom: 16px;">1. Select Primary Need</h3>
+          <div class="service-select-grid">
+            <div class="service-card-select selected" data-service="Air Conditioning Repair">
+              <div>
+                <div style="font-weight: 700; color: #0F2238;">AC Repair</div>
+                <div style="font-size: 12px; color: #64748B;">Warm air, leaks, unusual noises</div>
+              </div>
+            </div>
+            <div class="service-card-select" data-service="Furnace / Heating Fix">
+              <div>
+                <div style="font-weight: 700; color: #0F2238;">Heating / Furnace</div>
+                <div style="font-size: 12px; color: #64748B;">No heat, pilot light, blower failure</div>
+              </div>
+            </div>
+            <div class="service-card-select" data-service="Seasonal Tune-Up">
+              <div>
+                <div style="font-weight: 700; color: #0F2238;">24-Point Tune-Up</div>
+                <div style="font-size: 12px; color: #64748B;">Complete safety &amp; efficiency audit</div>
+              </div>
+            </div>
+            <div class="service-card-select" data-service="Emergency 24/7 Dispatch">
+              <div>
+                <div style="font-weight: 700; color: #DC2626;">Emergency 24/7</div>
+                <div style="font-size: 12px; color: #64748B;">Immediate on-call radio dispatch</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 18px; font-weight: 700; color: #0F2238; margin: 28px 0 16px 0;">2. Arrival Window</h3>
+          <div class="grid-2" style="margin-bottom: 20px;">
+            <div class="form-group">
+              <label class="form-label">Preferred Date:</label>
+              <input type="date" class="form-input" value="2026-09-25" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Urgency Level:</label>
+              <select class="form-input">
+                <option>Emergency (Same-Day / ASAP)</option>
+                <option>Next Day Available</option>
+                <option>Flexible Window (Next 3 Days)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Preferred Time Window:</label>
+            <div class="time-slot-group">
+              <div class="time-chip selected" data-slot="Morning (8am-12pm)">Morning (8am–12pm)</div>
+              <div class="time-chip" data-slot="Afternoon (12pm-4pm)">Afternoon (12pm–4pm)</div>
+              <div class="time-chip" data-slot="Evening (4pm-8pm)">Evening (4pm–8pm)</div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 18px; font-weight: 700; color: #0F2238; margin: 28px 0 16px 0;">3. Contact &amp; Property Details</h3>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Full Name:</label>
+              <input type="text" class="form-input" placeholder="e.g. David Miller" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number:</label>
+              <input type="tel" class="form-input" placeholder="(555) 000-0000" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Street Address &amp; Neighborhood ZIP:</label>
+            <input type="text" class="form-input" placeholder="e.g. 742 Evergreen Terrace, Metro City, 90210" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">System Symptoms / Notes (Optional):</label>
+            <textarea class="form-input" placeholder="Any specific symptoms (e.g. blowing warm air, outdoor unit buzzing, water leaking)?"></textarea>
+          </div>
+
+          <div style="background: #F1F5F9; border-radius: 8px; padding: 14px 18px; margin: 20px 0; font-size: 13px; color: #475569;">
+            🛡️ <strong>Our Promise:</strong> You will receive an upfront flat quote in writing before any repair begins. No surprise travel fees.
+          </div>
+
+          <button type="submit" class="btn btn-accent" style="width: 100%; height: 52px; font-size: 16px;">
+            Confirm Online Appointment
+          </button>
+        </form>
+
+        <div id="standalone-success" class="confirmation-box" style="display: none;">
+          <div class="confirmation-icon">✓</div>
+          <h2 style="font-size: 24px; font-weight: 800; color: #0F2238;">Booking Received!</h2>
+          <p style="color: #64748B; font-size: 15px; margin-top: 6px;">Your service call ticket has been created and assigned to the local dispatcher.</p>
+          <div class="confirmation-code">REF #NS-2026-9182</div>
+          <p style="color: #475569; font-size: 14px; max-width: 480px; margin: 16px auto;">A certified technician will telephone you 15 minutes prior to arriving at your home.</p>
+          <a href="index.html" class="btn btn-accent" style="margin-top: 20px;">Return to Homepage</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-section">
+    <div class="container text-center" style="text-align: center; font-size: 13px; color: #94A3B8;">
+      &copy; 2026 NorthStar HVAC Services. Fictional commercial template project.
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.service-card-select').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.service-card-select').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+
+    document.querySelectorAll('.time-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+      });
+    });
+
+    const form = document.getElementById('standalone-book-form');
+    const success = document.getElementById('standalone-success');
+    if (form && success) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        form.style.display = 'none';
+        success.style.display = 'block';
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+      });
+    }
+  </script>
+</body>
+</html>
+

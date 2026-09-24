@@ -1,0 +1,545 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { db, ensureDbInitialized } from '../../../lib/db';
+
+await ensureDbInitialized();
+
+const url = new URL(Astro.request.url);
+const currentStatus = url.searchParams.get('status') || 'all';
+const searchQuery = url.searchParams.get('q')?.trim() || '';
+
+let sql = 'SELECT * FROM booking_submissions';
+const conditions: string[] = [];
+const args: any[] = [];
+
+if (currentStatus !== 'all') {
+  conditions.push('status = ?');
+  args.push(currentStatus);
+}
+
+if (searchQuery) {
+  conditions.push('(customer_name LIKE ? OR customer_email LIKE ? OR customer_phone LIKE ? OR service_requested LIKE ?)');
+  const term = `%${searchQuery}%`;
+  args.push(term, term, term, term);
+}
+
+if (conditions.length > 0) {
+  sql += ' WHERE ' + conditions.join(' AND ');
+}
+
+sql += ' ORDER BY created_at DESC';
+
+const [bookingsRes, countsRes] = await Promise.all([
+  db.execute({ sql, args }),
+  db.execute(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_count,
+      SUM(CASE WHEN status = 'contacted' THEN 1 ELSE 0 END) as contacted_count,
+      SUM(CASE WHEN status = 'scheduled' THEN 1 ELSE 0 END) as scheduled_count,
+      SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_count
+    FROM booking_submissions
+  `)
+]);
+
+const bookings = bookingsRes.rows;
+const totalCount = Number(countsRes.rows[0]?.total || 0);
+const newCount = Number(countsRes.rows[0]?.new_count || 0);
+const contactedCount = Number(countsRes.rows[0]?.contacted_count || 0);
+const scheduledCount = Number(countsRes.rows[0]?.scheduled_count || 0);
+const completedCount = Number(countsRes.rows[0]?.completed_count || 0);
+
+function getStatusBadge(status: string) {
+  switch (status) {
+    case 'new':
+      return { label: 'New Lead', bg: 'bg-amber-50 text-amber-800 border-amber-200', dot: 'bg-amber-500' };
+    case 'contacted':
+      return { label: 'Contacted', bg: 'bg-blue-50 text-blue-800 border-blue-200', dot: 'bg-blue-500' };
+    case 'scheduled':
+      return { label: 'Scheduled', bg: 'bg-purple-50 text-purple-800 border-purple-200', dot: 'bg-purple-500' };
+    case 'completed':
+      return { label: 'Completed', bg: 'bg-emerald-50 text-emerald-800 border-emerald-200', dot: 'bg-emerald-500' };
+    case 'cancelled':
+      return { label: 'Cancelled', bg: 'bg-slate-100 text-slate-700 border-slate-300', dot: 'bg-slate-400' };
+    default:
+      return { label: status, bg: 'bg-slate-100 text-slate-700 border-slate-300', dot: 'bg-slate-400' };
+  }
+}
+---
+
+<AdminLayout
+  title="Booking Inquiries"
+  activeSection="bookings"
+  breadcrumbs={[{ label: 'Inquiries & Bookings' }]}
+>
+  <!-- Toast Container -->
+  <div id="toast" class="hidden fixed bottom-24 right-24 z-50 px-16 py-12 rounded-xl shadow-lg text-xs font-semibold text-white transition-all transform duration-300"></div>
+
+  <!-- Page Header -->
+  <div class="mb-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-16">
+    <div>
+      <h1 class="text-h2 font-heading text-[#0F2238] tracking-tight">Booking Inquiries &amp; Customer Leads</h1>
+      <p class="text-sm text-[#64748B] mt-4">
+        Review customer dispatch requests, manage follow-up status, and maintain technician dispatch notes.
+      </p>
+    </div>
+  </div>
+
+  <!-- Status Tabs & Search -->
+  <div class="bg-white rounded-xl border border-[#E2E8F0] p-16 mb-24 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-16">
+    <div class="flex items-center gap-8 overflow-x-auto pb-4 md:pb-0">
+      <a
+        href="/admin/bookings?status=all"
+        class={`h-36 px-14 inline-flex items-center rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+          currentStatus === 'all'
+            ? 'bg-[#0F2238] text-white shadow-sm'
+            : 'bg-slate-100 text-[#475569] hover:bg-slate-200'
+        }`}
+      >
+        All Inquiries ({totalCount})
+      </a>
+
+      <a
+        href="/admin/bookings?status=new"
+        class={`h-36 px-14 inline-flex items-center gap-6 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+          currentStatus === 'new'
+            ? 'bg-amber-600 text-white shadow-sm'
+            : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'
+        }`}
+      >
+        New Leads
+        <span class={`px-6 py-2 rounded-full text-[10px] font-bold ${currentStatus === 'new' ? 'bg-white text-amber-700' : 'bg-amber-200 text-amber-900'}`}>
+          {newCount}
+        </span>
+      </a>
+
+      <a
+        href="/admin/bookings?status=contacted"
+        class={`h-36 px-14 inline-flex items-center rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+          currentStatus === 'contacted'
+            ? 'bg-blue-600 text-white shadow-sm'
+            : 'bg-blue-50 text-blue-800 hover:bg-blue-100 border border-blue-200'
+        }`}
+      >
+        Contacted ({contactedCount})
+      </a>
+
+      <a
+        href="/admin/bookings?status=scheduled"
+        class={`h-36 px-14 inline-flex items-center rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+          currentStatus === 'scheduled'
+            ? 'bg-purple-600 text-white shadow-sm'
+            : 'bg-purple-50 text-purple-800 hover:bg-purple-100 border border-purple-200'
+        }`}
+      >
+        Scheduled ({scheduledCount})
+      </a>
+
+      <a
+        href="/admin/bookings?status=completed"
+        class={`h-36 px-14 inline-flex items-center rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+          currentStatus === 'completed'
+            ? 'bg-emerald-700 text-white shadow-sm'
+            : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200'
+        }`}
+      >
+        Completed ({completedCount})
+      </a>
+    </div>
+
+    <!-- Search Form -->
+    <form method="GET" action="/admin/bookings" class="relative max-w-xs w-full">
+      <input type="hidden" name="status" value={currentStatus} />
+      <input
+        type="text"
+        name="q"
+        value={searchQuery}
+        placeholder="Search name, phone, service..."
+        class="h-36 w-full pl-36 pr-16 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+      />
+      <div class="absolute inset-y-0 left-0 pl-12 flex items-center pointer-events-none text-[#94A3B8]">
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bookings Table -->
+  <div class="bg-white rounded-xl border border-[#E2E8F0] shadow-sm overflow-hidden">
+    {bookings.length === 0 ? (
+      <div class="p-48 text-center">
+        <div class="w-48 h-48 rounded-full bg-slate-100 text-[#94A3B8] flex items-center justify-center mx-auto mb-12">
+          <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-sm font-bold text-[#0F2238]">No booking inquiries found</h3>
+        <p class="text-xs text-[#64748B] mt-4">
+          {searchQuery ? `No inquiries match "${searchQuery}".` : 'Online submissions from homeowners will appear here.'}
+        </p>
+      </div>
+    ) : (
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-[#E2E8F0] bg-slate-50/75 text-[11px] font-bold text-[#475569] uppercase tracking-wider">
+              <th class="py-14 px-20">Customer Details</th>
+              <th class="py-14 px-20">Service &amp; Urgency</th>
+              <th class="py-14 px-20">Preferred Slot</th>
+              <th class="py-14 px-20">Status</th>
+              <th class="py-14 px-20">Received</th>
+              <th class="py-14 px-20 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#E2E8F0] text-xs">
+            {bookings.map((bkg) => {
+              const badge = getStatusBadge(bkg.status as string);
+              const isEmergency = bkg.urgency === 'emergency';
+              const dateObj = new Date(bkg.created_at as string);
+              const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+              return (
+                <tr class="hover:bg-slate-50/50 transition-colors" id={`row-${bkg.id}`}>
+                  <!-- Customer Details -->
+                  <td class="py-16 px-20 whitespace-nowrap">
+                    <div class="font-bold text-[#0F172A]">{bkg.customer_name}</div>
+                    <div class="flex items-center gap-8 text-[11px] text-[#64748B] mt-4">
+                      <a href={`tel:${bkg.customer_phone}`} class="hover:text-[#E65100] underline font-medium">
+                        {bkg.customer_phone}
+                      </a>
+                      <span>&bull;</span>
+                      <a href={`mailto:${bkg.customer_email}`} class="hover:text-[#E65100]">
+                        {bkg.customer_email}
+                      </a>
+                    </div>
+                  </td>
+
+                  <!-- Service & Urgency -->
+                  <td class="py-16 px-20 whitespace-nowrap">
+                    <div class="font-semibold text-[#0F2238]">{bkg.service_requested}</div>
+                    <div class="mt-4">
+                      {isEmergency ? (
+                        <span class="inline-block px-8 py-2 rounded text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700">
+                          Emergency 24/7
+                        </span>
+                      ) : (
+                        <span class="text-[11px] text-[#64748B]">Standard</span>
+                      )}
+                    </div>
+                  </td>
+
+                  <!-- Preferred Slot -->
+                  <td class="py-16 px-20 whitespace-nowrap">
+                    <div class="font-medium text-[#334155]">{bkg.preferred_date}</div>
+                    <div class="text-[11px] text-[#64748B] mt-2">{bkg.preferred_time}</div>
+                  </td>
+
+                  <!-- Status Badge -->
+                  <td class="py-16 px-20 whitespace-nowrap">
+                    <span class={`inline-flex items-center gap-6 px-10 py-4 rounded-full text-[11px] font-semibold border ${badge.bg}`}>
+                      <span class={`w-6 h-6 rounded-full ${badge.dot}`}></span>
+                      {badge.label}
+                    </span>
+                  </td>
+
+                  <!-- Date Received -->
+                  <td class="py-16 px-20 whitespace-nowrap text-[#64748B] text-[11px]">
+                    {formattedDate}
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="py-16 px-20 text-right whitespace-nowrap space-x-8">
+                    <button
+                      class="btn-view-booking px-10 py-6 text-slate-700 hover:text-[#0F2238] bg-slate-100 hover:bg-slate-200 rounded-md text-xs font-semibold cursor-pointer transition-colors border border-slate-200"
+                      data-id={bkg.id}
+                      data-name={bkg.customer_name}
+                      data-email={bkg.customer_email}
+                      data-phone={bkg.customer_phone}
+                      data-service={bkg.service_requested}
+                      data-date={bkg.preferred_date}
+                      data-time={bkg.preferred_time}
+                      data-urgency={bkg.urgency}
+                      data-message={bkg.message}
+                      data-status={bkg.status}
+                      data-notes={bkg.notes}
+                    >
+                      View &amp; Update
+                    </button>
+
+                    <button
+                      class="btn-delete-booking px-10 py-6 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md text-xs font-semibold cursor-pointer transition-colors border border-red-200"
+                      data-id={bkg.id}
+                      data-name={bkg.customer_name}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+
+  <!-- VIEW & UPDATE MODAL -->
+  <div id="booking-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-[#0F2238]/60 backdrop-blur-xs flex items-center justify-center p-16">
+    <div class="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl max-w-xl w-full p-24 relative">
+      <div class="flex items-center justify-between pb-16 border-b border-[#E2E8F0]">
+        <div>
+          <h3 class="text-base font-bold font-heading text-[#0F2238]" id="modal-customer-name">Booking Details</h3>
+          <p class="text-xs text-[#64748B] mt-2" id="modal-service-sub">Service Inquiry Details</p>
+        </div>
+        <button id="modal-close" class="text-[#94A3B8] hover:text-[#0F2238] text-lg font-bold cursor-pointer">&times;</button>
+      </div>
+
+      <form id="booking-update-form" class="mt-16 space-y-16">
+        <input type="hidden" id="form-booking-id" value="" />
+
+        <!-- Customer Summary Card -->
+        <div class="bg-slate-50 border border-[#E2E8F0] rounded-xl p-16 text-xs space-y-8">
+          <div class="grid grid-cols-2 gap-16">
+            <div>
+              <span class="text-[#64748B] block text-[10.5px]">Phone Number:</span>
+              <a id="modal-phone" href="#" class="font-bold text-[#E65100] underline"></a>
+            </div>
+            <div>
+              <span class="text-[#64748B] block text-[10.5px]">Email Address:</span>
+              <a id="modal-email" href="#" class="font-bold text-[#0F2238] underline"></a>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-16 pt-8 border-t border-[#E2E8F0]">
+            <div>
+              <span class="text-[#64748B] block text-[10.5px]">Requested Service:</span>
+              <span id="modal-service" class="font-semibold text-[#0F172A]"></span>
+            </div>
+            <div>
+              <span class="text-[#64748B] block text-[10.5px]">Preferred Window:</span>
+              <span id="modal-slot" class="font-semibold text-[#0F172A]"></span>
+            </div>
+          </div>
+          <div class="pt-8 border-t border-[#E2E8F0]">
+            <span class="text-[#64748B] block text-[10.5px]">Customer Notes / Symptoms:</span>
+            <p id="modal-message" class="text-[#334155] italic mt-4 leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- Status Selector -->
+        <div>
+          <label for="form-status" class="block text-xs font-semibold text-[#334155] mb-4">Dispatch / Workflow Status *</label>
+          <select
+            id="form-status"
+            class="h-40 w-full px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+          >
+            <option value="new">New Lead (Needs Response)</option>
+            <option value="contacted">Contacted (Spoke with Customer)</option>
+            <option value="scheduled">Scheduled (Technician Dispatched)</option>
+            <option value="completed">Completed (Service Finished)</option>
+            <option value="cancelled">Cancelled (Declined or Duplicate)</option>
+          </select>
+        </div>
+
+        <!-- Dispatcher Notes -->
+        <div>
+          <label for="form-notes" class="block text-xs font-semibold text-[#334155] mb-4">Internal Dispatcher Notes</label>
+          <textarea
+            id="form-notes"
+            rows="3"
+            placeholder="e.g. Spoke with homeowner at 11:30 AM. Furnace capacitor leaking, assigned Tech Mark for tomorrow 9 AM..."
+            class="w-full p-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+          ></textarea>
+        </div>
+
+        <div class="mt-24 flex items-center justify-end gap-12 pt-16 border-t border-[#E2E8F0]">
+          <button
+            type="button"
+            id="form-cancel"
+            class="h-40 px-16 border border-[#CBD5E1] rounded-lg text-xs font-semibold text-[#475569] hover:bg-slate-50 cursor-pointer"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            id="form-submit"
+            class="h-40 px-16 bg-[#E65100] hover:bg-[#CC4400] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow cursor-pointer transition-all"
+          >
+            Save Status &amp; Notes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL (MANDATORY PER SKILL) -->
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-[#0F2238]/60 backdrop-blur-xs flex items-center justify-center p-16">
+    <div class="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl max-w-md w-full p-24">
+      <div class="w-40 h-40 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-16">
+        <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </div>
+
+      <h3 class="text-base font-bold font-heading text-[#0F2238]">Confirm Inquiry Deletion</h3>
+      <p class="text-xs text-[#64748B] mt-8 leading-relaxed">
+        Are you sure you want to permanently delete the inquiry from <span id="delete-customer-name" class="font-bold text-[#0F172A]"></span>?
+        This record will be permanently purged from the database.
+      </p>
+
+      <div class="mt-24 flex items-center justify-end gap-12">
+        <button
+          type="button"
+          id="delete-cancel"
+          class="h-40 px-16 border border-[#CBD5E1] rounded-lg text-xs font-semibold text-[#475569] hover:bg-slate-50 cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="delete-confirm"
+          class="h-40 px-16 bg-[#DC2626] hover:bg-[#B91C1C] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow cursor-pointer transition-all"
+        >
+          Yes, Delete Inquiry
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getCsrfToken(): string {
+      const meta = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement;
+      return meta?.content || (window as any).__CSRF_TOKEN__ || '';
+    }
+
+    function showToast(message: string, isError = false) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.className = `fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold text-white transition-all transform duration-300 ${
+        isError ? 'bg-[#DC2626]' : 'bg-[#0F2238]'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Modal elements
+    const bookingModal = document.getElementById('booking-modal') as HTMLElement;
+    const deleteModal = document.getElementById('delete-modal') as HTMLElement;
+    const modalClose = document.getElementById('modal-close');
+    const formCancel = document.getElementById('form-cancel');
+    const deleteCancel = document.getElementById('delete-cancel');
+    const updateForm = document.getElementById('booking-update-form') as HTMLFormElement;
+
+    // Modal Display fields
+    const modalCustomerName = document.getElementById('modal-customer-name') as HTMLElement;
+    const modalServiceSub = document.getElementById('modal-service-sub') as HTMLElement;
+    const modalPhone = document.getElementById('modal-phone') as HTMLAnchorElement;
+    const modalEmail = document.getElementById('modal-email') as HTMLAnchorElement;
+    const modalService = document.getElementById('modal-service') as HTMLElement;
+    const modalSlot = document.getElementById('modal-slot') as HTMLElement;
+    const modalMessage = document.getElementById('modal-message') as HTMLElement;
+    const formBookingId = document.getElementById('form-booking-id') as HTMLInputElement;
+    const formStatus = document.getElementById('form-status') as HTMLSelectElement;
+    const formNotes = document.getElementById('form-notes') as HTMLTextAreaElement;
+
+    // Delete state
+    let pendingDeleteId: string | null = null;
+    const deleteCustomerName = document.getElementById('delete-customer-name') as HTMLElement;
+    const deleteConfirm = document.getElementById('delete-confirm');
+
+    modalClose?.addEventListener('click', () => bookingModal.classList.add('hidden'));
+    formCancel?.addEventListener('click', () => bookingModal.classList.add('hidden'));
+    deleteCancel?.addEventListener('click', () => deleteModal.classList.add('hidden'));
+
+    // View & Update click
+    document.querySelectorAll('.btn-view-booking').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        formBookingId.value = el.dataset.id || '';
+        modalCustomerName.textContent = el.dataset.name || 'Customer Inquiry';
+        modalServiceSub.textContent = `Inquiry ID: ${el.dataset.id}`;
+        modalPhone.textContent = el.dataset.phone || '';
+        modalPhone.href = `tel:${el.dataset.phone}`;
+        modalEmail.textContent = el.dataset.email || '';
+        modalEmail.href = `mailto:${el.dataset.email}`;
+        modalService.textContent = el.dataset.service || '';
+        modalSlot.textContent = `${el.dataset.date} (${el.dataset.time})`;
+        modalMessage.textContent = el.dataset.message || '(No extra notes provided by customer)';
+        formStatus.value = el.dataset.status || 'new';
+        formNotes.value = el.dataset.notes || '';
+        bookingModal.classList.remove('hidden');
+      });
+    });
+
+    // Save Update
+    updateForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = formBookingId.value;
+
+      try {
+        const res = await fetch(`/api/admin/bookings/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': getCsrfToken()
+          },
+          body: JSON.stringify({
+            status: formStatus.value,
+            notes: formNotes.value
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          showToast('Booking status and notes updated.');
+          bookingModal.classList.add('hidden');
+          setTimeout(() => window.location.reload(), 600);
+        } else {
+          showToast(data.error || 'Failed to update', true);
+        }
+      } catch (err: any) {
+        showToast('Network error: ' + err.message, true);
+      }
+    });
+
+    // Delete Trigger
+    document.querySelectorAll('.btn-delete-booking').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        pendingDeleteId = el.dataset.id || null;
+        deleteCustomerName.textContent = `"${el.dataset.name || 'this customer'}"`;
+        deleteModal.classList.remove('hidden');
+      });
+    });
+
+    // Delete Confirm
+    deleteConfirm?.addEventListener('click', async () => {
+      if (!pendingDeleteId) return;
+
+      try {
+        const res = await fetch(`/api/admin/bookings/${pendingDeleteId}`, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-Token': getCsrfToken()
+          }
+        });
+
+        if (res.ok) {
+          showToast('Booking inquiry deleted.');
+          deleteModal.classList.add('hidden');
+          const row = document.getElementById(`row-${pendingDeleteId}`);
+          row?.remove();
+        } else {
+          const data = await res.json();
+          showToast(data.error || 'Failed to delete', true);
+        }
+      } catch (err: any) {
+        showToast('Error: ' + err.message, true);
+      }
+    });
+  </script>
+</AdminLayout>
+

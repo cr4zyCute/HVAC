@@ -1,0 +1,74 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 490" width="1440" height="490" fill="none">
+  <!-- Section: How It Works (Desktop 1440px) -->
+  <g id="How-It-Works-Section">
+    <!-- Off-White Background -->
+    <rect width="1440" height="490" fill="#F8FAFC"/>
+    
+    <!-- Header -->
+    <g id="Section-Header" transform="translate(80, 60)">
+      <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="13" font-weight="700" letter-spacing="1">SEAMLESS APPOINTMENT PROCESS</text>
+      <text x="0" y="56" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="800">How It Works</text>
+      <text x="0" y="88" fill="#64748B" font-family="'Inter', sans-serif" font-size="16" font-weight="400">Three straightforward steps from initial contact to a restored, comfortable home climate.</text>
+    </g>
+
+    <!-- Connecting Timeline Track -->
+    <line x1="220" y1="230" x2="1140" y2="230" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="6 6"/>
+
+    <!-- Step 1 -->
+    <g id="Step-1" transform="translate(80, 190)">
+      <rect width="380" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, -20)">
+        <rect width="48" height="48" rx="10" fill="#0F2238" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="24" y="31" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" text-anchor="middle">01</text>
+      </g>
+      <g transform="translate(24, 48)">
+        <text x="0" y="20" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">Request Service</text>
+        <text x="0" y="52" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+          <tspan x="0" dy="0">Tell us what is happening with</tspan>
+          <tspan x="0" dy="22">your system online or by phone.</tspan>
+          <tspan x="0" dy="22">Pick a date and 2-hour window.</tspan>
+        </text>
+        <rect y="118" width="130" height="26" rx="4" fill="#F1F5F9"/>
+        <text x="65" y="135" fill="#475569" font-family="'Inter', sans-serif" font-size="11" font-weight="600" text-anchor="middle">ONLINE OR CALL</text>
+      </g>
+    </g>
+
+    <!-- Step 2 -->
+    <g id="Step-2" transform="translate(530, 190)">
+      <rect width="380" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, -20)">
+        <rect width="48" height="48" rx="10" fill="#E65100" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="24" y="31" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" text-anchor="middle">02</text>
+      </g>
+      <g transform="translate(24, 48)">
+        <text x="0" y="20" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">We Diagnose</text>
+        <text x="0" y="52" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+          <tspan x="0" dy="0">A certified technician inspects</tspan>
+          <tspan x="0" dy="22">your equipment thoroughly and</tspan>
+          <tspan x="0" dy="22">gives an upfront, flat-rate quote.</tspan>
+        </text>
+        <rect y="118" width="150" height="26" rx="4" fill="#EFF6FF"/>
+        <text x="75" y="135" fill="#1D4ED8" font-family="'Inter', sans-serif" font-size="11" font-weight="600" text-anchor="middle">UPFRONT ESTIMATE</text>
+      </g>
+    </g>
+
+    <!-- Step 3 -->
+    <g id="Step-3" transform="translate(980, 190)">
+      <rect width="380" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, -20)">
+        <rect width="48" height="48" rx="10" fill="#15803D" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="24" y="31" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800" text-anchor="middle">03</text>
+      </g>
+      <g transform="translate(24, 48)">
+        <text x="0" y="20" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">Get Comfortable</text>
+        <text x="0" y="52" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+          <tspan x="0" dy="0">We complete repairs using quality</tspan>
+          <tspan x="0" dy="22">parts, test the system, and restore</tspan>
+          <tspan x="0" dy="22">comfort to your living space.</tspan>
+        </text>
+        <rect y="118" width="160" height="26" rx="4" fill="#ECFDF5"/>
+        <text x="80" y="135" fill="#059669" font-family="'Inter', sans-serif" font-size="11" font-weight="600" text-anchor="middle">COMFORT RESTORED</text>
+      </g>
+    </g>
+  </g>
+</svg>

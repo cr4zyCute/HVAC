@@ -1,0 +1,251 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import CTABanner from '@/components/sections/CTABanner.astro';
+
+const values = [
+  {
+    icon: "shield",
+    title: "100% Upfront Honesty",
+    description: "We don't believe in hidden diagnostic surprises or high-pressure sales tactics. Before any repair starts, you receive an itemized flat-rate quote. What we quote is what you pay."
+  },
+  {
+    icon: "check",
+    title: "Certified Master Technicians",
+    description: "All NorthStar technicians hold active EPA Universal and NATE certifications. We require over 80 hours of annual continuing education on modern inverter and heat pump technology."
+  },
+  {
+    icon: "truck",
+    title: "Rolling Warehouses",
+    description: "Our fleet of service vans carries hundreds of genuine OEM capacitors, motors, igniters, and safety limit controls, enabling us to complete 92% of repairs on the very first trip."
+  },
+  {
+    icon: "award",
+    title: "Respect for Your Home",
+    description: "We treat your home with the care it deserves. Our technicians always wear protective shoe covers, lay down heavy-duty drop cloths, and leave your mechanical room cleaner than we found it."
+  }
+];
+
+const team = [
+  {
+    name: "Marcus Vance",
+    role: "Founder & Master Mechanical Contractor",
+    credentials: "Lic. #HV-89241 • 22 Yrs Experience",
+    bio: "Marcus founded NorthStar HVAC after seeing how corporate rollups prioritized sales quotas over true mechanical craftsmanship. He oversees all field diagnostic standards."
+  },
+  {
+    name: "Elena Ramos",
+    role: "Operations & Emergency Dispatch Director",
+    credentials: "Customer Experience Specialist • 14 Yrs Experience",
+    bio: "Elena coordinates our 24/7 mobile fleet routing to guarantee prompt, reliable arrival windows and direct homeowner communication during freeze alerts."
+  },
+  {
+    name: "David Chen",
+    role: "Lead Systems Diagnostic Specialist",
+    credentials: "NATE Senior Master • EPA Universal Certified",
+    bio: "David specializes in dual-fuel heat pumps, variable-speed inverter compressors, and complex airflow static pressure balancing."
+  }
+];
+---
+
+<Layout 
+  title="About NorthStar HVAC — Our Story, Values & Certified Team" 
+  description="Discover NorthStar HVAC's 15-year heritage of precision heating and cooling craftsmanship, certified master technicians, and upfront flat-rate pricing."
+>
+  <!-- Hero Section -->
+  <section class="bg-neutral-bg border-b border-neutral-border py-64 md:py-80">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-48 items-center">
+        <div class="lg:col-span-7 space-y-20">
+          <Badge variant="info">OUR HERITAGE &amp; PROMISE</Badge>
+          <h1 class="text-h1 font-heading font-extrabold text-brand-primary leading-tight">
+            Craftsmanship, Integrity &amp; Transparency Since 2011
+          </h1>
+          <p class="text-body text-text-secondary leading-relaxed">
+            NorthStar HVAC was founded on a simple principle: homeowners deserve honest diagnostic evaluations, transparent flat-rate pricing, and master-level mechanical workmanship without high-pressure sales tricks.
+          </p>
+          <p class="text-small text-text-muted leading-relaxed">
+            Over the past 15 years, we've grown from a single service van into one of the region's most trusted residential heating and air conditioning providers—servicing over 4,800 local households while maintaining a 4.9-star average.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-16 pt-8">
+            <Button href="/services" variant="primary" size="lg">
+              Explore Our Services
+              <Icon name="arrow-right" size={18} />
+            </Button>
+            <Button href="/book" variant="outline" size="lg">
+              Schedule an Appointment
+            </Button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 relative">
+          <div class="rounded-lg overflow-hidden border border-neutral-border shadow-md">
+            <img 
+              src="/images/hvac-hero-technician.jpg" 
+              alt="NorthStar HVAC Master Technician inspecting residential heating equipment" 
+              class="w-full h-400 object-cover"
+              loading="lazy"
+            />
+          </div>
+          <!-- Trust Badge Overlay -->
+          <div class="absolute -bottom-16 -left-16 bg-brand-primary text-white p-20 rounded-lg shadow-lg border border-brand-secondary hidden sm:block">
+            <div class="text-h2 font-heading font-extrabold text-brand-accent">15+</div>
+            <div class="text-caption font-bold uppercase tracking-wider text-neutral-surface">Years of Proven Local Service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Stats Bar -->
+  <section class="bg-brand-primary text-white py-48 border-b border-brand-secondary">
+    <div class="container">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-32 text-center">
+        <div class="space-y-4">
+          <div class="text-h1 font-heading font-extrabold text-brand-accent">15+</div>
+          <div class="text-caption uppercase tracking-wider text-text-muted">Years in Service</div>
+        </div>
+        <div class="space-y-4">
+          <div class="text-h1 font-heading font-extrabold text-brand-accent">4,800+</div>
+          <div class="text-caption uppercase tracking-wider text-text-muted">Homes Restored</div>
+        </div>
+        <div class="space-y-4">
+          <div class="text-h1 font-heading font-extrabold text-brand-accent">4.9★</div>
+          <div class="text-caption uppercase tracking-wider text-text-muted">Customer Rating</div>
+        </div>
+        <div class="space-y-4">
+          <div class="text-h1 font-heading font-extrabold text-brand-accent">24/7</div>
+          <div class="text-caption uppercase tracking-wider text-text-muted">On-Call Response</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container space-y-48">
+      <div class="text-center max-w-2xl mx-auto space-y-12">
+        <Badge variant="neutral">WHAT SETS US APART</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Our Four Guiding Commitments
+        </h2>
+        <p class="text-body text-text-secondary">
+          We operate with strict engineering standards and a homeowner-first mindset on every call.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-32">
+        {values.map((v) => (
+          <div class="bg-neutral-bg p-32 rounded-lg border border-neutral-border space-y-16 hover:border-brand-primary transition-colors">
+            <div class="w-48 h-48 rounded-md bg-blue-50 text-brand-primary flex items-center justify-center">
+              <Icon name={v.icon as any} size={24} />
+            </div>
+            <h3 class="text-h3 font-heading font-bold text-brand-primary">{v.title}</h3>
+            <p class="text-small text-text-secondary leading-relaxed">{v.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership / Technicians Section -->
+  <section class="py-80 bg-neutral-bg border-y border-neutral-border">
+    <div class="container space-y-48">
+      <div class="max-w-2xl space-y-12">
+        <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Meet the Team</span>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Led by Licensed Mechanical Craftsmen
+        </h2>
+        <p class="text-body text-text-secondary">
+          Our leadership and field specialists bring decades of hands-on mechanical diagnostic expertise to your doorstep.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-32">
+        {team.map((member) => (
+          <div class="bg-neutral-surface p-32 rounded-lg border border-neutral-border space-y-16 shadow-sm">
+            <div class="w-64 h-64 rounded-full bg-brand-primary/10 text-brand-primary flex items-center justify-center font-heading font-extrabold text-h2">
+              {member.name.split(' ').map(n => n[0]).join('')}
+            </div>
+            <div class="space-y-4">
+              <h3 class="text-h3 font-heading font-bold text-brand-primary">{member.name}</h3>
+              <div class="text-caption font-semibold text-brand-accent">{member.role}</div>
+              <div class="text-[12px] font-mono text-text-muted">{member.credentials}</div>
+            </div>
+            <p class="text-small text-text-secondary leading-relaxed pt-8 border-t border-neutral-border">
+              {member.bio}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Fleet & Technology Spotlight -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-48 items-center">
+        <div class="lg:col-span-5 rounded-lg overflow-hidden border border-neutral-border shadow-md">
+          <img 
+            src="/images/hvac-service-van.jpg" 
+            alt="NorthStar HVAC service van fleet stocked with diagnostic tools and parts" 
+            class="w-full h-360 object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="lg:col-span-7 space-y-20">
+          <Badge variant="success">FLEET &amp; DIAGNOSTIC RIGS</Badge>
+          <h2 class="text-h2 font-heading font-bold text-brand-primary">
+            Equipped with Advanced Digital Instruments
+          </h2>
+          <p class="text-body text-text-secondary leading-relaxed">
+            Old-fashioned analog gauges can't provide the precision required for today's high-efficiency inverter heat pumps and variable-speed furnaces.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 pt-8">
+            <div class="flex items-start gap-12">
+              <Icon name="check" size={18} class="text-emerald-600 mt-2 shrink-0" />
+              <div>
+                <strong class="block text-small text-brand-primary">Digital Refrigerant Manifolds</strong>
+                <span class="text-caption text-text-muted">Live subcooling &amp; superheat calculations accurate to 0.1°F</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-12">
+              <Icon name="check" size={18} class="text-emerald-600 mt-2 shrink-0" />
+              <div>
+                <strong class="block text-small text-brand-primary">Infrared Thermal Imaging</strong>
+                <span class="text-caption text-text-muted">Pinpointing duct leaks and electrical hotspots in seconds</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-12">
+              <Icon name="check" size={18} class="text-emerald-600 mt-2 shrink-0" />
+              <div>
+                <strong class="block text-small text-brand-primary">Electronic CO Analyzers</strong>
+                <span class="text-caption text-text-muted">Testing flue exhaust safety to parts-per-million accuracy</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-12">
+              <Icon name="check" size={18} class="text-emerald-600 mt-2 shrink-0" />
+              <div>
+                <strong class="block text-small text-brand-primary">Micron Vacuum Gauges</strong>
+                <span class="text-caption text-text-muted">Verifying deep moisture-free evacuations below 500 microns</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Work with Technicians You Can Trust"
+    subtitle="Experience transparent diagnostics, fair flat-rate pricing, and respectful service."
+    primaryCta={{ label: "Book an Appointment", href: "/book" }}
+    secondaryCta={{ label: "Contact Us", href: "/contact" }}
+    variant="primary"
+  />
+</Layout>

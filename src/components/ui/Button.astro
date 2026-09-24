@@ -1,0 +1,72 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'emergency' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  disabled = false,
+  loading = false,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+// Base styles from figma design system tokens
+const baseStyles = 'inline-flex items-center justify-center gap-8 font-body font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 select-none';
+
+// Size styles
+const sizeStyles = {
+  sm: 'h-36 px-16 text-small rounded-sm',
+  md: 'h-48 px-24 text-body rounded-md',
+  lg: 'h-56 px-32 text-body-large rounded-md',
+};
+
+// Variant styles mapping 1:1 with tokens
+const variantStyles = {
+  primary: 'bg-brand-accent text-white hover:bg-brand-accent-hover active:scale-[0.98] shadow-sm',
+  secondary: 'bg-brand-secondary text-white hover:bg-brand-primary active:scale-[0.98]',
+  outline: 'bg-transparent border border-neutral-border text-brand-primary hover:bg-neutral-surface-alt hover:border-neutral-border-focus active:bg-neutral-border/50',
+  emergency: 'bg-brand-emergency text-white hover:bg-brand-emergency-hover active:scale-[0.98] shadow-sm',
+  ghost: 'bg-transparent text-brand-primary hover:bg-neutral-surface-alt active:bg-neutral-border/40',
+};
+
+// Disabled & Loading state styles
+const stateStyles = (disabled || loading) ? 'opacity-50 cursor-not-allowed pointer-events-none' : '';
+
+const classes = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${stateStyles} ${className}`.trim();
+---
+
+{
+  href ? (
+    <a href={href} class={classes} role="button" aria-disabled={disabled} {...rest}>
+      {loading && (
+        <svg class="animate-spin -ml-4 mr-8 h-16 w-16 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      )}
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} disabled={disabled || loading} {...rest}>
+      {loading && (
+        <svg class="animate-spin -ml-4 mr-8 h-16 w-16 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      )}
+      <slot />
+    </button>
+  )
+}
+

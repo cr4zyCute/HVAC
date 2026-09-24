@@ -1,0 +1,181 @@
+[
+  {
+    "slug": "air-conditioning-repair",
+    "title": "Air Conditioning Repair",
+    "shortDescription": "Fast diagnosis, upfront flat-rate pricing, and long-lasting cooling repairs by licensed HVAC specialists.",
+    "category": "Cooling",
+    "badge": "RESIDENTIAL & COMMERCIAL",
+    "icon": "fan",
+    "symptoms": [
+      {
+        "title": "AC Blowing Warm Air",
+        "description": "Caused by low refrigerant charge, faulty compressor relays, or a blown dual capacitor."
+      },
+      {
+        "title": "Strange Grinding or Buzzing",
+        "description": "Worn blower motor bearings, loose fan blades, or failing electrical contactor coils."
+      },
+      {
+        "title": "Weak Airflow from Vents",
+        "description": "Restricted air filters, failing blower motors, or ductwork disconnections inside the attic."
+      },
+      {
+        "title": "Frequent System Cycling (Short Cycling)",
+        "description": "Unit cycles on and off every few minutes without reaching thermostat setpoint, rapidly spiking power bills."
+      },
+      {
+        "title": "Water Leaking Around Indoor Unit",
+        "description": "Clogged condensate drain lines or cracked drain pan overflowing into drywall, creating structural water damage risk."
+      }
+    ],
+    "scope": [
+      "Electronic Refrigerant Leak Scan",
+      "Thermostat Calibration & Signal Check",
+      "Capacitor & Contactor Testing",
+      "Condenser Fan Motor Inspection",
+      "Compressor Amp Draw Measurement",
+      "Evaporator Coil Temperature Split Check",
+      "Condensate Drain Line Vacuum Clearing",
+      "Full 90-Day Workmanship Guarantee"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Multi-Point Diagnostic",
+        "description": "Technician tests voltage, pressures, and airflow across the indoor evaporator coil."
+      },
+      {
+        "step": 2,
+        "title": "Clear Quote & Options",
+        "description": "We explain the root cause and provide clear upfront pricing before touching any tools."
+      },
+      {
+        "step": 3,
+        "title": "Precision Component Fix",
+        "description": "Repairs executed using OEM parts straight from our fully stocked local service van."
+      },
+      {
+        "step": 4,
+        "title": "Load Test & Verification",
+        "description": "System cycled through cooling stages to confirm 18-22 deg delta T split and peak SEER."
+      }
+    ]
+  },
+  {
+    "slug": "furnace-heating-repair",
+    "title": "Furnace & Heating Fix",
+    "shortDescription": "Gas ignition troubleshooting, cracked heat exchanger safety checks, and blower motor restoration for winter warmth.",
+    "category": "Heating",
+    "badge": "24/7 HEATING DISPATCH",
+    "icon": "flame",
+    "symptoms": [
+      {
+        "title": "No Heat or Lukewarm Air",
+        "description": "Failed ignition module, dirty flame sensor, or tripped thermal limit switch."
+      },
+      {
+        "title": "Furnace Clicking Without Igniting",
+        "description": "Clogged gas burner orifices or faulty hot surface igniter requiring replacement."
+      },
+      {
+        "title": "Yellow Burner Flame",
+        "description": "Incomplete combustion risk. May indicate carbon monoxide or improper gas-to-air mixture."
+      },
+      {
+        "title": "Blower Running Continuously",
+        "description": "Faulty thermostat limit control or failing control board relay."
+      },
+      {
+        "title": "Sudden High Heating Bills",
+        "description": "Restricted airflow, dirty heat exchangers, or leaky duct systems causing system strain."
+      }
+    ],
+    "scope": [
+      "Digital Combustion Efficiency Analysis",
+      "Heat Exchanger Integrity & Carbon Monoxide Test",
+      "Flame Sensor Cleaning & Microamp Verification",
+      "Inducer Draft Motor Pressure Switch Check",
+      "Gas Manifold Pressure Gauge Calibration",
+      "Blower Assembly Amp Draw & Balance Check",
+      "Safety Limit Switch Operation Verification",
+      "100% Clean Workspace Guarantee"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Safety & Combustion Check",
+        "description": "Complete flue exhaust and carbon monoxide safety verification."
+      },
+      {
+        "step": 2,
+        "title": "Ignition Circuit Diagnosis",
+        "description": "Testing electronic ignition sequence and gas pressure levels."
+      },
+      {
+        "step": 3,
+        "title": "OEM Component Replacement",
+        "description": "Installing genuine replacement igniters, sensors, or relays."
+      },
+      {
+        "step": 4,
+        "title": "Heat Rise Certification",
+        "description": "Cycling through full heating call to confirm spec delta T."
+      }
+    ]
+  },
+  {
+    "slug": "seasonal-tune-up",
+    "title": "24-Point Annual Tune-Up",
+    "shortDescription": "Comprehensive electrical, mechanical, and airflow calibration that prevents sudden breakdown and saves up to 25% on bills.",
+    "category": "Maintenance",
+    "badge": "PREVENTIVE CARE",
+    "icon": "wrench",
+    "symptoms": [
+      {
+        "title": "System Running Inefficiently",
+        "description": "Higher monthly electric or gas utility bills without changing temperature habits."
+      },
+      {
+        "title": "Dust or Odors Upon Startup",
+        "description": "Accumulated debris inside coils, blower wheel, and air filter housing."
+      },
+      {
+        "title": "Uneven Room Temperatures",
+        "description": "Static pressure imbalance or restricted airflow through duct returns."
+      }
+    ],
+    "scope": [
+      "Coil Cleaning & Fin Straightening",
+      "Refrigerant Charge Verification",
+      "Electrical Wiring & Contactor Tightening",
+      "Blower Wheel Debris Removal",
+      "Condensate Trap Flush & Algae Treatment",
+      "Thermostat Cycle & Accuracy Calibration",
+      "Airflow CFM Static Pressure Measurement",
+      "Written 24-Point Condition Report"
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Baseline Performance Audit",
+        "description": "Initial measurement of amps, pressures, and temperatures."
+      },
+      {
+        "step": 2,
+        "title": "Deep Clean & Flush",
+        "description": "Clearing coils, drains, and internal compartments."
+      },
+      {
+        "step": 3,
+        "title": "Electrical & Mechanical Tune",
+        "description": "Torquing connections, testing capacitors, lubricating bearings."
+      },
+      {
+        "step": 4,
+        "title": "Efficiency Certification",
+        "description": "Final report delivered with actionable homeowner guidance."
+      }
+    ]
+  }
+]
+

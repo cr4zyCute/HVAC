@@ -1,0 +1,625 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { db, ensureDbInitialized } from '../../../lib/db';
+
+await ensureDbInitialized();
+
+const url = new URL(Astro.request.url);
+const searchQuery = url.searchParams.get('q')?.trim() || '';
+
+let sql = 'SELECT * FROM services';
+const args: any[] = [];
+
+if (searchQuery) {
+  sql += ' WHERE (title LIKE ? OR short_desc LIKE ? OR slug LIKE ?)';
+  const term = `%${searchQuery}%`;
+  args.push(term, term, term);
+}
+
+sql += ' ORDER BY display_order ASC, created_at DESC';
+
+const [servicesRes, countsRes] = await Promise.all([
+  db.execute({ sql, args }),
+  db.execute(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) as active,
+      SUM(CASE WHEN is_active = 0 THEN 1 ELSE 0 END) as inactive
+    FROM services
+  `)
+]);
+
+const services = servicesRes.rows;
+const totalCount = Number(countsRes.rows[0]?.total || 0);
+const activeCount = Number(countsRes.rows[0]?.active || 0);
+const inactiveCount = Number(countsRes.rows[0]?.inactive || 0);
+---
+
+<AdminLayout
+  title="Services & Pricing"
+  activeSection="services"
+  breadcrumbs={[{ label: 'Services & Pricing' }]}
+>
+  <!-- Toast Notification Container -->
+  <div id="toast" class="hidden fixed bottom-24 right-24 z-50 px-16 py-12 rounded-xl shadow-lg text-xs font-semibold text-white transition-all transform duration-300"></div>
+
+  <!-- Page Header -->
+  <div class="mb-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-16">
+    <div>
+      <h1 class="text-h2 font-heading text-[#0F2238] tracking-tight">HVAC Services &amp; Pricing</h1>
+      <p class="text-sm text-[#64748B] mt-4">
+        Manage service descriptions, diagnostic pricing, and included warranty bullet points.
+      </p>
+    </div>
+
+    <div>
+      <button
+        id="btn-add-service"
+        class="h-40 px-16 inline-flex items-center gap-8 bg-[#E65100] hover:bg-[#CC4400] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow transition-all cursor-pointer"
+      >
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Add New Service
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats & Search Bar -->
+  <div class="bg-white rounded-xl border border-[#E2E8F0] p-16 mb-24 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-16">
+    <div class="flex items-center gap-12 text-xs">
+      <div class="px-12 py-6 rounded-lg bg-slate-100 font-semibold text-[#0F2238]">
+        Total: <span class="font-bold">{totalCount}</span>
+      </div>
+      <div class="px-12 py-6 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">
+        Active: <span class="font-bold">{activeCount}</span>
+      </div>
+      {inactiveCount > 0 && (
+        <div class="px-12 py-6 rounded-lg bg-slate-100 text-slate-600 font-semibold">
+          Draft / Inactive: <span class="font-bold">{inactiveCount}</span>
+        </div>
+      )}
+    </div>
+
+    <!-- Search Form -->
+    <form method="GET" action="/admin/services" class="relative max-w-xs w-full">
+      <input
+        type="text"
+        name="q"
+        value={searchQuery}
+        placeholder="Search services or slug..."
+        class="h-36 w-full pl-36 pr-16 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+      />
+      <div class="absolute inset-y-0 left-0 pl-12 flex items-center pointer-events-none text-[#94A3B8]">
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+    </form>
+  </div>
+
+  <!-- Services Table -->
+  <div class="bg-white rounded-xl border border-[#E2E8F0] shadow-sm overflow-hidden">
+    {services.length === 0 ? (
+      <div class="p-48 text-center">
+        <h3 class="text-sm font-bold text-[#0F2238]">No services found</h3>
+        <p class="text-xs text-[#64748B] mt-4">
+          {searchQuery ? `No services match "${searchQuery}".` : 'Add your first HVAC service to get started.'}
+        </p>
+      </div>
+    ) : (
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-[#E2E8F0] bg-slate-50/75 text-[11px] font-bold text-[#475569] uppercase tracking-wider">
+              <th class="py-14 px-20">Order</th>
+              <th class="py-14 px-20">Service Title &amp; Slug</th>
+              <th class="py-14 px-20">Starting Price</th>
+              <th class="py-14 px-20">Description</th>
+              <th class="py-14 px-20">Features</th>
+              <th class="py-14 px-20">Status</th>
+              <th class="py-14 px-20 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#E2E8F0] text-xs">
+            {services.map((srv) => {
+              const isActive = Number(srv.is_active) === 1;
+              let featuresArr: string[] = [];
+              try {
+                featuresArr = JSON.parse(srv.features_json as string || '[]');
+              } catch (e) {
+                featuresArr = [];
+              }
+
+              return (
+                <tr class="hover:bg-slate-50/50 transition-colors" id={`row-${srv.id}`}>
+                  <!-- Order -->
+                  <td class="py-16 px-20 font-mono text-[#64748B] text-center w-12">
+                    {srv.display_order}
+                  </td>
+
+                  <!-- Title & Slug -->
+                  <td class="py-16 px-20 font-semibold text-[#0F172A] whitespace-nowrap">
+                    <div class="font-bold text-[#0F172A]">{srv.title}</div>
+                    <div class="text-[11px] text-[#64748B] font-mono font-normal mt-2">/services/{srv.slug}</div>
+                  </td>
+
+                  <!-- Price -->
+                  <td class="py-16 px-20 font-bold text-[#0F2238] whitespace-nowrap">
+                    ${Number(srv.starting_price).toFixed(2)}
+                  </td>
+
+                  <!-- Description snippet -->
+                  <td class="py-16 px-20 text-[#475569] max-w-xs md:max-w-sm">
+                    <p class="line-clamp-2 leading-relaxed text-[11.5px]" title={srv.short_desc as string}>
+                      {srv.short_desc}
+                    </p>
+                  </td>
+
+                  <!-- Features count -->
+                  <td class="py-16 px-20 whitespace-nowrap text-[#64748B]">
+                    <span class="inline-flex items-center gap-4 px-8 py-4 rounded bg-slate-100 text-[#334155] text-[11px] font-medium border border-slate-200">
+                      {featuresArr.length} items
+                    </span>
+                  </td>
+
+                  <!-- Status Toggle -->
+                  <td class="py-16 px-20 whitespace-nowrap">
+                    <button
+                      class={`btn-toggle-active inline-flex items-center gap-6 px-10 py-4 rounded-full text-[11px] font-semibold cursor-pointer transition-all border ${
+                        isActive
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                          : 'bg-slate-100 text-slate-600 border-slate-300 hover:bg-slate-200'
+                      }`}
+                      data-id={srv.id}
+                      data-status={isActive ? '1' : '0'}
+                      title={isActive ? 'Click to deactivate' : 'Click to activate'}
+                    >
+                      <span class={`w-6 h-6 rounded-full ${isActive ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
+                      {isActive ? 'Active' : 'Draft'}
+                    </button>
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="py-16 px-20 text-right whitespace-nowrap space-x-8">
+                    <button
+                      class="btn-edit-service px-10 py-6 text-slate-600 hover:text-[#0F2238] hover:bg-slate-100 rounded-md text-xs font-semibold cursor-pointer transition-colors border border-slate-200"
+                      data-id={srv.id}
+                      data-title={srv.title}
+                      data-slug={srv.slug}
+                      data-price={srv.starting_price}
+                      data-short-desc={srv.short_desc}
+                      data-full-desc={srv.full_desc}
+                      data-features={srv.features_json}
+                      data-order={srv.display_order}
+                      data-active={srv.is_active}
+                      data-image-url={srv.image_url || ''}
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      class="btn-delete-service px-10 py-6 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md text-xs font-semibold cursor-pointer transition-colors border border-red-200"
+                      data-id={srv.id}
+                      data-title={srv.title}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+
+  <!-- ADD / EDIT SERVICE MODAL -->
+  <div id="service-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-[#0F2238]/60 backdrop-blur-xs flex items-center justify-center p-16">
+    <div class="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl max-w-xl w-full p-24 relative">
+      <div class="flex items-center justify-between pb-16 border-b border-[#E2E8F0]">
+        <h3 id="modal-title" class="text-base font-bold font-heading text-[#0F2238]">Add New Service</h3>
+        <button id="modal-close" class="text-[#94A3B8] hover:text-[#0F2238] text-lg font-bold cursor-pointer">&times;</button>
+      </div>
+
+      <form id="service-form" class="mt-16 space-y-16">
+        <input type="hidden" id="form-service-id" value="" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-16">
+          <div>
+            <label for="form-title" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+              <span>Service Title *</span>
+              <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="form-title"
+              required
+              placeholder="Enter service title to change..."
+              class="h-40 w-full px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+            />
+          </div>
+
+          <div>
+            <label for="form-slug" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+              <span>URL Slug *</span>
+              <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="form-slug"
+              required
+              placeholder="Enter URL slug to change (e.g. furnace-repair-service)..."
+              class="h-40 w-full px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-16">
+          <div>
+            <label for="form-price" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+              <span>Starting Price ($) *</span>
+              <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+            </label>
+            <input
+              type="number"
+              id="form-price"
+              step="0.01"
+              required
+              placeholder="Enter starting price to change (e.g. 89.00)..."
+              class="h-40 w-full px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+            />
+          </div>
+
+          <div>
+            <label for="form-order" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+              <span>Display Order</span>
+              <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+            </label>
+            <input
+              type="number"
+              id="form-order"
+              value="1"
+              min="1"
+              placeholder="Enter order number to change..."
+              class="h-40 w-full px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="form-short-desc" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+            <span>Short Description (Cards) *</span>
+            <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+          </label>
+          <input
+            type="text"
+            id="form-short-desc"
+            required
+            placeholder="Enter brief card description to change..."
+            class="h-40 w-full px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+          />
+        </div>
+
+        <div>
+          <label for="form-full-desc" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+            <span>Full Service Description</span>
+            <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+          </label>
+          <textarea
+            id="form-full-desc"
+            rows="3"
+            placeholder="Enter detailed description for landing page to change..."
+            class="w-full p-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="form-features" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+            <span>Features / Guarantees (1 per line)</span>
+            <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+          </label>
+          <textarea
+            id="form-features"
+            rows="3"
+            placeholder="Enter features to change (1 per line)...&#10;24/7 Emergency response&#10;NATE-certified technicians"
+            class="w-full p-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100] font-mono"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="form-image-url" class="block text-xs font-semibold text-[#334155] mb-4 flex items-center justify-between">
+            <span>Service Feature Image URL</span>
+            <span class="text-[10px] text-[#E65100] font-normal">Enter to change</span>
+          </label>
+          <div class="flex gap-8">
+            <input
+              type="text"
+              id="form-image-url"
+              placeholder="Enter image URL or choose from library..."
+              class="h-40 flex-1 px-12 text-xs bg-white border border-[#CBD5E1] rounded-lg text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#E65100]"
+            />
+            <a href="/admin/media" target="_blank" class="h-40 px-12 bg-slate-100 hover:bg-slate-200 border border-[#CBD5E1] text-[#0F2238] text-[11px] font-bold rounded-lg inline-flex items-center">
+              Media Library
+            </a>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-[#E2E8F0]">
+          <label class="flex items-center gap-8 cursor-pointer text-xs font-medium text-[#334155]">
+            <input type="checkbox" id="form-active" class="rounded border-[#CBD5E1] text-[#E65100] focus:ring-[#E65100]" checked />
+            Publish service live on website
+          </label>
+        </div>
+
+        <div class="mt-24 flex items-center justify-end gap-12 pt-16 border-t border-[#E2E8F0]">
+          <button
+            type="button"
+            id="form-cancel"
+            class="h-40 px-16 border border-[#CBD5E1] rounded-lg text-xs font-semibold text-[#475569] hover:bg-slate-50 cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            id="form-submit"
+            class="h-40 px-16 bg-[#E65100] hover:bg-[#CC4400] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow cursor-pointer transition-all"
+          >
+            Save Service
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL (MANDATORY PER SKILL) -->
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-[#0F2238]/60 backdrop-blur-xs flex items-center justify-center p-16">
+    <div class="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl max-w-md w-full p-24">
+      <div class="w-40 h-40 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-16">
+        <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </div>
+
+      <h3 class="text-base font-bold font-heading text-[#0F2238]">Confirm Service Deletion</h3>
+      <p class="text-xs text-[#64748B] mt-8 leading-relaxed">
+        Are you sure you want to permanently delete the service <span id="delete-service-title" class="font-bold text-[#0F172A]"></span>?
+        This action cannot be undone and will immediately remove this offering from the public site and admin records.
+      </p>
+
+      <div class="mt-24 flex items-center justify-end gap-12">
+        <button
+          type="button"
+          id="delete-cancel"
+          class="h-40 px-16 border border-[#CBD5E1] rounded-lg text-xs font-semibold text-[#475569] hover:bg-slate-50 cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="delete-confirm"
+          class="h-40 px-16 bg-[#DC2626] hover:bg-[#B91C1C] text-white text-xs font-semibold rounded-lg shadow-sm hover:shadow cursor-pointer transition-all"
+        >
+          Yes, Delete Service
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getCsrfToken(): string {
+      const meta = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement;
+      return meta?.content || (window as any).__CSRF_TOKEN__ || '';
+    }
+
+    function showToast(message: string, isError = false) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.className = `fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold text-white transition-all transform duration-300 ${
+        isError ? 'bg-[#DC2626]' : 'bg-[#0F2238]'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Modal elements
+    const serviceModal = document.getElementById('service-modal') as HTMLElement;
+    const deleteModal = document.getElementById('delete-modal') as HTMLElement;
+    const btnAdd = document.getElementById('btn-add-service');
+    const modalClose = document.getElementById('modal-close');
+    const formCancel = document.getElementById('form-cancel');
+    const deleteCancel = document.getElementById('delete-cancel');
+    const serviceForm = document.getElementById('service-form') as HTMLFormElement;
+    const modalTitle = document.getElementById('modal-title') as HTMLElement;
+
+    // Form inputs
+    const formId = document.getElementById('form-service-id') as HTMLInputElement;
+    const formTitle = document.getElementById('form-title') as HTMLInputElement;
+    const formSlug = document.getElementById('form-slug') as HTMLInputElement;
+    const formPrice = document.getElementById('form-price') as HTMLInputElement;
+    const formOrder = document.getElementById('form-order') as HTMLInputElement;
+    const formShortDesc = document.getElementById('form-short-desc') as HTMLInputElement;
+    const formFullDesc = document.getElementById('form-full-desc') as HTMLTextAreaElement;
+    const formFeatures = document.getElementById('form-features') as HTMLTextAreaElement;
+    const formActive = document.getElementById('form-active') as HTMLInputElement;
+    const formImageUrl = document.getElementById('form-image-url') as HTMLInputElement;
+
+    // Delete state
+    let pendingDeleteId: string | null = null;
+    const deleteServiceTitle = document.getElementById('delete-service-title') as HTMLElement;
+    const deleteConfirm = document.getElementById('delete-confirm');
+
+    // Auto-generate slug from title if empty
+    formTitle?.addEventListener('input', () => {
+      if (!formId.value) {
+        formSlug.value = formTitle.value
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }
+    });
+
+    // Open Add Modal
+    btnAdd?.addEventListener('click', () => {
+      modalTitle.textContent = 'Add New Service';
+      formId.value = '';
+      serviceForm.reset();
+      formActive.checked = true;
+      formOrder.value = '1';
+      if (formImageUrl) formImageUrl.value = '';
+      serviceModal.classList.remove('hidden');
+    });
+
+    // Close Modals
+    modalClose?.addEventListener('click', () => serviceModal.classList.add('hidden'));
+    formCancel?.addEventListener('click', () => serviceModal.classList.add('hidden'));
+    deleteCancel?.addEventListener('click', () => deleteModal.classList.add('hidden'));
+
+    // Edit Service click
+    document.querySelectorAll('.btn-edit-service').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        modalTitle.textContent = 'Edit Service';
+        formId.value = el.dataset.id || '';
+        formTitle.value = el.dataset.title || '';
+        formSlug.value = el.dataset.slug || '';
+        formPrice.value = el.dataset.price || '0';
+        formOrder.value = el.dataset.order || '1';
+        formShortDesc.value = el.dataset.shortDesc || '';
+        formFullDesc.value = el.dataset.fullDesc || '';
+        if (formImageUrl) formImageUrl.value = el.dataset.imageUrl || '';
+
+        try {
+          const arr = JSON.parse(el.dataset.features || '[]');
+          formFeatures.value = Array.isArray(arr) ? arr.join('\n') : '';
+        } catch (e) {
+          formFeatures.value = '';
+        }
+
+        formActive.checked = el.dataset.active === '1';
+        serviceModal.classList.remove('hidden');
+      });
+    });
+
+    // Save Form (Create or Update)
+    serviceForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = formId.value;
+      const isEdit = !!id;
+
+      const features = formFeatures.value
+        .split('\n')
+        .map(f => f.trim())
+        .filter(Boolean);
+
+      const payload = {
+        title: formTitle.value,
+        slug: formSlug.value,
+        starting_price: Number(formPrice.value),
+        display_order: Number(formOrder.value),
+        short_desc: formShortDesc.value,
+        full_desc: formFullDesc.value,
+        features,
+        image_url: formImageUrl?.value || '/images/hero-technician-ac.jpg',
+        is_active: formActive.checked ? 1 : 0
+      };
+
+      try {
+        const url = isEdit ? `/api/admin/services/${id}` : '/api/admin/services';
+        const method = isEdit ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': getCsrfToken()
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          showToast(isEdit ? 'Service updated successfully.' : 'Service created successfully.');
+          serviceModal.classList.add('hidden');
+          setTimeout(() => window.location.reload(), 600);
+        } else {
+          showToast(data.error || 'Operation failed', true);
+        }
+      } catch (err: any) {
+        showToast('Network error: ' + err.message, true);
+      }
+    });
+
+    // Delete Trigger
+    document.querySelectorAll('.btn-delete-service').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        pendingDeleteId = el.dataset.id || null;
+        deleteServiceTitle.textContent = `"${el.dataset.title || 'this service'}"`;
+        deleteModal.classList.remove('hidden');
+      });
+    });
+
+    // Delete Confirm
+    deleteConfirm?.addEventListener('click', async () => {
+      if (!pendingDeleteId) return;
+
+      try {
+        const res = await fetch(`/api/admin/services/${pendingDeleteId}`, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-Token': getCsrfToken()
+          }
+        });
+
+        if (res.ok) {
+          showToast('Service permanently deleted.');
+          deleteModal.classList.add('hidden');
+          const row = document.getElementById(`row-${pendingDeleteId}`);
+          row?.remove();
+        } else {
+          const data = await res.json();
+          showToast(data.error || 'Failed to delete service', true);
+        }
+      } catch (err: any) {
+        showToast('Error: ' + err.message, true);
+      }
+    });
+
+    // Quick inline Active Toggle
+    document.querySelectorAll('.btn-toggle-active').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const el = btn as HTMLElement;
+        const id = el.dataset.id;
+        const current = el.dataset.status === '1';
+        const newStatus = !current;
+
+        try {
+          const res = await fetch(`/api/admin/services/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': getCsrfToken()
+            },
+            body: JSON.stringify({ is_active: newStatus ? 1 : 0 })
+          });
+
+          if (res.ok) {
+            showToast(newStatus ? 'Service activated.' : 'Service moved to draft.');
+            setTimeout(() => window.location.reload(), 400);
+          } else {
+            showToast('Failed to update status', true);
+          }
+        } catch (e: any) {
+          showToast('Error: ' + e.message, true);
+        }
+      });
+    });
+  </script>
+</AdminLayout>
+

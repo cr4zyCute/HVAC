@@ -1,0 +1,510 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import siteConfig from '@/data/siteConfig.json';
+
+const { company, booking } = siteConfig;
+---
+
+<Layout 
+  title={`Schedule HVAC Service Online — ${company.name}`} 
+  description="Book your heating, cooling, or seasonal tune-up service online in under 2 minutes. Transparent flat-rate pricing and guaranteed arrival windows."
+>
+  <section class="py-40 lg:py-64 bg-neutral-surface min-h-[calc(100vh-140px)] flex items-center">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-32 lg:gap-48 items-start">
+        
+        <!-- LEFT COLUMN: Headline, Trust Signals, Direct Hotline -->
+        <div class="lg:col-span-5 space-y-24">
+          <div class="space-y-12">
+            <Badge variant="info">{booking.badge}</Badge>
+            <h1 class="text-h1 font-heading font-extrabold text-brand-primary leading-tight">
+              {booking.heroTitle}
+            </h1>
+            <p class="text-body text-text-secondary leading-relaxed">
+              {booking.heroSubtitle}
+            </p>
+          </div>
+
+          <!-- Trust Badges List -->
+          <div class="space-y-12 bg-neutral-bg p-24 rounded-lg border border-neutral-border shadow-sm">
+            <h3 class="text-caption font-bold uppercase tracking-wider text-brand-primary">{booking.guaranteeTitle}</h3>
+            <ul class="space-y-12 text-small text-text-secondary">
+              {booking.guarantees.map((item) => (
+                <li class="flex items-start gap-10">
+                  <Icon name="check" size={18} class="text-emerald-600 mt-2 shrink-0" />
+                  <span><strong>{item.title}</strong> — {item.description}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Emergency Hotline Card -->
+          <div class="p-20 bg-red-50 border-2 border-red-200 rounded-lg flex items-center justify-between gap-16 shadow-sm">
+            <div>
+              <span class="text-caption font-bold uppercase tracking-wider text-red-700 block">{booking.emergencyHotlineTitle}</span>
+              <a href={`tel:${company.phoneRaw}`} class="text-h3 font-heading font-bold text-red-600 hover:text-red-700 block mt-2">
+                {company.phone}
+              </a>
+              <span class="text-[11px] text-red-900/70 block mt-2">{booking.emergencyHotlineSubtitle}</span>
+            </div>
+            <div class="w-40 h-40 rounded-full bg-red-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Icon name="phone" size={18} />
+            </div>
+          </div>
+
+          <!-- Social Proof Snippet -->
+          <div class="flex items-center gap-12 text-caption text-text-muted pt-4">
+            <div class="flex text-amber-500">
+              <Icon name="star" size={16} />
+              <Icon name="star" size={16} />
+              <Icon name="star" size={16} />
+              <Icon name="star" size={16} />
+              <Icon name="star" size={16} />
+            </div>
+            <span><strong>{company.ratingScore} Rating</strong> {company.ratingSummary}</span>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Multi-Step Interactive Form -->
+        <div class="lg:col-span-7">
+          <!-- Stepper Progress Header -->
+          <div class="mb-24">
+            <div class="grid grid-cols-3 gap-8 text-center text-small font-bold">
+              <div id="step-tab-1" class="border-b-4 border-brand-primary pb-8 text-brand-primary">
+                1. Service &amp; Urgency
+              </div>
+              <div id="step-tab-2" class="border-b-4 border-neutral-border pb-8 text-text-muted">
+                2. Date &amp; Window
+              </div>
+              <div id="step-tab-3" class="border-b-4 border-neutral-border pb-8 text-text-muted">
+                3. Address &amp; Info
+              </div>
+            </div>
+          </div>
+
+          <!-- Booking Card Container -->
+          <div class="bg-neutral-bg border border-neutral-border rounded-xl p-24 sm:p-36 shadow-md">
+            <!-- STEP 1: Service & Urgency -->
+            <div id="step-pane-1" class="space-y-28">
+              <div>
+                <h2 class="text-h2 font-heading font-bold text-brand-primary mb-6">What do you need help with?</h2>
+                <p class="text-small text-text-secondary">Choose the primary reason for your visit:</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-16" id="service-options">
+                <label class="service-radio flex items-start gap-12 p-16 sm:p-20 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary transition-colors">
+                  <input type="radio" name="service" value="air-conditioning-repair" class="mt-4 accent-brand-primary" checked />
+                  <div>
+                    <strong class="block text-body text-brand-primary font-bold">Air Conditioning Repair</strong>
+                    <span class="text-caption text-text-muted">Blowing warm air, strange noises, or leaking water</span>
+                  </div>
+                </label>
+
+                <label class="service-radio flex items-start gap-12 p-16 sm:p-20 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary transition-colors">
+                  <input type="radio" name="service" value="furnace-heating-repair" class="mt-4 accent-brand-primary" />
+                  <div>
+                    <strong class="block text-body text-brand-primary font-bold">Furnace &amp; Heating Fix</strong>
+                    <span class="text-caption text-text-muted">No heat, clicking igniter, or safety shutoff</span>
+                  </div>
+                </label>
+
+                <label class="service-radio flex items-start gap-12 p-16 sm:p-20 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary transition-colors">
+                  <input type="radio" name="service" value="seasonal-tune-up" class="mt-4 accent-brand-primary" />
+                  <div>
+                    <strong class="block text-body text-brand-primary font-bold">24-Point Annual Tune-Up</strong>
+                    <span class="text-caption text-text-muted">Preventive maintenance, coil cleaning, and inspection</span>
+                  </div>
+                </label>
+
+                <label class="service-radio flex items-start gap-12 p-16 sm:p-20 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary transition-colors">
+                  <input type="radio" name="service" value="emergency-hvac" class="mt-4 accent-brand-primary" />
+                  <div>
+                    <strong class="block text-body text-brand-primary font-bold text-red-600">Emergency Dispatch</strong>
+                    <span class="text-caption text-text-muted">Priority response for extreme temperatures</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="space-y-12 pt-16 border-t border-neutral-border">
+                <label class="block text-small font-heading font-bold text-brand-primary">How urgently do you need service?</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-12">
+                  <label class="flex items-center gap-8 p-12 bg-neutral-surface border border-neutral-border rounded-md cursor-pointer hover:border-brand-primary">
+                    <input type="radio" name="urgency" value="emergency" class="accent-brand-primary" />
+                    <span class="text-small font-semibold text-brand-primary">Today / Urgent</span>
+                  </label>
+                  <label class="flex items-center gap-8 p-12 bg-neutral-surface border border-neutral-border rounded-md cursor-pointer hover:border-brand-primary">
+                    <input type="radio" name="urgency" value="24h" class="accent-brand-primary" checked />
+                    <span class="text-small font-semibold text-brand-primary">Within 24 Hours</span>
+                  </label>
+                  <label class="flex items-center gap-8 p-12 bg-neutral-surface border border-neutral-border rounded-md cursor-pointer hover:border-brand-primary">
+                    <input type="radio" name="urgency" value="flexible" class="accent-brand-primary" />
+                    <span class="text-small font-semibold text-brand-primary">Flexible (This Week)</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="flex justify-end pt-16">
+                <button 
+                  id="to-step-2-btn" 
+                  type="button"
+                  class="px-32 py-14 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors text-small flex items-center gap-8 shadow-sm"
+                >
+                  <span>Next: Choose Time Window</span>
+                  <Icon name="arrow-right" size={16} />
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Date & Window -->
+            <div id="step-pane-2" class="hidden space-y-28">
+              <div>
+                <h2 class="text-h2 font-heading font-bold text-brand-primary mb-6">Select Your Arrival Window</h2>
+                <p class="text-small text-text-secondary">We offer tight 2-hour arrival windows with a 20-minute call-ahead.</p>
+              </div>
+
+              <div class="space-y-16">
+                <div>
+                  <label for="book-date" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                    Preferred Date:
+                  </label>
+                  <input 
+                    type="date" 
+                    id="book-date" 
+                    class="w-full sm:w-64 px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                  />
+                </div>
+
+                <div class="space-y-12">
+                  <span class="block text-small font-heading font-bold text-brand-primary">Available Arrival Windows:</span>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-16">
+                    <label class="flex flex-col p-16 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary">
+                      <div class="flex items-center justify-between mb-8">
+                        <input type="radio" name="slot" value="Morning: 8:00 AM - 12:00 PM" class="accent-brand-primary" checked />
+                        <span class="text-caption font-bold text-emerald-700 bg-emerald-50 px-6 py-2 rounded">Open</span>
+                      </div>
+                      <strong class="text-body font-bold text-brand-primary">Morning Window</strong>
+                      <span class="text-caption text-text-muted mt-2">8:00 AM – 12:00 PM</span>
+                    </label>
+
+                    <label class="flex flex-col p-16 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary">
+                      <div class="flex items-center justify-between mb-8">
+                        <input type="radio" name="slot" value="Afternoon: 12:00 PM - 4:00 PM" class="accent-brand-primary" />
+                        <span class="text-caption font-bold text-emerald-700 bg-emerald-50 px-6 py-2 rounded">Open</span>
+                      </div>
+                      <strong class="text-body font-bold text-brand-primary">Afternoon Window</strong>
+                      <span class="text-caption text-text-muted mt-2">12:00 PM – 4:00 PM</span>
+                    </label>
+
+                    <label class="flex flex-col p-16 bg-neutral-surface border border-neutral-border rounded-lg cursor-pointer hover:border-brand-primary">
+                      <div class="flex items-center justify-between mb-8">
+                        <input type="radio" name="slot" value="Evening: 4:00 PM - 8:00 PM" class="accent-brand-primary" />
+                        <span class="text-caption font-bold text-emerald-700 bg-emerald-50 px-6 py-2 rounded">Open</span>
+                      </div>
+                      <strong class="text-body font-bold text-brand-primary">Evening Window</strong>
+                      <span class="text-caption text-text-muted mt-2">4:00 PM – 8:00 PM</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-16 border-t border-neutral-border">
+                <button 
+                  id="back-to-step-1-btn" 
+                  type="button"
+                  class="px-24 py-12 border border-neutral-border text-brand-primary font-bold rounded-md hover:bg-neutral-surface transition-colors text-small"
+                >
+                  &larr; Back
+                </button>
+                <button 
+                  id="to-step-3-btn" 
+                  type="button"
+                  class="px-32 py-14 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors text-small flex items-center gap-8 shadow-sm"
+                >
+                  <span>Next: Property &amp; Contact Info</span>
+                  <Icon name="arrow-right" size={16} />
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 3: Contact & Address -->
+            <form id="booking-final-form" class="hidden space-y-28">
+              <div>
+                <h2 class="text-h2 font-heading font-bold text-brand-primary mb-6">Property &amp; Contact Information</h2>
+                <p class="text-small text-text-secondary">Where should our technician dispatch to?</p>
+              </div>
+
+              <div class="space-y-16">
+                <!-- Anti-Spam Honeypot (hidden from real humans, traps bots) -->
+                <div class="hidden" aria-hidden="true" style="display:none !important; visibility:hidden;">
+                  <label for="hp_field">Leave this empty</label>
+                  <input type="text" name="hp_website_company_fax" id="hp_field" tabindex="-1" autocomplete="off" />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-16">
+                  <div>
+                    <label for="book-name" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                      First &amp; Last Name *
+                    </label>
+                    <input 
+                      type="text" 
+                      id="book-name" 
+                      required
+                      placeholder="e.g. Jordan Mitchell" 
+                      class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="book-phone" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                      Mobile Phone Number *
+                    </label>
+                    <input 
+                      type="tel" 
+                      id="book-phone" 
+                      required
+                      placeholder="e.g. (555) 987-6543" 
+                      class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-16">
+                  <div>
+                    <label for="book-email" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                      Email Address *
+                    </label>
+                    <input 
+                      type="email" 
+                      id="book-email" 
+                      required
+                      placeholder="e.g. jordan@example.com" 
+                      class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="book-address" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                      Service Street Address *
+                    </label>
+                    <input 
+                      type="text" 
+                      id="book-address" 
+                      required
+                      placeholder="e.g. 742 Evergreen Terrace" 
+                      class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-16">
+                  <div>
+                    <label for="book-city" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                      City *
+                    </label>
+                    <input 
+                      type="text" 
+                      id="book-city" 
+                      required
+                      value="Minneapolis" 
+                      class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="book-zip" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                      Zip Code *
+                    </label>
+                    <input 
+                      type="text" 
+                      id="book-zip" 
+                      required
+                      value="55401" 
+                      class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="book-notes" class="block text-small font-heading font-bold text-brand-primary mb-6">
+                    Issue Details &amp; Equipment Location (Optional)
+                  </label>
+                  <textarea 
+                    id="book-notes" 
+                    rows="3" 
+                    placeholder="e.g. AC making loud buzzing noise, unit is located in the backyard on the west side..."
+                    class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-surface focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="flex justify-between pt-16 border-t border-neutral-border">
+                <button 
+                  id="back-to-step-2-btn" 
+                  type="button"
+                  class="px-24 py-12 border border-neutral-border text-brand-primary font-bold rounded-md hover:bg-neutral-surface transition-colors text-small"
+                >
+                  &larr; Back
+                </button>
+                <button 
+                  type="submit"
+                  class="px-32 py-14 bg-brand-accent text-white font-bold rounded-md hover:bg-brand-accent-hover transition-colors text-small flex items-center gap-8 shadow-sm"
+                >
+                  <span>Confirm &amp; Book Dispatch</span>
+                  <Icon name="check" size={16} />
+                </button>
+              </div>
+            </form>
+
+            <!-- STEP 4: Confirmation Receipt -->
+            <div id="step-pane-4" class="hidden text-center py-20 space-y-24">
+              <div class="w-64 h-64 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+                <Icon name="check" size={32} />
+              </div>
+
+              <div class="space-y-8">
+                <span class="text-caption font-bold text-emerald-700 uppercase tracking-widest">Appointment Confirmed</span>
+                <h2 class="text-h2 font-heading font-extrabold text-brand-primary">Dispatch Request Received!</h2>
+                <p class="text-body text-text-secondary max-w-lg mx-auto">
+                  A certified NorthStar HVAC technician has been scheduled. You will receive an SMS and email notification 20 minutes before our arrival.
+                </p>
+              </div>
+
+              <div class="bg-neutral-surface border border-neutral-border rounded-lg p-20 max-w-md mx-auto text-left space-y-12 text-small">
+                <div class="flex justify-between border-b border-neutral-border pb-8">
+                  <span class="text-text-muted">Booking Reference:</span>
+                  <strong class="font-mono text-brand-primary" id="confirm-ref">#NS-2026-8492</strong>
+                </div>
+                <div class="flex justify-between border-b border-neutral-border pb-8">
+                  <span class="text-text-muted">Selected Service:</span>
+                  <strong class="text-brand-primary" id="confirm-service">Air Conditioning Repair</strong>
+                </div>
+                <div class="flex justify-between border-b border-neutral-border pb-8">
+                  <span class="text-text-muted">Arrival Window:</span>
+                  <strong class="text-brand-primary" id="confirm-window">Morning (8:00 AM – 12:00 PM)</strong>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-text-muted">Contact Person:</span>
+                  <strong class="text-brand-primary" id="confirm-contact">Jordan Mitchell</strong>
+                </div>
+              </div>
+
+              <div class="pt-8">
+                <Button href="/" variant="primary" size="md">
+                  Return to Homepage
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Prefill service if URL query param exists
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('service');
+    if (serviceParam) {
+      const matchRadio = document.querySelector(`input[name="service"][value="${serviceParam}"]`) as HTMLInputElement | null;
+      if (matchRadio) matchRadio.checked = true;
+    }
+
+    // Set default date to tomorrow
+    const dateInput = document.getElementById('book-date') as HTMLInputElement | null;
+    if (dateInput) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      dateInput.value = tomorrow.toISOString().split('T')[0];
+    }
+
+    // Stepper Panes
+    const p1 = document.getElementById('step-pane-1');
+    const p2 = document.getElementById('step-pane-2');
+    const p3 = document.getElementById('booking-final-form') as HTMLFormElement | null;
+    const p4 = document.getElementById('step-pane-4');
+
+    const tab1 = document.getElementById('step-tab-1');
+    const tab2 = document.getElementById('step-tab-2');
+    const tab3 = document.getElementById('step-tab-3');
+
+    document.getElementById('to-step-2-btn')?.addEventListener('click', () => {
+      p1?.classList.add('hidden');
+      p2?.classList.remove('hidden');
+      if (tab2) tab2.className = "border-b-4 border-brand-primary pb-8 text-brand-primary";
+    });
+
+    document.getElementById('back-to-step-1-btn')?.addEventListener('click', () => {
+      p2?.classList.add('hidden');
+      p1?.classList.remove('hidden');
+      if (tab2) tab2.className = "border-b-4 border-neutral-border pb-8 text-text-muted";
+    });
+
+    document.getElementById('to-step-3-btn')?.addEventListener('click', () => {
+      p2?.classList.add('hidden');
+      p3?.classList.remove('hidden');
+      if (tab3) tab3.className = "border-b-4 border-brand-primary pb-8 text-brand-primary";
+    });
+
+    document.getElementById('back-to-step-2-btn')?.addEventListener('click', () => {
+      p3?.classList.add('hidden');
+      p2?.classList.remove('hidden');
+      if (tab3) tab3.className = "border-b-4 border-neutral-border pb-8 text-text-muted";
+    });
+
+    p3?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const serviceRadio = document.querySelector('input[name="service"]:checked') as HTMLInputElement | null;
+      const serviceVal = serviceRadio?.value || 'General HVAC Service';
+      const slotRadio = document.querySelector('input[name="slot"]:checked') as HTMLInputElement | null;
+      const slotVal = slotRadio?.value || 'Morning Window (8:00 AM – 12:00 PM)';
+      const nameInput = document.getElementById('book-name') as HTMLInputElement | null;
+      const nameVal = nameInput?.value || 'Homeowner';
+      const emailInput = document.getElementById('book-email') as HTMLInputElement | null;
+      const phoneInput = document.getElementById('book-phone') as HTMLInputElement | null;
+      const dateInput = document.getElementById('book-date') as HTMLInputElement | null;
+      const notesInput = document.getElementById('book-notes') as HTMLTextAreaElement | null;
+
+      const hpInput = document.getElementById('hp_field') as HTMLInputElement | null;
+
+      const payload = {
+        customer_name: nameVal,
+        customer_email: emailInput?.value || '',
+        customer_phone: phoneInput?.value || '',
+        service_requested: serviceVal.replace(/-/g, ' ').toUpperCase(),
+        preferred_date: dateInput?.value || 'Tomorrow',
+        preferred_time: slotVal,
+        urgency: serviceVal.toLowerCase().includes('emergency') ? 'emergency' : 'standard',
+        message: notesInput?.value || '',
+        hp_website_company_fax: hpInput?.value || ''
+      };
+
+      try {
+        await fetch('/api/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (err) {
+        console.error('Failed to submit booking to server:', err);
+      }
+
+      const randId = Math.floor(1000 + Math.random() * 9000);
+      const refEl = document.getElementById('confirm-ref');
+      const serviceEl = document.getElementById('confirm-service');
+      const windowEl = document.getElementById('confirm-window');
+      const contactEl = document.getElementById('confirm-contact');
+
+      if (refEl) refEl.textContent = `#NS-2026-${randId}`;
+      if (serviceEl) serviceEl.textContent = serviceVal.replace(/-/g, ' ').toUpperCase();
+      if (windowEl) windowEl.textContent = slotVal;
+      if (contactEl) contactEl.textContent = nameVal;
+
+      p3?.classList.add('hidden');
+      p4?.classList.remove('hidden');
+    });
+  </script>
+</Layout>

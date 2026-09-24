@@ -1,0 +1,439 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+import { db, ensureDbInitialized } from '@/lib/db';
+
+await ensureDbInitialized();
+
+const url = new URL(Astro.request.url);
+const searchQuery = url.searchParams.get('q')?.trim() || '';
+
+let sql = 'SELECT * FROM media';
+const args: any[] = [];
+
+if (searchQuery) {
+  sql += ' WHERE file_name LIKE ? OR alt_text LIKE ?';
+  const term = `%${searchQuery}%`;
+  args.push(term, term);
+}
+
+sql += ' ORDER BY created_at DESC';
+
+const mediaRes = await db.execute({ sql, args });
+const mediaItems = mediaRes.rows;
+
+function formatBytes(bytes: number) {
+  if (!bytes || bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+---
+
+<AdminLayout
+  title="Media Library"
+  activeSection="media"
+  breadcrumbs={[{ label: 'Media Library' }]}
+>
+  <!-- Toast Notification Container -->
+  <div id="toast" class="hidden fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-lg text-small font-semibold text-white transition-all transform duration-300"></div>
+
+  <!-- Page Header -->
+  <div class="mb-32 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-16">
+    <div>
+      <h1 class="text-h2 font-heading font-extrabold text-brand-primary tracking-tight">Media Library</h1>
+      <p class="text-small text-text-muted mt-4">
+        Upload, preview, replace, and organize image assets for your public website and CMS sections.
+      </p>
+    </div>
+
+    <div>
+      <button
+        id="btn-trigger-upload"
+        class="inline-flex items-center gap-8 h-40 px-16 bg-brand-accent hover:bg-brand-accent-hover text-white text-small font-semibold rounded-md shadow-sm hover:shadow transition-all cursor-pointer"
+      >
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        </svg>
+        Upload New Image
+      </button>
+    </div>
+  </div>
+
+  <!-- Drag & Drop Upload Panel (Collapsible / Toggleable) -->
+  <div id="upload-panel" class="hidden mb-32 bg-neutral-surface border-2 border-dashed border-brand-accent/40 rounded-lg p-32 text-center transition-all bg-amber-50/20">
+    <div class="max-w-md mx-auto">
+      <div class="w-48 h-48 rounded-full bg-brand-accent/10 text-brand-accent mx-auto flex items-center justify-center mb-16">
+        <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+      </div>
+      <h3 class="text-body font-heading font-bold text-brand-primary">Upload Website Image</h3>
+      <p class="text-caption text-text-muted mt-4 mb-16">Drag &amp; drop an image file here, or click to browse. Max size 10MB (JPG, PNG, WEBP, SVG).</p>
+
+      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif" class="hidden" />
+
+      <div class="space-y-12">
+        <input
+          type="text"
+          id="alt-text-input"
+          placeholder="Enter descriptive alt text for SEO &amp; accessibility to change (optional)..."
+          class="w-full h-40 px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary"
+        />
+
+        <div class="flex items-center justify-center gap-12 pt-8">
+          <button
+            type="button"
+            id="btn-select-file"
+            class="h-36 px-16 bg-brand-primary hover:bg-brand-secondary text-white text-caption font-semibold rounded-md transition-all cursor-pointer"
+          >
+            Select File
+          </button>
+          <button
+            type="button"
+            id="btn-cancel-upload"
+            class="h-36 px-16 border border-neutral-border bg-neutral-surface hover:bg-neutral-surface-alt text-text-secondary text-caption font-semibold rounded-md transition-all cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div id="upload-status" class="hidden mt-16 text-caption font-semibold"></div>
+    </div>
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="bg-neutral-surface rounded-lg border border-neutral-border p-16 mb-24 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-16">
+    <div class="flex items-center gap-12 text-small">
+      <span class="font-bold text-brand-primary font-heading">Total Assets: {mediaItems.length}</span>
+    </div>
+
+    <form method="GET" class="relative w-full sm:w-80">
+      <input
+        type="text"
+        name="q"
+        value={searchQuery}
+        placeholder="Enter filename or keyword to search media..."
+        class="w-full h-36 pl-36 pr-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary"
+      />
+      <svg class="w-16 h-16 text-text-muted absolute left-12 top-10 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      {searchQuery && (
+        <a href="/admin/media" class="absolute right-10 top-8 text-caption text-text-muted hover:text-brand-primary font-bold">Clear</a>
+      )}
+    </form>
+  </div>
+
+  <!-- Media Items Grid -->
+  {mediaItems.length === 0 ? (
+    <div class="bg-neutral-surface rounded-lg border border-neutral-border p-48 text-center">
+      <div class="w-48 h-48 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-16">
+        <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <h3 class="text-body font-heading font-bold text-brand-primary">No Media Found</h3>
+      <p class="text-small text-text-muted mt-4">
+        {searchQuery ? `No images matching "${searchQuery}"` : 'Upload your first image to begin building your media library.'}
+      </p>
+    </div>
+  ) : (
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-20">
+      {mediaItems.map(item => (
+        <div class="bg-neutral-surface rounded-lg border border-neutral-border overflow-hidden shadow-sm hover:shadow transition-shadow flex flex-col group">
+          <!-- Thumbnail preview container with aspect ratio -->
+          <div class="relative h-180 bg-slate-100 flex items-center justify-center overflow-hidden border-b border-neutral-border">
+            <img
+              src={item.url as string}
+              alt={(item.alt_text as string) || (item.file_name as string)}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              onerror="this.src='/images/hero_opt.jpg';"
+            />
+            <button
+              class="btn-preview absolute inset-0 bg-brand-primary/40 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center gap-6 text-caption font-semibold transition-opacity backdrop-blur-[2px]"
+              data-url={item.url as string}
+              data-name={item.file_name as string}
+              data-alt={(item.alt_text as string) || ''}
+            >
+              <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              View Full
+            </button>
+          </div>
+
+          <!-- Metadata & Actions -->
+          <div class="p-16 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-caption font-bold text-brand-primary truncate" title={item.file_name as string}>
+                {item.file_name}
+              </div>
+              <div class="text-[11px] text-text-muted mt-2 flex items-center justify-between">
+                <span>{formatBytes(Number(item.file_size))}</span>
+                <span class="uppercase tracking-wider font-mono text-[10px] bg-slate-100 px-6 py-1 rounded">
+                  {((item.mime_type as string) || '').split('/')[1] || 'IMAGE'}
+                </span>
+              </div>
+              <p class="text-[11px] text-text-secondary mt-6 line-clamp-1 italic" title={(item.alt_text as string) || 'No alt text'}>
+                {item.alt_text ? `"${item.alt_text}"` : 'No alt text set'}
+              </p>
+            </div>
+
+            <div class="pt-12 mt-12 border-t border-neutral-border flex items-center justify-between gap-8">
+              <button
+                class="btn-copy-url flex-1 h-32 px-8 bg-neutral-surface-alt hover:bg-slate-200 text-brand-primary text-[11px] font-semibold rounded transition-colors inline-flex items-center justify-center gap-4 cursor-pointer"
+                data-url={item.url as string}
+                title="Copy relative URL to clipboard"
+              >
+                <svg class="w-12 h-12 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy URL
+              </button>
+
+              <button
+                class="btn-delete-media w-32 h-32 text-text-muted hover:text-brand-emergency hover:bg-red-50 rounded flex items-center justify-center transition-colors cursor-pointer"
+                data-id={item.id as string}
+                data-name={item.file_name as string}
+                title="Delete image"
+              >
+                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Lightbox Preview Modal -->
+  <div id="preview-modal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-20 backdrop-blur-sm">
+    <div class="bg-neutral-surface rounded-lg max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+      <div class="p-16 border-b border-neutral-border flex items-center justify-between">
+        <h3 id="modal-img-title" class="text-small font-heading font-bold text-brand-primary truncate"></h3>
+        <button id="modal-close" class="text-text-muted hover:text-brand-primary p-4 rounded-md">✕</button>
+      </div>
+      <div class="p-20 bg-slate-950 flex items-center justify-center overflow-auto max-h-[60vh]">
+        <img id="modal-img" src="" alt="" class="max-h-[55vh] object-contain rounded" />
+      </div>
+      <div class="p-16 bg-neutral-surface flex items-center justify-between gap-16">
+        <div class="truncate text-caption text-text-muted">
+          URL: <code id="modal-img-url" class="font-mono text-brand-primary bg-slate-100 px-8 py-4 rounded select-all"></code>
+        </div>
+        <button id="modal-copy-btn" class="h-32 px-12 bg-brand-accent hover:bg-brand-accent-hover text-white text-caption font-semibold rounded">
+          Copy URL
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-20 backdrop-blur-sm">
+    <div class="bg-neutral-surface rounded-lg max-w-md w-full p-24 shadow-2xl border border-neutral-border">
+      <div class="w-40 h-40 rounded-full bg-red-100 text-brand-emergency flex items-center justify-center mb-16">
+        <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <h3 class="text-body font-heading font-bold text-brand-primary">Delete Media Asset?</h3>
+      <p class="text-small text-text-muted mt-6">
+        Are you sure you want to delete <span id="delete-item-name" class="font-bold text-text-primary"></span>?
+        If this image is used on the public website, it will no longer display.
+      </p>
+
+      <div class="mt-24 flex items-center justify-end gap-12">
+        <button id="btn-cancel-delete" class="h-36 px-16 border border-neutral-border rounded-md text-small font-semibold text-text-secondary hover:bg-neutral-surface-alt">
+          Cancel
+        </button>
+        <button id="btn-confirm-delete" class="h-36 px-16 bg-brand-emergency hover:bg-brand-emergency-hover text-white text-small font-semibold rounded-md shadow-sm">
+          Delete Image
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const csrfToken = (window as any).__CSRF_TOKEN__ || '';
+
+    function showToast(message: string, isError = false) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.className = `fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-lg text-small font-semibold text-white transition-all transform duration-300 ${
+        isError ? 'bg-brand-emergency' : 'bg-feedback-success'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Upload Panel Toggle
+    const btnTriggerUpload = document.getElementById('btn-trigger-upload');
+    const uploadPanel = document.getElementById('upload-panel');
+    const btnCancelUpload = document.getElementById('btn-cancel-upload');
+    const btnSelectFile = document.getElementById('btn-select-file');
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    const altTextInput = document.getElementById('alt-text-input') as HTMLInputElement;
+    const uploadStatus = document.getElementById('upload-status');
+
+    btnTriggerUpload?.addEventListener('click', () => {
+      uploadPanel?.classList.toggle('hidden');
+    });
+
+    btnCancelUpload?.addEventListener('click', () => {
+      uploadPanel?.classList.add('hidden');
+      if (fileInput) fileInput.value = '';
+      if (altTextInput) altTextInput.value = '';
+      if (uploadStatus) uploadStatus.classList.add('hidden');
+    });
+
+    btnSelectFile?.addEventListener('click', () => {
+      fileInput?.click();
+    });
+
+    fileInput?.addEventListener('change', async () => {
+      const file = fileInput.files?.[0];
+      if (!file) return;
+
+      if (uploadStatus) {
+        uploadStatus.className = 'mt-16 text-caption font-semibold text-brand-primary';
+        uploadStatus.textContent = `Uploading ${file.name}...`;
+        uploadStatus.classList.remove('hidden');
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('alt_text', altTextInput?.value || '');
+
+      try {
+        const res = await fetch('/api/admin/media', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          },
+          body: formData
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Upload failed');
+        }
+
+        showToast('Image uploaded successfully!');
+        setTimeout(() => window.location.reload(), 1000);
+      } catch (err: any) {
+        if (uploadStatus) {
+          uploadStatus.className = 'mt-16 text-caption font-semibold text-brand-emergency';
+          uploadStatus.textContent = err.message;
+        }
+        showToast(err.message, true);
+      }
+    });
+
+    // Copy URL Buttons
+    document.querySelectorAll('.btn-copy-url').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = (btn as HTMLElement).dataset.url || '';
+        navigator.clipboard.writeText(url).then(() => {
+          showToast(`Copied ${url} to clipboard!`);
+        });
+      });
+    });
+
+    // Lightbox Modal
+    const previewModal = document.getElementById('preview-modal');
+    const modalImg = document.getElementById('modal-img') as HTMLImageElement;
+    const modalTitle = document.getElementById('modal-img-title');
+    const modalUrl = document.getElementById('modal-img-url');
+    const modalClose = document.getElementById('modal-close');
+    const modalCopyBtn = document.getElementById('modal-copy-btn');
+
+    document.querySelectorAll('.btn-preview').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        const url = el.dataset.url || '';
+        const name = el.dataset.name || '';
+        if (modalImg) modalImg.src = url;
+        if (modalTitle) modalTitle.textContent = name;
+        if (modalUrl) modalUrl.textContent = url;
+        previewModal?.classList.remove('hidden');
+      });
+    });
+
+    modalClose?.addEventListener('click', () => {
+      previewModal?.classList.add('hidden');
+    });
+
+    previewModal?.addEventListener('click', (e) => {
+      if (e.target === previewModal) previewModal.classList.add('hidden');
+    });
+
+    modalCopyBtn?.addEventListener('click', () => {
+      if (modalUrl?.textContent) {
+        navigator.clipboard.writeText(modalUrl.textContent).then(() => {
+          showToast('Image URL copied to clipboard!');
+        });
+      }
+    });
+
+    // Delete Media Modal
+    const deleteModal = document.getElementById('delete-modal');
+    const deleteItemName = document.getElementById('delete-item-name');
+    const btnCancelDelete = document.getElementById('btn-cancel-delete');
+    const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+    let mediaToDeleteId = '';
+
+    document.querySelectorAll('.btn-delete-media').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        mediaToDeleteId = el.dataset.id || '';
+        if (deleteItemName) deleteItemName.textContent = el.dataset.name || 'this image';
+        deleteModal?.classList.remove('hidden');
+      });
+    });
+
+    btnCancelDelete?.addEventListener('click', () => {
+      deleteModal?.classList.add('hidden');
+      mediaToDeleteId = '';
+    });
+
+    btnConfirmDelete?.addEventListener('click', async () => {
+      if (!mediaToDeleteId) return;
+
+      if (btnConfirmDelete) {
+        btnConfirmDelete.textContent = 'Deleting...';
+        (btnConfirmDelete as HTMLButtonElement).disabled = true;
+      }
+
+      try {
+        const res = await fetch(`/api/admin/media/${mediaToDeleteId}`, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-Token': csrfToken
+          }
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Failed to delete image');
+        }
+
+        showToast('Image removed from library.');
+        setTimeout(() => window.location.reload(), 800);
+      } catch (err: any) {
+        showToast(err.message, true);
+        if (btnConfirmDelete) {
+          btnConfirmDelete.textContent = 'Delete Image';
+          (btnConfirmDelete as HTMLButtonElement).disabled = false;
+        }
+      }
+    });
+  </script>
+</AdminLayout>

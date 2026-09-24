@@ -1,0 +1,133 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" width="1440" height="600" fill="none">
+  <!-- Section: Service Areas (Desktop 1440px) -->
+  <g id="Service-Areas-Section">
+    <rect width="1440" height="600" fill="#FFFFFF"/>
+    
+    <!-- Left Column: Areas Content -->
+    <g id="Areas-Content" transform="translate(80, 80)">
+      <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="13" font-weight="700" letter-spacing="1">REGIONAL COVERAGE</text>
+      <text x="0" y="56" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="800">Proudly Serving Our Local Community</text>
+      <text x="0" y="88" fill="#64748B" font-family="'Inter', sans-serif" font-size="16" font-weight="400">
+        <tspan x="0" dy="0">Our fully equipped service vans are strategically stationed</tspan>
+        <tspan x="0" dy="24">across the metro area to guarantee fast response times</tspan>
+        <tspan x="0" dy="24">for both routine maintenance and 24/7 emergency calls.</tspan>
+      </text>
+
+      <!-- 6 Location Cards (3 cols x 2 rows) -->
+      <g id="Locations-Grid" transform="translate(0, 140)">
+        <!-- Loc 1: Downtown -->
+        <g transform="translate(0, 0)">
+          <rect width="190" height="80" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="24" cy="40" r="12" fill="#EFF6FF"/>
+          <path d="M24 33C21 33 19 35 19 38C19 42 24 47 24 47C24 47 29 42 29 38C29 35 27 33 24 33Z" fill="#2563EB"/>
+          <text x="46" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Downtown</text>
+          <text x="46" y="52" fill="#15803D" font-family="'Inter', sans-serif" font-size="11" font-weight="600">• Same-Day Dispatch</text>
+        </g>
+
+        <!-- Loc 2: Northside -->
+        <g transform="translate(205, 0)">
+          <rect width="190" height="80" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="24" cy="40" r="12" fill="#EFF6FF"/>
+          <path d="M24 33C21 33 19 35 19 38C19 42 24 47 24 47C24 47 29 42 29 38C29 35 27 33 24 33Z" fill="#2563EB"/>
+          <text x="46" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Northside</text>
+          <text x="46" y="52" fill="#15803D" font-family="'Inter', sans-serif" font-size="11" font-weight="600">• Same-Day Dispatch</text>
+        </g>
+
+        <!-- Loc 3: Westfield -->
+        <g transform="translate(410, 0)">
+          <rect width="190" height="80" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="24" cy="40" r="12" fill="#EFF6FF"/>
+          <path d="M24 33C21 33 19 35 19 38C19 42 24 47 24 47C24 47 29 42 29 38C29 35 27 33 24 33Z" fill="#2563EB"/>
+          <text x="46" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Westfield</text>
+          <text x="46" y="52" fill="#15803D" font-family="'Inter', sans-serif" font-size="11" font-weight="600">• Same-Day Dispatch</text>
+        </g>
+
+        <!-- Loc 4: Brookhaven -->
+        <g transform="translate(0, 95)">
+          <rect width="190" height="80" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="24" cy="40" r="12" fill="#EFF6FF"/>
+          <path d="M24 33C21 33 19 35 19 38C19 42 24 47 24 47C24 47 29 42 29 38C29 35 27 33 24 33Z" fill="#2563EB"/>
+          <text x="46" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Brookhaven</text>
+          <text x="46" y="52" fill="#15803D" font-family="'Inter', sans-serif" font-size="11" font-weight="600">• Same-Day Dispatch</text>
+        </g>
+
+        <!-- Loc 5: Riverside -->
+        <g transform="translate(205, 95)">
+          <rect width="190" height="80" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="24" cy="40" r="12" fill="#EFF6FF"/>
+          <path d="M24 33C21 33 19 35 19 38C19 42 24 47 24 47C24 47 29 42 29 38C29 35 27 33 24 33Z" fill="#2563EB"/>
+          <text x="46" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Riverside</text>
+          <text x="46" y="52" fill="#15803D" font-family="'Inter', sans-serif" font-size="11" font-weight="600">• Same-Day Dispatch</text>
+        </g>
+
+        <!-- Loc 6: Eastwood -->
+        <g transform="translate(410, 95)">
+          <rect width="190" height="80" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="24" cy="40" r="12" fill="#EFF6FF"/>
+          <path d="M24 33C21 33 19 35 19 38C19 42 24 47 24 47C24 47 29 42 29 38C29 35 27 33 24 33Z" fill="#2563EB"/>
+          <text x="46" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Eastwood</text>
+          <text x="46" y="52" fill="#15803D" font-family="'Inter', sans-serif" font-size="11" font-weight="600">• Same-Day Dispatch</text>
+        </g>
+      </g>
+
+      <!-- View All Action -->
+      <g id="View-All-Areas" transform="translate(0, 345)">
+        <text x="0" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="15" font-weight="700">Don&apos;t see your neighborhood? We service surrounding counties.</text>
+        <g transform="translate(0, 30)">
+          <rect width="210" height="44" rx="8" fill="#0F2238"/>
+          <text x="105" y="27" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="14" font-weight="600" text-anchor="middle">View All Service Areas</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Right Column: Regional Radius Visual Map Card -->
+    <g id="Map-Container" transform="translate(800, 80)">
+      <rect width="560" height="440" rx="16" fill="#0F2238" stroke="#1E293B" stroke-width="1"/>
+      
+      <!-- Styled Road Network & Coverage Radar Graphic -->
+      <g id="Radar-Graphic" transform="translate(280, 220)">
+        <circle cx="0" cy="0" r="190" stroke="#334155" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle cx="0" cy="0" r="130" stroke="#334155" stroke-width="1"/>
+        <circle cx="0" cy="0" r="70" fill="#1E3A5F" fill-opacity="0.3" stroke="#38BDF8" stroke-width="1.5"/>
+        
+        <!-- Radar Sweep Pulse -->
+        <circle cx="0" cy="0" r="12" fill="#E65100"/>
+        <circle cx="0" cy="0" r="6" fill="#FFFFFF"/>
+
+        <!-- Pins -->
+        <!-- Downtown -->
+        <g transform="translate(-40, -50)">
+          <circle cx="0" cy="0" r="7" fill="#38BDF8"/>
+          <text x="12" y="4" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="12" font-weight="700">Downtown</text>
+        </g>
+        <!-- Northside -->
+        <g transform="translate(30, -90)">
+          <circle cx="0" cy="0" r="7" fill="#38BDF8"/>
+          <text x="12" y="4" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="12" font-weight="700">Northside</text>
+        </g>
+        <!-- Westfield -->
+        <g transform="translate(-110, 40)">
+          <circle cx="0" cy="0" r="7" fill="#38BDF8"/>
+          <text x="12" y="4" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="12" font-weight="700">Westfield</text>
+        </g>
+        <!-- Brookhaven -->
+        <g transform="translate(70, 60)">
+          <circle cx="0" cy="0" r="7" fill="#38BDF8"/>
+          <text x="12" y="4" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="12" font-weight="700">Brookhaven</text>
+        </g>
+        <!-- Riverside -->
+        <g transform="translate(100, -30)">
+          <circle cx="0" cy="0" r="7" fill="#38BDF8"/>
+          <text x="12" y="4" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="12" font-weight="700">Riverside</text>
+        </g>
+      </g>
+
+      <!-- Bottom Map Callout -->
+      <g transform="translate(40, 360)">
+        <rect width="480" height="50" rx="8" fill="#1E293B"/>
+        <circle cx="25" cy="25" r="4" fill="#10B981"/>
+        <text x="40" y="30" fill="#E2E8F0" font-family="'Inter', sans-serif" font-size="13" font-weight="500">All 6 service zones active • Dispatched directly from regional depot</text>
+      </g>
+    </g>
+  </g>
+</svg>

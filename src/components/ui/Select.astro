@@ -1,0 +1,98 @@
+---
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  label?: string;
+  id: string;
+  name?: string;
+  options: Option[];
+  selected?: string;
+  error?: string;
+  hint?: string;
+  disabled?: boolean;
+  required?: boolean;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  label,
+  id,
+  name = id,
+  options,
+  selected,
+  error,
+  hint,
+  disabled = false,
+  required = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const baseSelect = 'w-full h-48 px-16 rounded-sm bg-neutral-surface text-body text-text-primary transition-all duration-150 border appearance-none cursor-pointer focus:outline-none focus:ring-2';
+
+const stateStyles = error
+  ? 'border-feedback-error text-feedback-error focus:border-feedback-error focus:ring-feedback-error/20'
+  : 'border-neutral-border focus:border-brand-accent focus:ring-brand-accent/20';
+
+const disabledStyles = disabled
+  ? 'bg-neutral-surface-alt opacity-60 cursor-not-allowed select-none'
+  : '';
+
+const selectClasses = `${baseSelect} ${stateStyles} ${disabledStyles} ${className}`.trim();
+---
+
+<div class="w-full flex flex-col gap-6">
+  {label && (
+    <label for={id} class="text-small font-semibold text-text-primary flex items-center justify-between">
+      <span>
+        {label}
+        {required && <span class="text-brand-emergency ml-2">*</span>}
+      </span>
+    </label>
+  )}
+
+  <div class="relative">
+    <select
+      id={id}
+      name={name}
+      disabled={disabled}
+      required={required}
+      aria-invalid={error ? 'true' : undefined}
+      aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
+      class={selectClasses}
+      {...rest}
+    >
+      {options.map((opt) => (
+        <option value={opt.value} selected={opt.value === selected}>
+          {opt.label}
+        </option>
+      ))}
+    </select>
+    
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-16 text-text-muted">
+      <svg class="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  </div>
+
+  {error && (
+    <p id={`${id}-error`} class="text-caption text-feedback-error font-medium flex items-center gap-4">
+      <svg class="w-14 h-14 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>{error}</span>
+    </p>
+  )}
+
+  {!error && hint && (
+    <p id={`${id}-hint`} class="text-caption text-text-muted">{hint}</p>
+  )}
+</div>
+

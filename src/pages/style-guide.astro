@@ -1,0 +1,294 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Input from '@/components/ui/Input.astro';
+import Select from '@/components/ui/Select.astro';
+import Textarea from '@/components/ui/Textarea.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+const icons = [
+  'phone', 'check', 'alert-triangle', 'star', 'calendar',
+  'clock', 'arrow-right', 'fan', 'flame', 'wrench',
+  'shield', 'map-pin', 'x', 'chevron-down', 'plus', 'minus'
+];
+
+const serviceOptions = [
+  { value: 'ac-repair', label: 'Air Conditioning Repair' },
+  { value: 'heating-fix', label: 'Furnace & Heating Fix' },
+  { value: 'tune-up', label: '24-Point Annual Tune-Up' },
+  { value: 'emergency', label: '24/7 Emergency Dispatch' },
+];
+---
+
+<Layout title="Design System Style Guide — NorthStar HVAC">
+  <div class="py-64 bg-brand-primary text-white border-b border-brand-secondary">
+    <div class="container">
+      <div class="flex items-center gap-12 mb-12">
+        <span class="text-caption font-bold tracking-widest text-brand-accent uppercase">Component Library &amp; States</span>
+        <Badge variant="success" dot={true}>Tokens V1.0 Verified</Badge>
+      </div>
+      <h1 class="text-display font-heading font-extrabold tracking-tight">Design System Style Guide</h1>
+      <p class="text-body-large text-text-muted mt-8 max-w-2xl">
+        Complete isolation test suite for all primitive UI components, variants, interactive states, and design tokens mapped from <code class="text-white bg-brand-secondary px-8 py-2 rounded-sm text-small">figma-design-tokens.json</code>.
+      </p>
+    </div>
+  </div>
+
+  <main class="py-80 container space-y-96">
+    <!-- =====================================================================
+         1. BUTTONS (Variants, Sizes, States)
+         ===================================================================== -->
+    <section class="space-y-32">
+      <div class="border-b border-neutral-border pb-16">
+        <h2 class="text-h2 font-heading font-extrabold text-brand-primary">1. Buttons (`Button.astro`)</h2>
+        <p class="text-body text-text-secondary mt-4">
+          Interactive button primitives supporting semantic <code class="text-brand-accent font-semibold">&lt;button&gt;</code> and accessible <code class="text-brand-accent font-semibold">&lt;a&gt;</code> navigation.
+        </p>
+      </div>
+
+      <!-- Variants -->
+      <div>
+        <h3 class="text-h3 font-heading font-bold text-brand-primary mb-16">Variants</h3>
+        <div class="flex flex-wrap items-center gap-16 p-24 bg-neutral-surface border border-neutral-border rounded-lg">
+          <Button variant="primary">Primary Accent</Button>
+          <Button variant="secondary">Secondary Navy</Button>
+          <Button variant="outline">Outline Neutral</Button>
+          <Button variant="emergency">Emergency Red</Button>
+          <Button variant="ghost">Ghost Button</Button>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div>
+        <h3 class="text-h3 font-heading font-bold text-brand-primary mb-16">Sizes</h3>
+        <div class="flex flex-wrap items-center gap-16 p-24 bg-neutral-surface border border-neutral-border rounded-lg">
+          <Button size="sm">Small (36px)</Button>
+          <Button size="md">Medium / Default (48px)</Button>
+          <Button size="lg">Large (56px)</Button>
+        </div>
+      </div>
+
+      <!-- Interactive States -->
+      <div>
+        <h3 class="text-h3 font-heading font-bold text-brand-primary mb-16">States Coverage (Section 8)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+          <div class="p-20 bg-neutral-surface border border-neutral-border rounded-lg space-y-12">
+            <span class="text-caption font-bold text-text-muted uppercase">Default State</span>
+            <div><Button variant="primary" class="w-full">Default</Button></div>
+          </div>
+
+          <div class="p-20 bg-neutral-surface border border-neutral-border rounded-lg space-y-12">
+            <span class="text-caption font-bold text-text-muted uppercase">Loading State</span>
+            <div><Button variant="primary" loading={true} class="w-full">Processing...</Button></div>
+          </div>
+
+          <div class="p-20 bg-neutral-surface border border-neutral-border rounded-lg space-y-12">
+            <span class="text-caption font-bold text-text-muted uppercase">Disabled State</span>
+            <div><Button variant="primary" disabled={true} class="w-full">Disabled</Button></div>
+          </div>
+
+          <div class="p-20 bg-neutral-surface border border-neutral-border rounded-lg space-y-12">
+            <span class="text-caption font-bold text-text-muted uppercase">Semantic Link (&lt;a&gt;)</span>
+            <div><Button href="/services" variant="outline" class="w-full">Navigate to /services</Button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         2. STATUS BADGES & TAGS
+         ===================================================================== -->
+    <section class="space-y-32">
+      <div class="border-b border-neutral-border pb-16">
+        <h2 class="text-h2 font-heading font-extrabold text-brand-primary">2. Badges &amp; Tags (`Badge.astro`)</h2>
+        <p class="text-body text-text-secondary mt-4">
+          Status indicators with optional animated ping dots for live emergency and dispatch signals.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
+        <div class="p-24 bg-neutral-surface border border-neutral-border rounded-lg space-y-16">
+          <h3 class="text-body font-bold text-brand-primary">Standard Badges</h3>
+          <div class="flex flex-wrap items-center gap-12">
+            <Badge variant="emergency">24/7 Dispatch</Badge>
+            <Badge variant="success">Verified Homeowner</Badge>
+            <Badge variant="warning">Advisory Notice</Badge>
+            <Badge variant="info">Residential &amp; Commercial</Badge>
+            <Badge variant="neutral">Licensed #8492</Badge>
+          </div>
+        </div>
+
+        <div class="p-24 bg-neutral-surface border border-neutral-border rounded-lg space-y-16">
+          <h3 class="text-body font-bold text-brand-primary">Live Pulse Dot Variants</h3>
+          <div class="flex flex-wrap items-center gap-12">
+            <Badge variant="emergency" dot={true}>Live Emergency Callout</Badge>
+            <Badge variant="success" dot={true}>Technicians Active</Badge>
+            <Badge variant="warning" dot={true}>Freeze Warning</Badge>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         3. FORM CONTROLS (Input, Select, Textarea)
+         ===================================================================== -->
+    <section class="space-y-32">
+      <div class="border-b border-neutral-border pb-16">
+        <h2 class="text-h2 font-heading font-extrabold text-brand-primary">3. Form Controls (`Input`, `Select`, `Textarea`)</h2>
+        <p class="text-body text-text-secondary mt-4">
+          Full state coverage: Default, Focused, Filled, Error (with accessible error IDs), and Disabled.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-24">
+        <!-- Inputs -->
+        <div class="p-24 bg-neutral-surface border border-neutral-border rounded-lg space-y-20">
+          <h3 class="text-body font-bold text-brand-primary">Text Inputs</h3>
+          <Input id="demo-default" label="Default Input" placeholder="John Miller" hint="Enter customer full name" />
+          <Input id="demo-filled" label="Filled Input" value="david@example.com" type="email" />
+          <Input id="demo-error" label="Error State" value="invalid-phone" error="Please enter a valid 10-digit phone number" required={true} />
+          <Input id="demo-disabled" label="Disabled State" value="Locked system ID #4829" disabled={true} />
+        </div>
+
+        <!-- Selects -->
+        <div class="p-24 bg-neutral-surface border border-neutral-border rounded-lg space-y-20">
+          <h3 class="text-body font-bold text-brand-primary">Dropdown Selects</h3>
+          <Select id="demo-select-default" label="Required Service" options={serviceOptions} />
+          <Select id="demo-select-error" label="Urgency Selection" options={serviceOptions} error="Please choose an appointment urgency" required={true} />
+          <Select id="demo-select-disabled" label="Locked Service" options={serviceOptions} selected="tune-up" disabled={true} />
+        </div>
+
+        <!-- Textarea -->
+        <div class="p-24 bg-neutral-surface border border-neutral-border rounded-lg space-y-20">
+          <h3 class="text-body font-bold text-brand-primary">Textarea</h3>
+          <Textarea id="demo-textarea" label="System Symptoms" placeholder="Describe strange noises, smells, or cooling loss..." rows={3} hint="Up to 500 characters" />
+          <Textarea id="demo-textarea-error" label="Problem Description" error="Description must be at least 15 characters" rows={3} required={true} />
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         4. LUCIDE ICON LIBRARY
+         ===================================================================== -->
+    <section class="space-y-32">
+      <div class="border-b border-neutral-border pb-16">
+        <h2 class="text-h2 font-heading font-extrabold text-brand-primary">4. Lucide Vector Icons (`Icon.astro`)</h2>
+        <p class="text-body text-text-secondary mt-4">
+          Official Lucide 24×24 vector strokes rendered with accessible <code class="text-brand-accent font-semibold">aria-hidden="true"</code>.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-16">
+        {icons.map(iconName => (
+          <div class="p-16 bg-neutral-surface border border-neutral-border rounded-md flex flex-col items-center justify-center gap-8 text-center hover:border-brand-accent transition-colors">
+            <div class="w-40 h-40 rounded-sm bg-neutral-surface-alt flex items-center justify-center text-brand-primary">
+              <Icon name={iconName} size={20} />
+            </div>
+            <span class="text-caption font-mono text-text-muted">{iconName}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         5. TYPOGRAPHY SCALE VERIFICATION
+         ===================================================================== -->
+    <section class="space-y-32">
+      <div class="border-b border-neutral-border pb-16">
+        <h2 class="text-h2 font-heading font-extrabold text-brand-primary">5. Typography Scale Verification</h2>
+        <p class="text-body text-text-secondary mt-4">
+          Mapped directly from <code class="text-brand-accent font-semibold">figma-design-tokens.json</code> typography rules.
+        </p>
+      </div>
+
+      <div class="space-y-24 bg-neutral-surface border border-neutral-border rounded-lg p-32">
+        <div class="border-b border-neutral-divider pb-16">
+          <span class="text-caption font-mono text-text-muted">Display — 56px / 64px line-height (Plus Jakarta Sans)</span>
+          <p class="text-display font-heading font-extrabold text-brand-primary mt-4">Climate Excellence You Can Count On</p>
+        </div>
+
+        <div class="border-b border-neutral-divider pb-16">
+          <span class="text-caption font-mono text-text-muted">H1 — 40px / 48px line-height (Plus Jakarta Sans)</span>
+          <p class="text-h1 font-heading font-extrabold text-brand-primary mt-4">Professional Air Conditioning Repair</p>
+        </div>
+
+        <div class="border-b border-neutral-divider pb-16">
+          <span class="text-caption font-mono text-text-muted">H2 — 32px / 40px line-height (Plus Jakarta Sans)</span>
+          <p class="text-h2 font-heading font-extrabold text-brand-primary mt-4">Is Your AC Showing These Symptoms?</p>
+        </div>
+
+        <div class="border-b border-neutral-divider pb-16">
+          <span class="text-caption font-mono text-text-muted">H3 — 24px / 32px line-height (Plus Jakarta Sans)</span>
+          <p class="text-h3 font-heading font-bold text-brand-primary mt-4">What Our AC Repair Service Includes</p>
+        </div>
+
+        <div class="border-b border-neutral-divider pb-16">
+          <span class="text-caption font-mono text-text-muted">Body Large — 18px / 28px line-height (Inter)</span>
+          <p class="text-body-large text-text-secondary mt-4">Fast diagnosis, upfront flat-rate pricing, and long-lasting cooling repairs by licensed HVAC specialists.</p>
+        </div>
+
+        <div class="border-b border-neutral-divider pb-16">
+          <span class="text-caption font-mono text-text-muted">Body — 16px / 24px line-height (Inter)</span>
+          <p class="text-body text-text-secondary mt-4">Unit cycles on and off every few minutes without reaching thermostat setpoint, rapidly spiking power bills.</p>
+        </div>
+
+        <div>
+          <span class="text-caption font-mono text-text-muted">Small &amp; Caption — 14px &amp; 12px (Inter)</span>
+          <p class="text-small text-text-muted mt-4">Small: Electronic refrigerant leak scan and electrical contactor test.</p>
+          <p class="text-caption text-text-muted mt-2">Caption: &copy; 2026 NorthStar HVAC Services. All rights reserved.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         6. COLOR TOKEN SWATCHES
+         ===================================================================== -->
+    <section class="space-y-32">
+      <div class="border-b border-neutral-border pb-16">
+        <h2 class="text-h2 font-heading font-extrabold text-brand-primary">6. Color Token Swatches</h2>
+        <p class="text-body text-text-secondary mt-4">
+          Live Tailwind class verification against token hex codes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-16">
+        <div class="space-y-6">
+          <div class="h-64 rounded-md bg-brand-primary shadow-sm border border-black/10"></div>
+          <div class="text-small font-bold text-brand-primary">brand-primary</div>
+          <div class="text-caption font-mono text-text-muted">#0F2238</div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="h-64 rounded-md bg-brand-secondary shadow-sm border border-black/10"></div>
+          <div class="text-small font-bold text-brand-primary">brand-secondary</div>
+          <div class="text-caption font-mono text-text-muted">#1E3A5F</div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="h-64 rounded-md bg-brand-accent shadow-sm border border-black/10"></div>
+          <div class="text-small font-bold text-brand-primary">brand-accent</div>
+          <div class="text-caption font-mono text-text-muted">#E65100</div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="h-64 rounded-md bg-brand-emergency shadow-sm border border-black/10"></div>
+          <div class="text-small font-bold text-brand-primary">brand-emergency</div>
+          <div class="text-caption font-mono text-text-muted">#DC2626</div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="h-64 rounded-md bg-feedback-success shadow-sm border border-black/10"></div>
+          <div class="text-small font-bold text-brand-primary">feedback-success</div>
+          <div class="text-caption font-mono text-text-muted">#15803D</div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="h-64 rounded-md bg-neutral-surface-alt shadow-sm border border-neutral-border"></div>
+          <div class="text-small font-bold text-brand-primary">surface-alt</div>
+          <div class="text-caption font-mono text-text-muted">#F1F5F9</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

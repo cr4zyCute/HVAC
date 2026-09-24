@@ -1,0 +1,335 @@
+---
+export const prerender = false;
+
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import StepCard from '@/components/ui/StepCard.astro';
+import Accordion from '@/components/ui/Accordion.astro';
+import CTABanner from '@/components/sections/CTABanner.astro';
+import defaultServices from '@/content/services.json';
+import { db, ensureDbInitialized, getSiteSettings } from '@/lib/db';
+
+await ensureDbInitialized();
+
+const { slug } = Astro.params;
+const [dbRes, siteSettings] = await Promise.all([
+  db.execute({
+    sql: 'SELECT * FROM services WHERE slug = ? LIMIT 1',
+    args: [slug]
+  }),
+  getSiteSettings().catch(() => ({} as Record<string, string>))
+]);
+
+// Fallback template from services.json
+const jsonFallback = defaultServices.find(s => s.slug === slug);
+
+if (dbRes.rows.length === 0 && !jsonFallback) {
+  return Astro.redirect('/services');
+}
+
+const dbRow = dbRes.rows[0];
+
+let dbFeatures: string[] = [];
+if (dbRow?.features_json) {
+  try { dbFeatures = JSON.parse(dbRow.features_json as string); } catch {}
+}
+
+const service = {
+  slug: (dbRow?.slug as string) || jsonFallback?.slug || slug,
+  title: (dbRow?.title as string) || jsonFallback?.title || 'HVAC Service',
+  category: jsonFallback?.category || 'Residential HVAC',
+  badge: dbRow?.starting_price ? `From $${Number(dbRow.starting_price).toFixed(0)}` : (jsonFallback?.badge || 'Flat Rate'),
+  startingPrice: dbRow?.starting_price ? `$${Number(dbRow.starting_price).toFixed(0)} Diagnostic` : (jsonFallback?.startingPrice || '$89 Diagnostic'),
+  shortDescription: (dbRow?.short_desc as string) || jsonFallback?.shortDescription || '',
+  fullDescription: (dbRow?.full_desc as string) || jsonFallback?.fullDescription || '',
+  features: dbFeatures.length > 0 ? dbFeatures : (jsonFallback?.features || []),
+  scope: jsonFallback?.scope || [
+    'Complete system diagnostic inspection',
+    'Electrical component safety audit',
+    'Filter condition & airflow verification',
+    'Refrigerant level / heat exchanger testing',
+    'Written flat-rate quote before any repair'
+  ],
+  symptoms: jsonFallback?.symptoms || [
+    { title: 'Weak Airflow or Inconsistent Temperatures', description: 'Uneven room heating or cooling usually indicates duct leakage, clogged filters, or blower motor degradation.' },
+    { title: 'Unusual Noises or Persistent Rattles', description: 'Grinding, squealing, or clicking sounds indicate mechanical wear or failing electrical contactors requiring rapid diagnosis.' },
+    { title: 'Sudden Spike in Monthly Energy Bills', description: 'Systems struggling with dirty coils or improper refrigerant charge consume significantly more electricity or gas.' }
+  ]
+};
+
+// Service-specific FAQs
+const serviceFaqs: Record<string, { question: string; answer: string }[]> = {
+  "air-conditioning-repair": [
+    {
+      question: "How long does a standard AC repair diagnostic visit take?",
+      answer: "A standard comprehensive diagnostic takes between 45 and 75 minutes. Our technician runs electronic leak tests, tests capacitor microfarad ratings, inspects contactor points, checks compressor amp draws, and measures delta-T temperature splits across the coil."
+    },
+    {
+      question: "Do you repair older R-22 Freon air conditioners?",
+      answer: "Yes, we service and repair existing R-22 systems. We can repair electrical controls, fan motors, and capacitors without touching the sealed refrigerant loop. If your system has a significant refrigerant leak, we will provide honest calculations on repair vs. upgrading to modern R-410A or R-454B high-efficiency systems."
+    },
+    {
+      question: "Will you quote me before starting any repair work?",
+      answer: "Always. We strictly operate on upfront flat-rate pricing. You receive an itemized quote detailing parts and labor with zero surprise add-ons. Nothing begins until you approve."
+    }
+  ],
+  "heating-furnace-service": [
+    {
+      question: "What should I do if my furnace is blowing cold air?",
+      answer: "First check that your thermostat is set to 'HEAT' and the fan is on 'AUTO' rather than 'ON'. If settings are correct, turn the system off at the thermostat and call us. Continuous cold air often indicates an overheated limit switch, failed igniter, or dirty flame sensor that has locked the control board for safety."
+    },
+    {
+      question: "How do you test for a cracked heat exchanger?",
+      answer: "We perform an electronic flue combustion test and use high-resolution micro-camera borescopes inside the burner cells. A cracked heat exchanger allows deadly carbon monoxide to mix into living room supply air, so this is our number one safety priority on every heating call."
+    },
+    {
+      question: "Do you offer emergency weekend heating repairs during winter storms?",
+      answer: "Yes, our on-call winter response fleet operates 24 hours a day, 7 days a week, 365 days a year across the metro region with fully stocked OEM ignition modules and blowers."
+    }
+  ],
+  "annual-maintenance-plan": [
+    {
+      question: "When is the best time to schedule an HVAC tune-up?",
+      answer: "We recommend scheduling cooling tune-ups in early spring (March–May) before summer heat waves hit, and heating maintenance in early autumn (September–November) before the first freeze. Regular preventive care reduces breakdown risk by up to 85%."
+    },
+    {
+      question: "How much energy does an annual tune-up save?",
+      answer: "According to Department of Energy research, a dirty coil and improperly charged system can increase electricity usage by 20% to 30%. A thorough cleaning, electrical calibration, and refrigerant verification restores factory SEER2 efficiency."
+    },
+    {
+      question: "Do you provide a written condition report after the tune-up?",
+      answer: "Yes, you will receive our complete 24-point digital inspection checklist including exact voltage, capacitor capacitance, static pressure readings, and photographic proof of coil conditions."
+    }
+  ]
+};
+
+const currentFaqs = serviceFaqs[service.slug] || [
+  {
+    question: "What is your arrival window for service calls?",
+    answer: "We offer concise 2-hour arrival windows and send a dispatch text with your technician's photo and live GPS tracking when they are 20 minutes away."
+  },
+  {
+    question: "What warranty comes with this service?",
+    answer: "All repairs include our 90-day parts and labor guarantee. If the same component fails, we replace it at no charge."
+  }
+];
+
+const phoneFormatted = siteSettings['phone_primary'] || '(555) 014-7824';
+const phoneRaw = siteSettings['phone_raw'] || '5550147824';
+---
+
+<Layout 
+  title={`${service.title} — NorthStar HVAC`} 
+  description={`${service.shortDescription} Upfront flat-rate pricing, certified technicians, and 90-day guarantee.`}
+>
+  <!-- Breadcrumb -->
+  <nav class="bg-neutral-surface-alt border-b border-neutral-border py-12 text-caption text-text-muted" aria-label="Breadcrumb">
+    <div class="container flex items-center gap-8">
+      <a href="/" class="hover:text-brand-primary transition-colors">Home</a>
+      <span>/</span>
+      <a href="/services" class="hover:text-brand-primary transition-colors">Services</a>
+      <span>/</span>
+      <span class="text-brand-primary font-semibold">{service.title}</span>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-neutral-surface border-b border-neutral-border py-64 md:py-80">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-48 items-center">
+        <div class="lg:col-span-7 space-y-20">
+          <div class="flex items-center gap-12">
+            <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">{service.category}</span>
+            <Badge variant="emergency" size="sm">{service.badge}</Badge>
+          </div>
+
+          <h1 class="text-h1 font-heading font-extrabold text-brand-primary leading-tight">
+            {service.title}
+          </h1>
+
+          <p class="text-body text-text-secondary leading-relaxed">
+            {service.shortDescription}
+          </p>
+
+          <!-- Key Benefit Pills -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-12 pt-8">
+            <div class="bg-neutral-surface-alt p-12 rounded-md border border-neutral-border text-center">
+              <span class="block text-caption font-bold text-brand-primary">Fast Dispatch</span>
+              <span class="text-[11px] text-text-muted">Same-Day Slots</span>
+            </div>
+            <div class="bg-neutral-surface-alt p-12 rounded-md border border-neutral-border text-center">
+              <span class="block text-caption font-bold text-brand-primary">Flat-Rate</span>
+              <span class="text-[11px] text-text-muted">No Surprise Fees</span>
+            </div>
+            <div class="bg-neutral-surface-alt p-12 rounded-md border border-neutral-border text-center">
+              <span class="block text-caption font-bold text-brand-primary">Certified</span>
+              <span class="text-[11px] text-text-muted">NATE &amp; EPA Spec</span>
+            </div>
+            <div class="bg-neutral-surface-alt p-12 rounded-md border border-neutral-border text-center">
+              <span class="block text-caption font-bold text-brand-primary">90-Day</span>
+              <span class="text-[11px] text-text-muted">Work Warranty</span>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-16 pt-12">
+            <Button href={`/book?service=${service.slug}`} variant="primary" size="lg">
+              <span>Book This Service</span>
+              <Icon name="calendar" size={18} />
+            </Button>
+            <Button href={`tel:${phoneRaw}`} variant="secondary" size="lg">
+              <Icon name="phone" size={18} />
+              <span>Call {phoneFormatted}</span>
+            </Button>
+          </div>
+        </div>
+
+        <!-- Hero Card / Quick Diagnostic Summary -->
+        <div class="lg:col-span-5 bg-neutral-surface-alt p-32 rounded-lg border border-neutral-border shadow-md space-y-20">
+          <div class="flex items-center justify-between border-b border-neutral-border pb-16">
+            <h3 class="font-heading font-bold text-brand-primary text-h3">Rapid Diagnostic Scope</h3>
+            <span class="w-10 h-10 rounded-full bg-emerald-500 animate-pulse" title="Dispatch active"></span>
+          </div>
+
+          <p class="text-small text-text-secondary">
+            Our certified technician conducts a multi-point mechanical and electrical audit before presenting clear, flat-rate options.
+          </p>
+
+          <ul class="space-y-10 text-small text-text-secondary">
+            {service.scope.slice(0, 5).map((item: string) => (
+              <li class="flex items-start gap-10">
+                <Icon name="check" size={16} class="text-brand-accent mt-2 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="pt-8 border-t border-neutral-border">
+            <a 
+              href={`/book?service=${service.slug}`}
+              class="w-full inline-flex items-center justify-center gap-8 py-12 px-20 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors"
+            >
+              <span>Schedule Inspection</span>
+              <Icon name="chevron-right" size={16} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Symptoms Grid Section -->
+  <section class="py-80 bg-neutral-surface-alt">
+    <div class="container space-y-48">
+      <div class="max-w-2xl space-y-12">
+        <Badge variant="warning">SYMPTOMS &amp; DIAGNOSIS</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Warning Signs Your System Needs Immediate Attention
+        </h2>
+        <p class="text-body text-text-secondary">
+          Don't ignore minor noises or temperature swings. Catching electrical and mechanical faults early prevents catastrophic compressor lockup and expensive emergency replacements.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24">
+        {service.symptoms.map((symptom: any) => (
+          <div class="bg-neutral-surface p-28 rounded-lg border border-neutral-border space-y-12 shadow-sm hover:border-amber-400 transition-colors">
+            <div class="w-40 h-40 rounded-md bg-amber-50 text-amber-600 flex items-center justify-center">
+              <Icon name="alert-triangle" size={20} />
+            </div>
+            <h3 class="font-heading font-bold text-body text-brand-primary">{symptom.title}</h3>
+            <p class="text-small text-text-secondary leading-relaxed">{symptom.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprehensive Scope Checklist -->
+  <section class="py-80 bg-neutral-surface border-y border-neutral-border">
+    <div class="container space-y-48">
+      <div class="max-w-3xl space-y-12">
+        <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Complete Workmanship</span>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          What Is Included in Every Service Visit
+        </h2>
+        <p class="text-body text-text-secondary">
+          Our rigorous protocols cover every critical component to guarantee safety, restore efficiency, and prevent repeat service visits.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16">
+        {service.scope.map((item: string) => (
+          <div class="flex items-center gap-12 p-16 rounded-md bg-neutral-surface-alt border border-neutral-border">
+            <div class="w-24 h-24 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+              <Icon name="check" size={14} />
+            </div>
+            <span class="text-small font-medium text-text-primary">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Step Process Flow -->
+  <section class="py-80 bg-neutral-surface-alt border-b border-neutral-border">
+    <div class="container space-y-48">
+      <div class="text-center max-w-2xl mx-auto space-y-12">
+        <Badge variant="neutral">TRANSPARENT PROCESS</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          From First Click to Comfort Restored
+        </h2>
+        <p class="text-body text-text-secondary">
+          No vague waiting windows. No high-pressure sales tactics. Just prompt, certified craftsmanship.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-24">
+        <StepCard
+          step={1}
+          title="Easy 60-Second Booking"
+          description="Pick your arrival window online or call our 24/7 dispatcher. You'll receive instant SMS confirmation."
+        />
+        <StepCard
+          step={2}
+          title="Written Flat-Rate Diagnostic"
+          description="Your technician inspects the unit and gives you upfront, written pricing options before touching a single tool."
+        />
+        <StepCard
+          step={3}
+          title="Factory-Grade Fix & Test"
+          description="Repairs are completed with OEM parts, verified with digital instruments, and backed by our 90-day warranty."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Service FAQs -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container max-w-4xl space-y-40">
+      <div class="text-center space-y-12">
+        <Badge variant="neutral">COMMON QUESTIONS</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-body text-text-secondary">
+          Everything you need to know about our repair procedures, pricing, and warranties.
+        </p>
+      </div>
+
+      <Accordion items={currentFaqs} />
+    </div>
+  </section>
+
+  <!-- Bottom CTA Banner -->
+  <CTABanner
+    variant="primary"
+    title={`Schedule ${service.title} Today`}
+    subtitle="Our mobile vans are fully stocked and radio-dispatched across the metro area. Get your HVAC running right."
+    buttonText="Book Service Online"
+    buttonHref={`/book?service=${service.slug}`}
+    phoneText={`Call ${phoneFormatted}`}
+  />
+</Layout>

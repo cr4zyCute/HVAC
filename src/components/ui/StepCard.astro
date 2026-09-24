@@ -1,0 +1,34 @@
+---
+interface Props {
+  step: number;
+  title: string;
+  description: string;
+  variant?: 'primary' | 'accent' | 'success';
+}
+
+const {
+  step,
+  title,
+  description,
+  variant = 'primary',
+} = Astro.props;
+
+const badgeColors = {
+  primary: 'bg-brand-primary text-white',
+  accent: 'bg-brand-accent text-white',
+  success: 'bg-feedback-success text-white',
+};
+---
+
+<div class="bg-neutral-surface border border-neutral-border rounded-lg p-24 md:p-32 relative hover:border-neutral-border-focus hover:shadow-sm transition-all duration-200">
+  <div class={`w-40 h-40 rounded-md flex items-center justify-center font-heading font-extrabold text-h3 mb-20 ${badgeColors[variant]}`}>
+    {step}
+  </div>
+  <h3 class="font-heading font-bold text-h3 text-brand-primary mb-12">
+    {title}
+  </h3>
+  <p class="text-body text-text-secondary leading-relaxed">
+    {description}
+  </p>
+</div>
+

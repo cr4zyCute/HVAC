@@ -1,0 +1,46 @@
+{
+  "company": {
+    "name": "NorthStar HVAC",
+    "brandFirst": "NorthStar",
+    "brandAccent": "HVAC",
+    "tagline": "Comfort You Can Count On",
+    "description": "Comfort You Can Count On. Licensed, insured, and certified technicians delivering precision heating, cooling repairs, and upfront flat-rate pricing.",
+    "phone": "(555) 014-7824",
+    "phoneRaw": "5550147824",
+    "emergencyHotline": "(555) 014-7824",
+    "email": "dispatch@northstarhvac.example",
+    "license": "MN HVAC-LIC #849201",
+    "address": "742 Evergreen Terrace, Minneapolis, MN 55401",
+    "operatingHours": "Open 24 Hours / 7 Days a Week",
+    "dispatchNotice": "Serving Residential & Light Commercial Across Metro Region",
+    "ratingScore": "4.9 / 5.0",
+    "ratingSummary": "across 180+ verified local homeowners"
+  },
+  "booking": {
+    "badge": "ONLINE BOOKING SYSTEM",
+    "heroTitle": "Schedule Your HVAC Service Online",
+    "heroSubtitle": "Select your service, choose an arrival window that works for you, and get instant dispatch confirmation with zero upfront payment required.",
+    "guaranteeTitle": "The NorthStar Guarantee",
+    "guarantees": [
+      {
+        "title": "No Upfront Payment",
+        "description": "Pay only after diagnosis and your written approval."
+      },
+      {
+        "title": "Upfront Flat-Rate Quote",
+        "description": "Transparent pricing with zero surprise charges."
+      },
+      {
+        "title": "2-Hour Arrival Window",
+        "description": "Guaranteed on-time with 20-min call ahead."
+      },
+      {
+        "title": "90-Day Guarantee",
+        "description": "Complete parts & labor workmanship warranty."
+      }
+    ],
+    "emergencyHotlineTitle": "Immediate Freeze or Heat Emergency?",
+    "emergencyHotlineSubtitle": "24/7 Priority Emergency Dispatch"
+  }
+}
+

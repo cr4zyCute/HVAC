@@ -1,0 +1,402 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+import { db, ensureDbInitialized, getSiteSettings } from '@/lib/db';
+
+await ensureDbInitialized();
+
+const [navRes, settings] = await Promise.all([
+  db.execute('SELECT * FROM navigation_items ORDER BY display_order ASC'),
+  getSiteSettings()
+]);
+
+const navItems = navRes.rows;
+---
+
+<AdminLayout
+  title="Navigation & Header Links"
+  activeSection="navigation"
+  breadcrumbs={[{ label: 'Navigation' }]}
+>
+  <!-- Toast Notification Container -->
+  <div id="toast" class="hidden fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-lg text-small font-semibold text-white transition-all transform duration-300"></div>
+
+  <!-- Page Header -->
+  <div class="mb-32 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-16">
+    <div>
+      <h1 class="text-h2 font-heading font-extrabold text-brand-primary tracking-tight">Navigation &amp; Header Links</h1>
+      <p class="text-small text-text-muted mt-4">
+        Customize public website navigation menus, link destinations, order, and the header CTA button.
+      </p>
+    </div>
+
+    <div>
+      <button
+        id="btn-add-nav"
+        class="inline-flex items-center gap-8 h-40 px-16 bg-brand-accent hover:bg-brand-accent-hover text-white text-small font-semibold rounded-md shadow-sm hover:shadow transition-all cursor-pointer"
+      >
+        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Add Navigation Link
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-32">
+    <!-- Left Column: Navigation Items Table (8 cols) -->
+    <div class="lg:col-span-8 space-y-24">
+      <div class="bg-neutral-surface rounded-lg border border-neutral-border shadow-sm overflow-hidden">
+        <div class="p-16 border-b border-neutral-border bg-slate-50/50 flex items-center justify-between">
+          <h2 class="text-body font-heading font-bold text-brand-primary">Header Menu Items ({navItems.length})</h2>
+          <span class="text-caption text-text-muted font-medium">Rendered left-to-right on public website</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-neutral-border bg-slate-50 text-caption font-bold text-text-secondary uppercase tracking-wider">
+                <th class="py-12 px-16">Order</th>
+                <th class="py-12 px-16">Link Label</th>
+                <th class="py-12 px-16">Destination URL</th>
+                <th class="py-12 px-16">Status</th>
+                <th class="py-12 px-16 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-neutral-border text-small">
+              {navItems.map((item) => (
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="py-12 px-16 font-mono text-caption text-text-muted font-bold">
+                    #{item.display_order}
+                  </td>
+                  <td class="py-12 px-16 font-bold text-brand-primary">
+                    {item.label}
+                  </td>
+                  <td class="py-12 px-16 font-mono text-caption text-text-secondary">
+                    {item.href}
+                  </td>
+                  <td class="py-12 px-16">
+                    <button
+                      class="btn-toggle-enabled inline-flex items-center gap-6 px-10 py-4 rounded-full text-caption font-bold border transition-colors cursor-pointer"
+                      class:list={[
+                        Number(item.is_enabled) === 1
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                          : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'
+                      ]}
+                      data-id={item.id as string}
+                      data-status={item.is_enabled}
+                    >
+                      <span class={`w-6 h-6 rounded-full ${Number(item.is_enabled) === 1 ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
+                      {Number(item.is_enabled) === 1 ? 'Active' : 'Hidden'}
+                    </button>
+                  </td>
+                  <td class="py-12 px-16 text-right">
+                    <div class="flex items-center justify-end gap-8">
+                      <button
+                        class="btn-edit-nav px-8 py-4 text-caption font-semibold text-brand-secondary hover:text-brand-accent hover:bg-slate-100 rounded transition-colors"
+                        data-id={item.id as string}
+                        data-label={item.label as string}
+                        data-href={item.href as string}
+                        data-order={item.display_order}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="btn-delete-nav px-8 py-4 text-caption font-semibold text-brand-emergency hover:bg-red-50 rounded transition-colors"
+                        data-id={item.id as string}
+                        data-label={item.label as string}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Header CTA Button Settings (4 cols) -->
+    <div class="lg:col-span-4 space-y-24">
+      <div class="bg-neutral-surface rounded-lg border border-neutral-border shadow-sm p-24">
+        <h3 class="text-body font-heading font-bold text-brand-primary pb-12 border-b border-neutral-border">
+          Header Call-To-Action Button
+        </h3>
+        <p class="text-caption text-text-muted mt-8">
+          The prominent orange conversion button located at the top right of every page header.
+        </p>
+
+        <form id="header-cta-form" class="mt-20 space-y-16">
+          <div>
+            <label class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Button Label</span>
+              <span class="text-[10px] text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="header-cta-text"
+              value={settings['header_cta_text'] || 'Book a Service'}
+              placeholder="Enter header button label to change..."
+              class="w-full h-40 px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <div>
+            <label class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+              <span>Destination URL</span>
+              <span class="text-[10px] text-brand-accent">Enter to change</span>
+            </label>
+            <input
+              type="text"
+              id="header-cta-url"
+              value={settings['header_cta_url'] || '/book'}
+              placeholder="Enter destination URL to change (e.g. /book)..."
+              class="w-full h-40 px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+            />
+          </div>
+
+          <button
+            type="submit"
+            id="btn-save-header-cta"
+            class="w-full h-40 bg-brand-primary hover:bg-brand-secondary text-white text-small font-semibold rounded-md shadow-sm transition-all cursor-pointer mt-8"
+          >
+            Update Header Button
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add / Edit Nav Item Modal -->
+  <div id="nav-modal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-20 backdrop-blur-sm">
+    <div class="bg-neutral-surface rounded-lg max-w-md w-full p-24 shadow-2xl border border-neutral-border">
+      <div class="flex items-center justify-between pb-16 border-b border-neutral-border">
+        <h3 id="modal-title" class="text-body font-heading font-bold text-brand-primary">Add Navigation Link</h3>
+        <button id="modal-close" class="text-text-muted hover:text-brand-primary">✕</button>
+      </div>
+
+      <form id="nav-form" class="mt-20 space-y-16">
+        <input type="hidden" id="nav-id" value="" />
+
+        <div>
+          <label class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+            <span>Link Text / Label *</span>
+            <span class="text-[10px] text-brand-accent">Enter to change</span>
+          </label>
+          <input
+            type="text"
+            id="nav-label"
+            required
+            placeholder="Enter navigation label to change (e.g. Services)..."
+            class="w-full h-40 px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+          />
+        </div>
+
+        <div>
+          <label class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+            <span>Destination URL *</span>
+            <span class="text-[10px] text-brand-accent">Enter to change</span>
+          </label>
+          <input
+            type="text"
+            id="nav-href"
+            required
+            placeholder="Enter destination URL to change (e.g. /services)..."
+            class="w-full h-40 px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+          />
+        </div>
+
+        <div>
+          <label class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-6 flex items-center justify-between">
+            <span>Display Order Index</span>
+            <span class="text-[10px] text-brand-accent">Enter to change</span>
+          </label>
+          <input
+            type="number"
+            id="nav-order"
+            value="1"
+            min="1"
+            max="99"
+            placeholder="Enter display order to change..."
+            class="w-full h-40 px-12 text-small bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary"
+          />
+        </div>
+
+        <div class="pt-16 border-t border-neutral-border flex items-center justify-end gap-12">
+          <button type="button" id="modal-cancel" class="h-36 px-16 border border-neutral-border rounded-md text-small font-semibold text-text-secondary hover:bg-neutral-surface-alt">
+            Cancel
+          </button>
+          <button type="submit" id="modal-submit" class="h-36 px-16 bg-brand-accent hover:bg-brand-accent-hover text-white text-small font-semibold rounded-md shadow-sm">
+            Save Link
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const csrfToken = (window as any).__CSRF_TOKEN__ || '';
+
+    function showToast(message: string, isError = false) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.className = `fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-lg text-small font-semibold text-white transition-all transform duration-300 ${
+        isError ? 'bg-brand-emergency' : 'bg-feedback-success'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Modal Handlers
+    const navModal = document.getElementById('nav-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalClose = document.getElementById('modal-close');
+    const modalCancel = document.getElementById('modal-cancel');
+    const navForm = document.getElementById('nav-form') as HTMLFormElement;
+    const navIdInput = document.getElementById('nav-id') as HTMLInputElement;
+    const navLabelInput = document.getElementById('nav-label') as HTMLInputElement;
+    const navHrefInput = document.getElementById('nav-href') as HTMLInputElement;
+    const navOrderInput = document.getElementById('nav-order') as HTMLInputElement;
+
+    document.getElementById('btn-add-nav')?.addEventListener('click', () => {
+      navIdInput.value = '';
+      navLabelInput.value = '';
+      navHrefInput.value = '';
+      navOrderInput.value = '10';
+      if (modalTitle) modalTitle.textContent = 'Add Navigation Link';
+      navModal?.classList.remove('hidden');
+    });
+
+    modalClose?.addEventListener('click', () => navModal?.classList.add('hidden'));
+    modalCancel?.addEventListener('click', () => navModal?.classList.add('hidden'));
+
+    document.querySelectorAll('.btn-edit-nav').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        navIdInput.value = el.dataset.id || '';
+        navLabelInput.value = el.dataset.label || '';
+        navHrefInput.value = el.dataset.href || '';
+        navOrderInput.value = el.dataset.order || '1';
+        if (modalTitle) modalTitle.textContent = 'Edit Navigation Link';
+        navModal?.classList.remove('hidden');
+      });
+    });
+
+    navForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = navIdInput.value;
+      const isNew = !id;
+      const payload = {
+        label: navLabelInput.value,
+        href: navHrefInput.value,
+        display_order: Number(navOrderInput.value)
+      };
+
+      try {
+        const url = isNew ? '/api/admin/navigation' : `/api/admin/navigation/${id}`;
+        const method = isNew ? 'POST' : 'PUT';
+
+        const res = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Failed to save navigation link');
+        }
+
+        showToast('Navigation updated successfully!');
+        setTimeout(() => window.location.reload(), 600);
+      } catch (err: any) {
+        showToast(err.message, true);
+      }
+    });
+
+    // Toggle enabled/hidden
+    document.querySelectorAll('.btn-toggle-enabled').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const el = btn as HTMLElement;
+        const id = el.dataset.id;
+        const currentStatus = Number(el.dataset.status);
+        const newStatus = currentStatus === 1 ? 0 : 1;
+
+        try {
+          const res = await fetch(`/api/admin/navigation/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({ is_enabled: newStatus })
+          });
+
+          if (!res.ok) throw new Error('Failed to update status');
+          showToast(`Link ${newStatus === 1 ? 'activated' : 'hidden'}`);
+          setTimeout(() => window.location.reload(), 500);
+        } catch (err: any) {
+          showToast(err.message, true);
+        }
+      });
+    });
+
+    // Delete item
+    document.querySelectorAll('.btn-delete-nav').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const el = btn as HTMLElement;
+        const id = el.dataset.id;
+        const label = el.dataset.label;
+        if (!confirm(`Are you sure you want to delete the "${label}" navigation link?`)) return;
+
+        try {
+          const res = await fetch(`/api/admin/navigation/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'X-CSRF-Token': csrfToken
+            }
+          });
+
+          if (!res.ok) throw new Error('Failed to delete item');
+          showToast('Navigation link removed');
+          setTimeout(() => window.location.reload(), 500);
+        } catch (err: any) {
+          showToast(err.message, true);
+        }
+      });
+    });
+
+    // Header CTA Save
+    document.getElementById('header-cta-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = (document.getElementById('header-cta-text') as HTMLInputElement).value;
+      const url = (document.getElementById('header-cta-url') as HTMLInputElement).value;
+
+      try {
+        const res = await fetch('/api/admin/settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
+          },
+          body: JSON.stringify({
+            header_cta_text: text,
+            header_cta_url: url
+          })
+        });
+
+        if (!res.ok) throw new Error('Failed to update header button');
+        showToast('Header CTA button updated successfully!');
+      } catch (err: any) {
+        showToast(err.message, true);
+      }
+    });
+  </script>
+</AdminLayout>

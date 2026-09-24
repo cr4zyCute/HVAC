@@ -1,0 +1,139 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 780" width="1440" height="780" fill="none">
+  <!-- Section: Services Grid (Desktop 1440px) -->
+  <g id="Services-Grid-Section">
+    <!-- Background -->
+    <rect width="1440" height="780" fill="#F8FAFC"/>
+
+    <!-- Section Header Group -->
+    <g id="Section-Header" transform="translate(80, 60)">
+      <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="13" font-weight="700" letter-spacing="1">OUR COMPREHENSIVE EXPERTISE</text>
+      <text x="0" y="56" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="800">HVAC Services for Every Season</text>
+      <text x="0" y="88" fill="#64748B" font-family="'Inter', sans-serif" font-size="16" font-weight="400">Professional heating, cooling, and air quality solutions engineered for peak efficiency and home reliability.</text>
+    </g>
+
+    <!-- Row 1: Cards 1, 2, 3 (y: 190) -->
+    <!-- Card 1: AC Repair -->
+    <g id="Card-AC-Repair" transform="translate(80, 190)">
+      <rect width="400" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(32, 28)">
+        <rect width="48" height="48" rx="10" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <g transform="translate(12, 12)" stroke="#2563EB" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12h20M12 2v20M20 16l-4-4 4-4M4 8l4 4-4 4M16 4l-4 4-4-4M8 20l4-4 4 4"/>
+        </g>
+      </g>
+      <text x="32" y="112" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">AC Repair</text>
+      <text x="32" y="140" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+        <tspan x="32" dy="0">Fast diagnosis and precision repair for</tspan>
+        <tspan x="32" dy="22">strange noises, warm air blowing, leaks,</tspan>
+        <tspan x="32" dy="22">and sudden compressor breakdowns.</tspan>
+      </text>
+      <!-- Action Link -->
+      <g transform="translate(32, 218)">
+        <text x="0" y="12" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Learn More</text>
+        <path d="M78 8L86 8M86 8L82 4M86 8L82 12" stroke="#0F2238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+
+    <!-- Card 2: AC Installation -->
+    <g id="Card-AC-Installation" transform="translate(520, 190)">
+      <rect width="400" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(32, 28)">
+        <rect width="48" height="48" rx="10" fill="#F0FDF4" stroke="#DCFCE7" stroke-width="1"/>
+        <g transform="translate(12, 12)" stroke="#16A34A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </g>
+      </g>
+      <text x="32" y="112" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">AC Installation &amp; Replacement</text>
+      <text x="32" y="140" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+        <tspan x="32" dy="0">High-efficiency cooling systems sized</tspan>
+        <tspan x="32" dy="22">for your home&apos;s square footage, saving</tspan>
+        <tspan x="32" dy="22">up to 30% on seasonal electric bills.</tspan>
+      </text>
+      <g transform="translate(32, 218)">
+        <text x="0" y="12" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Learn More</text>
+        <path d="M78 8L86 8M86 8L82 4M86 8L82 12" stroke="#0F2238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+
+    <!-- Card 3: Heating Repair -->
+    <g id="Card-Heating-Repair" transform="translate(960, 190)">
+      <rect width="400" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(32, 28)">
+        <rect width="44" height="44" rx="8" fill="#FFF7ED"/>
+        <path d="M22 13C22 13 17 18 17 24C17 27 19.3 29.5 22 29.5C24.7 29.5 27 27 27 24C27 18 22 13 22 13Z" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 22C22 22 19.5 23.5 19.5 25.5C19.5 26.8 20.6 28 22 28C23.4 28 24.5 26.8 24.5 25.5C24.5 23.5 22 22 22 22Z" fill="#EA580C"/>
+      </g>
+      <text x="32" y="112" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">Heating &amp; Furnace Repair</text>
+      <text x="32" y="140" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+        <tspan x="32" dy="0">Reliable heating fixes for furnaces,</tspan>
+        <tspan x="32" dy="22">boilers, and heat pumps. Keep your home</tspan>
+        <tspan x="32" dy="22">warm when winter temperatures plunge.</tspan>
+      </text>
+      <g transform="translate(32, 218)">
+        <text x="0" y="12" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Learn More</text>
+        <path d="M78 8L86 8M86 8L82 4M86 8L82 12" stroke="#0F2238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+
+    <!-- Row 2: Cards 4, 5, 6 (y: 480) -->
+    <!-- Card 4: HVAC Maintenance -->
+    <g id="Card-Maintenance" transform="translate(80, 480)">
+      <rect width="400" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(32, 28)">
+        <rect width="44" height="44" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+        <path d="M26 15L30 19L19 30C18 31 16 31 15 30C14 29 14 27 15 26L26 15Z" stroke="#1E293B" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="26" cy="17" r="3.5" stroke="#1E293B" stroke-width="1.5"/>
+      </g>
+      <text x="32" y="112" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">Preventive Maintenance</text>
+      <text x="32" y="140" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+        <tspan x="32" dy="0">Comprehensive 24-point tune-ups that</tspan>
+        <tspan x="32" dy="22">prevent costly breakdowns, improve airflow,</tspan>
+        <tspan x="32" dy="22">and safeguard manufacturer warranties.</tspan>
+      </text>
+      <g transform="translate(32, 218)">
+        <text x="0" y="12" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Learn More</text>
+        <path d="M78 8L86 8M86 8L82 4M86 8L82 12" stroke="#0F2238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+
+    <!-- Card 5: Indoor Air Quality -->
+    <g id="Card-Indoor-Air" transform="translate(520, 480)">
+      <rect width="400" height="260" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(32, 28)">
+        <rect width="44" height="44" rx="8" fill="#F0FDF4"/>
+        <path d="M15 20C15 15 22 14 22 14C22 14 29 15 29 20C29 25 22 30 22 30C22 30 15 25 15 20Z" stroke="#16A34A" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M22 18V25" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <text x="32" y="112" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">Indoor Air Quality (IAQ)</text>
+      <text x="32" y="140" fill="#475569" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+        <tspan x="32" dy="0">Whole-home air purifiers, UV treatment</tspan>
+        <tspan x="32" dy="22">systems, and humidity regulation to</tspan>
+        <tspan x="32" dy="22">eliminate dust, allergens, and odors.</tspan>
+      </text>
+      <g transform="translate(32, 218)">
+        <text x="0" y="12" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Learn More</text>
+        <path d="M78 8L86 8M86 8L82 4M86 8L82 12" stroke="#0F2238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+
+    <!-- Card 6: Emergency HVAC -->
+    <g id="Card-Emergency-HVAC" transform="translate(960, 480)">
+      <rect width="400" height="260" rx="12" fill="#0F2238" stroke="#1E3A5F" stroke-width="1"/>
+      <g transform="translate(32, 28)">
+        <rect width="44" height="44" rx="8" fill="#DC2626" fill-opacity="0.2"/>
+        <circle cx="22" cy="22" r="9" stroke="#EF4444" stroke-width="2"/>
+        <path d="M22 17V22M22 25V26" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <text x="32" y="112" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="700">24/7 Emergency HVAC</text>
+      <text x="32" y="140" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14" font-weight="400">
+        <tspan x="32" dy="0">Urgent heating or cooling failure during</tspan>
+        <tspan x="32" dy="22">extreme weather. Direct radio-dispatched</tspan>
+        <tspan x="32" dy="22">service vans arrive with parts ready.</tspan>
+      </text>
+      <g transform="translate(32, 218)">
+        <text x="0" y="12" fill="#F87171" font-family="'Inter', sans-serif" font-size="14" font-weight="700">Request Emergency Service</text>
+        <path d="M190 8L198 8M198 8L194 4M198 8L194 12" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+</svg>

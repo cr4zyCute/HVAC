@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Production build outputs
+dist/
+.vercel/
+.astro/
+
+# Environment files and credentials
+.env
+.env.*
+!.env.example
+
+# Local SQLite databases and journals
+*.db
+*.db-journal
+*.sqlite
+northstar.db
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+

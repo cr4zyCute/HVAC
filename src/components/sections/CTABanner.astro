@@ -1,0 +1,72 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+import siteConfig from '@/data/siteConfig.json';
+
+interface Props {
+  overline?: string;
+  badge?: string;
+  badgeVariant?: 'emergency' | 'success';
+  title: string;
+  subtitle: string;
+  buttonText?: string;
+  buttonHref?: string;
+  phoneText?: string;
+  phoneHref?: string;
+  variant?: 'primary' | 'emergency';
+}
+
+const {
+  overline,
+  badge,
+  badgeVariant = 'emergency',
+  title,
+  subtitle,
+  buttonText = 'Book a Service',
+  buttonHref = '/book',
+  phoneText = `Call ${siteConfig.company.phone}`,
+  phoneHref = `tel:${siteConfig.company.phoneRaw}`,
+  variant = 'primary',
+} = Astro.props;
+
+const bgColors = {
+  primary: 'bg-brand-primary',
+  emergency: 'bg-gradient-to-r from-red-950 to-brand-primary border border-red-900/40',
+};
+---
+
+<section class="py-80 container">
+  <div class={`rounded-xl p-32 md:p-64 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-32 shadow-xl ${bgColors[variant]}`}>
+    <div class="max-w-2xl space-y-12">
+      {badge && (
+        <Badge variant={badgeVariant} dot={true} size="sm">
+          {badge}
+        </Badge>
+      )}
+      {overline && (
+        <span class="text-caption font-bold tracking-widest text-brand-accent uppercase block">
+          {overline}
+        </span>
+      )}
+      <h2 class="text-h2 md:text-h1 font-heading font-extrabold text-white leading-tight">
+        {title}
+      </h2>
+      <p class="text-body md:text-body-large text-text-muted leading-relaxed">
+        {subtitle}
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 shrink-0">
+      <Button href={buttonHref} variant={variant === 'emergency' ? 'emergency' : 'primary'} size="lg">
+        <span>{buttonText}</span>
+        <Icon name="arrow-right" size={18} />
+      </Button>
+      <Button href={phoneHref} variant="outline" size="lg" class="text-white border-white/20 hover:bg-white/10 hover:border-white">
+        <Icon name="phone" size={18} class="text-amber-400" />
+        <span>{phoneText}</span>
+      </Button>
+    </div>
+  </div>
+</section>
+

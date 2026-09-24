@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "author": "David Miller",
+    "location": "Oak Ridge Subdivision",
+    "verified": true,
+    "rating": 5,
+    "service": "Air Conditioning Repair",
+    "date": "2 weeks ago",
+    "quote": "Our AC compressor failed in the middle of a 95-degree heatwave. Technician Marcus arrived within 45 minutes, had the dual capacitor in stock in his van, and fixed it at the exact quoted price. Remarkable speed and professionalism."
+  },
+  {
+    "id": 2,
+    "author": "Sarah Jenkins",
+    "location": "Downtown Metro",
+    "verified": true,
+    "rating": 5,
+    "service": "Furnace & Heating Fix",
+    "date": "1 month ago",
+    "quote": "No sales pressure at all! Other contractors told us we needed a $12,000 new unit. NorthStar tested the contactor, found a loose wire, and saved us thousands. Honest company with true craftsmanship."
+  },
+  {
+    "id": 3,
+    "author": "Robert Chen",
+    "location": "Westlake Heights",
+    "verified": true,
+    "rating": 5,
+    "service": "24-Point Annual Tune-Up",
+    "date": "2 months ago",
+    "quote": "Annual maintenance tune-up was thorough. They cleaned the condenser coils, cleared the drain line, and showed digital pressure gauge readings before and after. My electric bill dropped 18%."
+  },
+  {
+    "id": 4,
+    "author": "Emily Thompson",
+    "location": "Beaverton Hills",
+    "verified": true,
+    "rating": 5,
+    "service": "Air Conditioning Repair",
+    "date": "3 months ago",
+    "quote": "Called on a Sunday afternoon when our outdoor unit was buzzing loudly. Tech David diagnosed a failing fan motor bearing and replaced it cleanly. He wore boot covers throughout the home and left the site spotless."
+  },
+  {
+    "id": 5,
+    "author": "Michael Kowalski",
+    "location": "Lake Oswego",
+    "verified": true,
+    "rating": 5,
+    "service": "Furnace & Heating Fix",
+    "date": "4 months ago",
+    "quote": "Furnace stopped igniting right when temperatures dropped to 28 degrees. The dispatch team kept me updated every 15 minutes, technician arrived on time, cleaned the flame sensor, and verified combustion safety."
+  },
+  {
+    "id": 6,
+    "author": "Jessica Reynolds",
+    "location": "Pearl District",
+    "verified": true,
+    "rating": 5,
+    "service": "24-Point Annual Tune-Up",
+    "date": "5 months ago",
+    "quote": "Signed up for NorthStar's annual seasonal care plan. Super punctual, friendly, and very transparent. They provided photos of the evaporator coil condition and explained everything clearly."
+  }
+]

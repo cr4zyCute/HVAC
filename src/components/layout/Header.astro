@@ -1,0 +1,187 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+import siteConfig from '@/data/siteConfig.json';
+import { getSiteSettings, getNavigationItems } from '@/lib/db';
+
+const currentPath = Astro.url.pathname;
+
+const [dbSettings, dbNavItems] = await Promise.all([
+  getSiteSettings().catch(() => ({} as Record<string, string>)),
+  getNavigationItems('header').catch(() => [])
+]);
+
+const company = {
+  ...siteConfig.company,
+  brandFirst: dbSettings['brand_first'] || siteConfig.company.brandFirst,
+  brandAccent: dbSettings['brand_accent'] || siteConfig.company.brandAccent,
+  tagline: dbSettings['tagline'] || siteConfig.company.tagline,
+  phone: dbSettings['phone_primary'] || siteConfig.company.phone,
+  phoneRaw: dbSettings['phone_raw'] || siteConfig.company.phoneRaw,
+  dispatchNotice: dbSettings['dispatch_notice'] || siteConfig.company.dispatchNotice,
+  license: dbSettings['license_number'] || siteConfig.company.license,
+};
+
+const ctaText = dbSettings['header_cta_text'] || 'Book a Service';
+const ctaUrl = dbSettings['header_cta_url'] || '/book';
+
+const navItems = dbNavItems && dbNavItems.length > 0
+  ? dbNavItems.map(item => ({ href: item.href, label: item.label }))
+  : [
+      { href: '/', label: 'Home' },
+      { href: '/services', label: 'Services' },
+      { href: '/about', label: 'About' },
+      { href: '/service-areas', label: 'Service Areas' },
+      { href: '/financing', label: 'Financing' },
+      { href: '/reviews', label: 'Reviews' },
+      { href: '/contact', label: 'Contact' },
+    ];
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="w-full sticky top-0 z-50 bg-neutral-surface border-b border-neutral-border shadow-sm">
+  <!-- 1. Utility Top Bar (Desktop & Tablet) -->
+  <div class="hidden md:block bg-brand-secondary text-text-muted text-caption border-b border-brand-primary/40 py-8">
+    <div class="container flex items-center justify-between">
+      <div class="flex items-center gap-16">
+        <Badge variant="emergency" dot={true} size="sm">24/7 DISPATCH ACTIVE</Badge>
+        <span>{company.dispatchNotice}</span>
+      </div>
+
+      <div class="flex items-center gap-16">
+        <span class="text-caption uppercase font-semibold text-text-muted">Licensed &amp; Fully Insured</span>
+        <span class="text-neutral-border">|</span>
+        <a href={`tel:${company.phoneRaw}`} class="inline-flex items-center gap-6 font-semibold text-white hover:text-brand-accent transition-colors">
+          <Icon name="phone" size={14} class="text-amber-400" />
+          <span>{company.phone}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Main Navigation Bar -->
+  <div class="container h-80 md:h-88 flex items-center justify-between gap-16">
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-12 group focus-visible:rounded-sm shrink-0">
+      <div class="w-44 h-44 rounded-md bg-brand-primary flex items-center justify-center text-white shadow-sm group-hover:bg-brand-secondary transition-colors shrink-0">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z" fill="#FFFFFF"/>
+          <circle cx="12" cy="11" r="2" fill="#E65100"/>
+        </svg>
+      </div>
+      <div>
+        <div class="font-heading font-extrabold text-[20px] text-brand-primary leading-tight tracking-tight">
+          {company.brandFirst}<span class="text-brand-accent">{company.brandAccent}</span>
+        </div>
+        <div class="text-[10px] font-bold tracking-widest text-text-muted uppercase">
+          {company.tagline}
+        </div>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Menu -->
+    <nav class="hidden lg:flex items-center gap-16 xl:gap-24" aria-label="Main Navigation">
+      {navItems.map(item => {
+        const active = isActive(item.href);
+        return (
+          <a
+            href={item.href}
+            class={`relative py-8 text-small font-medium transition-colors whitespace-nowrap ${
+              active
+                ? 'text-brand-accent font-bold'
+                : 'text-text-secondary hover:text-brand-accent'
+            }`}
+            aria-current={active ? 'page' : undefined}
+          >
+            {item.label}
+            {active && (
+              <span class="absolute bottom-0 left-0 right-0 h-2 bg-brand-accent rounded-full" />
+            )}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Header Actions (CTA) -->
+    <div class="flex items-center gap-12 shrink-0">
+      <a href={`tel:${company.phoneRaw}`} class="hidden sm:inline-flex items-center gap-8 text-small font-bold text-brand-primary hover:text-brand-accent px-12 py-8 rounded-sm transition-colors whitespace-nowrap">
+        <Icon name="phone" size={16} class="text-brand-accent" />
+        <span class="hidden xl:inline">{company.phone}</span>
+      </a>
+
+      <Button href={ctaUrl} variant="primary" size="md" class="whitespace-nowrap">
+        <span>{ctaText}</span>
+        <Icon name="arrow-right" size={16} />
+      </Button>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        id="mobile-nav-toggle"
+        class="lg:hidden p-8 rounded-md text-brand-primary hover:bg-neutral-surface-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="hamburger-icon" class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="close-icon" class="w-24 h-24 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-neutral-surface border-t border-neutral-border px-24 py-20 shadow-lg animate-fadeIn">
+    <nav class="flex flex-col gap-12" aria-label="Mobile Navigation">
+      {navItems.map(item => {
+        const active = isActive(item.href);
+        return (
+          <a
+            href={item.href}
+            class={`py-10 px-12 rounded-sm text-body font-medium transition-colors ${
+              active
+                ? 'bg-brand-accent/10 text-brand-accent font-bold'
+                : 'text-text-primary hover:bg-neutral-surface-alt'
+            }`}
+            aria-current={active ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+      <div class="pt-16 border-t border-neutral-border flex flex-col gap-12">
+        <a href={`tel:${company.phoneRaw}`} class="flex items-center gap-10 py-10 px-12 text-small font-bold text-brand-primary bg-neutral-surface-alt rounded-sm">
+          <Icon name="phone" size={16} class="text-brand-accent" />
+          <span>Call Dispatch: {company.phone}</span>
+        </a>
+        <Button href={ctaUrl} variant="primary" size="md" class="w-full">
+          {ctaText}
+        </Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const hamburger = document.getElementById('hamburger-icon');
+  const close = document.getElementById('close-icon');
+
+  if (toggleBtn && menu && hamburger && close) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      menu.classList.toggle('hidden');
+      hamburger.classList.toggle('hidden');
+      close.classList.toggle('hidden');
+    });
+  }
+</script>

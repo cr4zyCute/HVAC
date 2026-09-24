@@ -1,0 +1,1865 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+import defaultServices from '@/content/services.json';
+import defaultReviews from '@/content/reviews.json';
+import { db, ensureDbInitialized, getHomepageSections, getSiteSettings } from '@/lib/db';
+
+await ensureDbInitialized();
+
+const [sections, siteSettings, dbServicesRes, dbReviewsRes, mediaRes] = await Promise.all([
+  getHomepageSections(),
+  getSiteSettings(),
+  db.execute('SELECT * FROM services WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC LIMIT 6'),
+  db.execute('SELECT * FROM reviews WHERE is_approved = 1 ORDER BY is_featured DESC, created_at DESC LIMIT 6'),
+  db.execute('SELECT id, file_name, url, alt_text, mime_type, file_size FROM media ORDER BY created_at DESC LIMIT 50')
+]);
+
+const mediaList = mediaRes.rows;
+
+// Helper to safely parse JSON
+function safeJson(str: string, fallback: any = {}) {
+  try {
+    return JSON.parse(str || '{}');
+  } catch {
+    return fallback;
+  }
+}
+
+// 1. Hero
+const hero = sections['hero'] || {
+  title: 'Reliable Heating & AC Solutions for Lasting Comfort.',
+  subtitle: 'From precision emergency AC repairs to high-efficiency furnace installations, licensed NorthStar technicians deliver transparent flat-rate pricing and respectful service across your neighborhood.',
+  badge: 'Fast Same-Day Response Guaranteed',
+  image_url: '/images/hero-technician-ac.jpg',
+  image_alt: 'Certified NorthStar HVAC technician testing outdoor condensing unit with digital manifold gauges',
+  primary_btn_text: 'Schedule Service',
+  primary_btn_url: '/book',
+  secondary_btn_text: siteSettings['phone_primary'] ? `Call ${siteSettings['phone_primary']}` : 'Call (555) 014-7824',
+  secondary_btn_url: siteSettings['phone_raw'] ? `tel:${siteSettings['phone_raw']}` : 'tel:5550147824',
+  is_enabled: 1
+};
+const heroExtra = safeJson(hero.extra_data_json, {
+  rating_score: '4.9 / 5.0 Rating',
+  rating_subtext: 'across Google & Yelp',
+  trust_card_title: 'Full 90-Day Workmanship Guarantee',
+  trust_card_desc: 'Zero hidden trip charges on all diagnostic calls'
+});
+
+// 2. Trust Signals
+const trustSection = sections['trust_signals'] || { is_enabled: 1 };
+const trustSignals: Array<{ icon: string; title: string; text: string }> = safeJson(trustSection.extra_data_json, [
+  { icon: 'shield', title: 'NATE & EPA Certified', text: 'Rigorous master technician standards' },
+  { icon: 'check', title: 'Upfront Flat Pricing', text: 'Written quotes before any work begins' },
+  { icon: 'star', title: '4.9★ Rated Locally', text: 'Over 1,200+ verified homeowner reviews' },
+  { icon: 'clock', title: '24/7 Live Dispatch', text: 'Average 45-min emergency van response' }
+]);
+
+// 3. Services Intro
+const servicesIntro = sections['services_intro'] || {
+  title: 'Comprehensive HVAC Services',
+  subtitle: 'Engineered for high SEER2 energy efficiency, indoor air purity, and year-round indoor comfort.',
+  badge: 'PRECISION CLIMATE SOLUTIONS',
+  primary_btn_text: 'Explore All Services',
+  primary_btn_url: '/services',
+  is_enabled: 1
+};
+const services = dbServicesRes.rows.length > 0
+  ? dbServicesRes.rows.map(s => ({
+      id: s.id as string,
+      slug: s.slug as string,
+      title: s.title as string,
+      category: 'Residential HVAC',
+      badge: Number(s.starting_price) > 0 ? `From $${Number(s.starting_price).toFixed(0)}` : 'Flat Rate',
+      icon: 'wrench',
+      shortDescription: s.short_desc as string,
+      fullDescription: s.full_desc as string
+    }))
+  : defaultServices.map((s, i) => ({ ...s, id: `svc_default_${i}` }));
+
+// 4. Emergency CTA
+const emergencyCta = sections['emergency_cta'] || {
+  badge: 'URGENT EMERGENCY CALLOUT',
+  title: 'HVAC Failure During Extreme Weather?',
+  subtitle: 'Our fully stocked mobile service vans are radio-dispatched 24/7 across the metro territory with genuine OEM parts on board.',
+  primary_btn_text: 'Emergency Dispatch',
+  primary_btn_url: '/emergency',
+  secondary_btn_text: siteSettings['emergency_phone'] ? `Call ${siteSettings['emergency_phone']}` : 'Call (555) 014-7824',
+  secondary_btn_url: siteSettings['phone_raw'] ? `tel:${siteSettings['phone_raw']}` : 'tel:5550147824',
+  is_enabled: 1
+};
+
+// 5. Why Choose Us
+const whyUs = sections['why_us'] || {
+  badge: 'THE NORTHSTAR STANDARD',
+  title: 'Why Local Homeowners Trust NorthStar',
+  description: 'We believe you deserve honest heating and cooling craftsmanship without manufactured sales pressure. When you call NorthStar, an experienced technician troubleshoots the root cause, explains your options clearly, and respects your home.',
+  image_url: '/images/technician-furnace-inspection.jpg',
+  image_alt: 'Licensed HVAC technician performing multi-point furnace combustion safety inspection',
+  primary_btn_text: 'Read Our Full Story',
+  primary_btn_url: '/about',
+  is_enabled: 1
+};
+const whyUsExtra = safeJson(whyUs.extra_data_json, {
+  badge_overlay: 'Clean Drop Cloth & Boot Covers on Every Call',
+  features: [
+    { title: 'Transparent Flat Pricing', desc: 'We quote all repairs in writing before beginning. No hidden diagnostic surprises.' },
+    { title: 'Fully Stocked Service Vans', desc: 'Over 90% of cooling and heating issues fixed on the very first trip.' },
+    { title: 'EPA & NATE Certified', desc: 'Work performed by technicians holding national HVAC engineering certifications.' },
+    { title: 'Zero Sales Pressure', desc: 'If a repair solves your comfort issue safely, we will never force a premature replacement.' }
+  ]
+});
+
+// 6. How It Works
+const howItWorks = sections['how_it_works'] || {
+  badge: 'SEAMLESS PROCESS',
+  title: 'How It Works in 3 Simple Steps',
+  subtitle: 'Restoring your home comfort should be straightforward and stress-free.',
+  is_enabled: 1
+};
+const stepsList: Array<{ step: number; title: string; desc: string }> = safeJson(howItWorks.extra_data_json, [
+  { step: 1, title: 'Schedule Online or Call', desc: 'Pick your preferred arrival window through our 60-second booking form or speak directly with our 24/7 dispatcher.' },
+  { step: 2, title: 'Diagnostic & Upfront Quote', desc: 'Technician conducts digital manifold testing, identifies the problem, and presents a written flat-rate quote before touching any tools.' },
+  { step: 3, title: 'Precision Fix & Guarantee', desc: 'Repairs are completed with OEM factory parts, load-tested for cooling delta T, and backed by our full 90-day guarantee.' }
+]);
+
+// 7. Service Areas
+const serviceAreasSec = sections['service_areas'] || {
+  badge: 'LOCAL COMMUNITY DISPATCH',
+  title: 'Serving Neighborhoods Across the Metro Region',
+  subtitle: 'Our radio-dispatched mobile technicians are strategically positioned for 45-minute response times.',
+  primary_btn_text: 'Check Your ZIP Code',
+  primary_btn_url: '/service-areas',
+  is_enabled: 1
+};
+const serviceAreas: string[] = safeJson(serviceAreasSec.extra_data_json, [
+  'Downtown Metro', 'Oak Ridge Estates', 'Westlake Heights',
+  'Pine Valley', 'Riverdale Crossing', 'Eastridge Park'
+]);
+
+// 8. Reviews Section
+const reviewsIntro = sections['reviews_intro'] || {
+  badge: 'VERIFIED LOCAL FEEDBACK',
+  title: '5-Star Reputations in Every Neighborhood',
+  subtitle: 'Real feedback from local residents who trust NorthStar for honest heating and cooling craftsmanship.',
+  primary_btn_text: 'View All 1,200+ Reviews',
+  primary_btn_url: '/reviews',
+  is_enabled: 1
+};
+const reviews = dbReviewsRes.rows.length > 0
+  ? dbReviewsRes.rows.map(r => ({
+      id: r.id as string,
+      author: r.author_name as string,
+      location: r.author_location as string,
+      quote: r.content as string,
+      rating: Number(r.rating),
+      service: r.service_type as string
+    }))
+  : defaultReviews.map((r, i) => ({ ...r, id: `rev_default_${i}` }));
+
+// 9. Financing Banner
+const financingCta = sections['financing_cta'] || {
+  badge: '0% APR AVAILABLE FOR 36 MONTHS',
+  title: 'Need a Replacement System? Flexible Payment Options Available.',
+  subtitle: 'Plans starting as low as $89/month for qualifying high-efficiency SEER2 heat pumps and furnaces.',
+  primary_btn_text: 'Explore Financing Plans',
+  primary_btn_url: '/financing',
+  is_enabled: 1
+};
+
+// 10. Final CTA
+const finalCta = sections['final_cta'] || {
+  badge: 'PROMPT COMFORT RESTORATION',
+  title: 'Restore Your Home Comfort Today',
+  subtitle: 'Same-day emergency AC and furnace repair appointments available across our local service territory.',
+  primary_btn_text: 'Book Service Online',
+  primary_btn_url: '/book',
+  secondary_btn_text: siteSettings['phone_primary'] ? `Call ${siteSettings['phone_primary']}` : 'Call (555) 014-7824',
+  secondary_btn_url: siteSettings['phone_raw'] ? `tel:${siteSettings['phone_raw']}` : 'tel:5550147824',
+  is_enabled: 1
+};
+
+const initialCmsData = {
+  hero: { ...hero, extra: heroExtra },
+  trust_signals: { ...trustSection, items: trustSignals },
+  services_intro: { ...servicesIntro },
+  emergency_cta: { ...emergencyCta },
+  why_us: { ...whyUs, extra: whyUsExtra },
+  how_it_works: { ...howItWorks, steps: stepsList },
+  service_areas: { ...serviceAreasSec, areas: serviceAreas },
+  reviews_intro: { ...reviewsIntro },
+  financing_cta: { ...financingCta },
+  final_cta: { ...finalCta }
+};
+---
+
+<AdminLayout
+  title="Homepage Content Management"
+  activeSection="homepage"
+  breadcrumbs={[{ label: 'Homepage Content Management' }]}
+>
+  <!-- Toast Notification Container -->
+  <div id="toast" class="hidden fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-2xl text-small font-semibold text-white transition-all transform duration-300"></div>
+
+  <!-- Media Library Picker Modal -->
+  <div id="media-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-16">
+    <div class="bg-neutral-surface rounded-xl border border-neutral-border shadow-2xl w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden animate-fade-in">
+      <div class="px-24 py-16 border-b border-neutral-border flex items-center justify-between bg-neutral-surface-alt">
+        <div class="flex items-center gap-10">
+          <div class="w-32 h-32 rounded-md bg-brand-primary text-brand-accent flex items-center justify-center">
+            <svg width="16" height="16" class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-h4 font-heading font-bold text-brand-primary">Select Image from Media Library</h3>
+            <p class="text-caption text-text-muted">Click any image to assign it directly to the selected element</p>
+          </div>
+        </div>
+        <button id="media-modal-close" class="text-text-muted hover:text-brand-primary p-6 rounded-md hover:bg-neutral-surface transition-colors" title="Close modal">
+          ✕
+        </button>
+      </div>
+
+      <!-- Search & Upload Bar -->
+      <div class="p-16 border-b border-neutral-border flex flex-col sm:flex-row items-center gap-12 bg-neutral-surface">
+        <div class="relative flex-1 w-full">
+          <input
+            type="text"
+            id="media-search-input"
+            placeholder="Search media by filename or alt text... (Enter to filter)"
+            class="w-full h-38 pl-36 pr-12 text-small bg-neutral-surface-alt border border-neutral-border rounded-md focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+          />
+          <svg width="16" height="16" class="w-16 h-16 text-text-muted absolute left-12 top-11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <label class="h-38 px-16 bg-brand-primary hover:bg-brand-secondary text-white text-small font-semibold rounded-md flex items-center gap-8 cursor-pointer shrink-0 transition-colors">
+          <svg width="16" height="16" class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          <span>Upload New Image</span>
+          <input type="file" id="media-file-input" accept="image/*" class="hidden" />
+        </label>
+      </div>
+
+      <!-- Media Grid -->
+      <div id="media-grid-container" class="flex-1 overflow-y-auto p-20 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-16">
+        {mediaList.map((m: any) => (
+          <div
+            class="media-item-card group relative bg-neutral-surface-alt rounded-lg border border-neutral-border hover:border-brand-accent overflow-hidden cursor-pointer transition-all hover:shadow-md"
+            data-url={m.url}
+            data-alt={m.alt_text || m.file_name}
+            data-filename={m.file_name}
+          >
+            <div class="h-120 bg-neutral-surface flex items-center justify-center overflow-hidden">
+              <img src={m.url} alt={m.alt_text || m.file_name} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" loading="lazy" />
+            </div>
+            <div class="p-8 bg-neutral-surface">
+              <p class="text-caption font-semibold text-brand-primary truncate">{m.file_name}</p>
+              <p class="text-[11px] text-text-muted truncate">{m.alt_text || 'No alt description'}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Button Popover Modal / Bubble (Directly on Button) -->
+  <div id="button-inline-popover" class="hidden fixed z-50 bg-neutral-surface rounded-xl border border-brand-accent shadow-2xl p-16 w-80 max-w-[90vw] animate-fade-in">
+    <div class="flex items-center justify-between pb-10 mb-12 border-b border-neutral-border">
+      <span class="text-caption font-bold font-heading text-brand-primary flex items-center gap-6">
+        <span>🔘</span>
+        <span id="popover-btn-title">Configure Button</span>
+      </span>
+      <button type="button" id="popover-btn-close" class="text-text-muted hover:text-brand-primary p-2">✕</button>
+    </div>
+    <div class="space-y-12">
+      <div>
+        <label class="block text-caption font-bold text-text-secondary mb-4">Button Label (Enter to change)</label>
+        <input type="text" id="popover-input-text" class="w-full h-34 px-10 text-small bg-neutral-surface-alt border border-neutral-border rounded-md focus:border-brand-primary outline-none" placeholder="Enter button label..." />
+      </div>
+      <div>
+        <label class="block text-caption font-bold text-text-secondary mb-4">Destination Link (URL)</label>
+        <input type="text" id="popover-input-url" class="w-full h-34 px-10 text-small bg-neutral-surface-alt border border-neutral-border rounded-md focus:border-brand-primary outline-none" placeholder="e.g. /book or tel:5550147824" />
+      </div>
+      <div class="pt-4 flex items-center justify-end gap-8">
+        <button type="button" id="popover-btn-done" class="px-14 py-6 bg-brand-primary hover:bg-brand-secondary text-white text-caption font-bold rounded-md transition-colors">
+          Apply &amp; Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline Image Popover / Overlay -->
+  <div id="image-inline-popover" class="hidden fixed z-50 bg-neutral-surface rounded-xl border border-brand-accent shadow-2xl p-16 w-88 max-w-[90vw] animate-fade-in">
+    <div class="flex items-center justify-between pb-10 mb-12 border-b border-neutral-border">
+      <span class="text-caption font-bold font-heading text-brand-primary flex items-center gap-6">
+        <span>🖼</span>
+        <span>Image Options</span>
+      </span>
+      <button type="button" id="popover-img-close" class="text-text-muted hover:text-brand-primary p-2">✕</button>
+    </div>
+    <div class="space-y-12">
+      <div class="h-100 rounded-md overflow-hidden bg-neutral-surface-alt border border-neutral-border flex items-center justify-center">
+        <img id="popover-img-preview" src="" alt="" class="w-full h-full object-cover" />
+      </div>
+      <button type="button" id="popover-btn-choose-media" class="w-full h-36 bg-brand-primary hover:bg-brand-secondary text-white text-caption font-bold rounded-md flex items-center justify-center gap-6 transition-colors">
+        <span>Choose from Media Library</span>
+      </button>
+      <div>
+        <label class="block text-caption font-bold text-text-secondary mb-4">Image Alt Text (Accessibility)</label>
+        <input type="text" id="popover-input-img-alt" class="w-full h-34 px-10 text-small bg-neutral-surface-alt border border-neutral-border rounded-md focus:border-brand-primary outline-none" placeholder="Enter image description..." />
+      </div>
+      <div class="pt-4 flex items-center justify-end gap-8">
+        <button type="button" id="popover-img-done" class="px-14 py-6 bg-brand-primary hover:bg-brand-secondary text-white text-caption font-bold rounded-md transition-colors">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Top Editor Toolbar -->
+  <header class="sticky top-0 z-40 bg-neutral-surface/95 backdrop-blur-md border-b border-neutral-border px-16 lg:px-24 py-12 mb-20 shadow-sm">
+    <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-12">
+      <!-- Title & Live Status -->
+      <div class="flex flex-wrap items-center gap-12">
+        <h1 class="text-h3 font-heading font-extrabold text-brand-primary tracking-tight whitespace-nowrap">
+          Homepage Content Management
+        </h1>
+        <span class="inline-flex px-8 py-2 rounded-full text-caption font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 whitespace-nowrap">
+          DIRECT INLINE VISUAL EDITOR
+        </span>
+        <div class="hidden sm:inline-flex items-center gap-6 text-caption text-text-muted">
+          <span class="w-6 h-6 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>SSE Real-Time Sync</span>
+        </div>
+      </div>
+
+      <!-- Action & Viewport Controls -->
+      <div class="flex flex-wrap items-center gap-10">
+        <!-- Viewport Mode Switcher -->
+        <div class="bg-neutral-surface-alt border border-neutral-border rounded-lg p-2 flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            id="btn-view-desktop"
+            class="px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
+            title="Full Desktop View"
+          >
+            <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span>Desktop</span>
+          </button>
+          <button
+            type="button"
+            id="btn-view-tablet"
+            class="px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
+            title="Tablet View (768px)"
+          >
+            <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+            <span>Tablet</span>
+          </button>
+          <button
+            type="button"
+            id="btn-view-mobile"
+            class="px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0"
+            title="Mobile View (390px)"
+          >
+            <svg width="14" height="14" class="w-14 h-14 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+            <span>Mobile</span>
+          </button>
+        </div>
+
+        <!-- Section Quick Jump -->
+        <select
+          id="section-jump-select"
+          class="h-34 px-10 text-caption font-semibold bg-neutral-surface border border-neutral-border rounded-md text-text-primary focus:border-brand-primary outline-none cursor-pointer shrink-0"
+          title="Jump to Section"
+        >
+          <option value="">Jump to Section...</option>
+          <option value="section-hero">1. Hero Section</option>
+          <option value="section-trust">2. Trust Signals</option>
+          <option value="section-services">3. Core Services</option>
+          <option value="section-emergency">4. Emergency Banner</option>
+          <option value="section-why-us">5. Why Choose Us</option>
+          <option value="section-how-it-works">6. How It Works</option>
+          <option value="section-service-areas">7. Service Areas</option>
+          <option value="section-reviews">8. Reviews Section</option>
+          <option value="section-financing">9. Financing Banner</option>
+          <option value="section-final-cta">10. Final Call to Action</option>
+        </select>
+
+        <!-- Save Status Pill -->
+        <div
+          id="save-status-pill"
+          class="inline-flex items-center justify-center gap-6 px-12 py-6 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all whitespace-nowrap shrink-0 min-w-[145px]"
+        >
+          <span class="w-6 h-6 rounded-full bg-emerald-500 shrink-0"></span>
+          <span id="save-status-label" class="whitespace-nowrap">All changes saved</span>
+        </div>
+
+        <!-- Save Changes Primary Button -->
+        <button
+          type="button"
+          id="btn-global-save"
+          class="h-36 px-16 bg-brand-primary hover:bg-brand-secondary text-white text-small font-semibold rounded-md shadow-sm flex items-center gap-8 transition-all disabled:opacity-50 whitespace-nowrap shrink-0"
+        >
+          <svg width="16" height="16" class="w-16 h-16 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          <span id="btn-save-text" class="whitespace-nowrap">Save Changes</span>
+        </button>
+
+        <!-- Preview Public Site Button -->
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="h-36 px-12 bg-neutral-surface hover:bg-neutral-surface-alt border border-neutral-border text-brand-primary text-small font-semibold rounded-md flex items-center gap-6 transition-colors shadow-sm whitespace-nowrap shrink-0"
+          title="Open public website in a new tab"
+        >
+          <svg width="14" height="14" class="w-14 h-14 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          <span class="whitespace-nowrap">Preview Site</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Visual Canvas (Full width, no side panel) -->
+  <main id="visual-canvas-viewport" class="w-full transition-all duration-300 pb-80">
+    <div id="visual-canvas-wrapper" class="w-full bg-white rounded-xl shadow-lg border border-neutral-border overflow-hidden transition-all duration-300 mx-auto">
+
+      <!-- =====================================================================
+           1. HERO SECTION
+           ===================================================================== -->
+      <section
+        id="section-hero"
+        class="visual-section bg-gradient-to-b from-brand-primary to-brand-secondary text-white py-64 lg:py-88 relative overflow-hidden"
+        data-section-key="hero"
+      >
+        <div class="container mx-auto px-16 lg:px-32 grid grid-cols-1 lg:grid-cols-12 gap-48 items-center">
+          <!-- Content Column -->
+          <div class="lg:col-span-7 space-y-24">
+            <!-- Hero Eyebrow Badge (Direct inline editable) -->
+            <div>
+              <span
+                id="canvas-hero-badge"
+                class="direct-inline-editable inline-flex items-center gap-6 px-14 py-6 rounded-full text-caption font-bold bg-feedback-success/20 text-feedback-success border border-feedback-success/30"
+                contenteditable="true"
+                data-section="hero"
+                data-field="badge"
+                data-placeholder="Enter hero badge text..."
+                title="Click and type to edit badge text directly"
+              >{hero.badge || 'Fast Same-Day Response Guaranteed'}</span>
+            </div>
+
+            <!-- Hero Title (Direct inline editable) -->
+            <div>
+              <h1
+                id="canvas-hero-title"
+                class="direct-inline-editable text-h1 sm:text-display font-heading font-extrabold tracking-tight leading-[1.1] text-white"
+                contenteditable="true"
+                data-section="hero"
+                data-field="title"
+                data-placeholder="Enter hero title..."
+                title="Click and type to edit hero title directly"
+              >{hero.title || 'Reliable Heating & AC Solutions for Lasting Comfort.'}</h1>
+            </div>
+
+            <!-- Hero Subtitle (Direct inline editable) -->
+            <div>
+              <p
+                id="canvas-hero-subtitle"
+                class="direct-inline-editable text-body-large text-slate-200 max-w-2xl leading-relaxed"
+                contenteditable="true"
+                data-section="hero"
+                data-field="subtitle"
+                data-placeholder="Enter description of services..."
+                title="Click and type to edit subtitle directly"
+              >{hero.subtitle || 'From precision emergency AC repairs to high-efficiency furnace installations, licensed NorthStar technicians deliver transparent flat-rate pricing and respectful service across your neighborhood.'}</p>
+            </div>
+
+            <!-- Hero Buttons Row (Click to configure inline) -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 pt-8">
+              <!-- Primary Button -->
+              <button
+                type="button"
+                id="canvas-hero-primary-btn"
+                class="direct-button-editable h-48 px-24 bg-brand-accent hover:bg-brand-accent/90 text-white font-bold rounded-md flex items-center justify-between gap-12 shadow-lg"
+                data-section="hero"
+                data-btn-type="primary"
+                data-label-field="primary_btn_text"
+                data-url-field="primary_btn_url"
+                data-text={hero.primary_btn_text || 'Schedule Service'}
+                data-url={hero.primary_btn_url || '/book'}
+                title="Click to edit button text and destination URL"
+              >
+                <span class="btn-display-text">{hero.primary_btn_text || 'Schedule Service'}</span>
+                <span class="text-caption opacity-80">⚙️</span>
+              </button>
+
+              <!-- Secondary Button -->
+              <button
+                type="button"
+                id="canvas-hero-secondary-btn"
+                class="direct-button-editable h-48 px-24 bg-transparent border border-white/20 text-white font-semibold rounded-md flex items-center justify-between gap-12 hover:bg-white/10"
+                data-section="hero"
+                data-btn-type="secondary"
+                data-label-field="secondary_btn_text"
+                data-url-field="secondary_btn_url"
+                data-text={hero.secondary_btn_text || 'Call (555) 014-7824'}
+                data-url={hero.secondary_btn_url || 'tel:5550147824'}
+                title="Click to edit phone button and destination URL"
+              >
+                <span class="btn-display-text">{hero.secondary_btn_text || 'Call (555) 014-7824'}</span>
+                <span class="text-caption opacity-80">⚙️</span>
+              </button>
+            </div>
+
+            <!-- Rating Sub-badge -->
+            <div class="pt-8 flex items-center gap-12 text-caption text-slate-300">
+              <div class="flex items-center gap-4 text-amber-400">
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+              </div>
+              <span>
+                <strong
+                  id="canvas-hero-rating-score"
+                  class="direct-inline-editable"
+                  contenteditable="true"
+                  data-section="hero"
+                  data-extra-field="rating_score"
+                  data-placeholder="Enter rating..."
+                >{heroExtra.rating_score || '4.9 / 5.0 Rating'}</strong>
+                <span
+                  id="canvas-hero-rating-subtext"
+                  class="direct-inline-editable"
+                  contenteditable="true"
+                  data-section="hero"
+                  data-extra-field="rating_subtext"
+                  data-placeholder="Enter platforms..."
+                > {heroExtra.rating_subtext || 'across Google & Yelp'}</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Image Column (Click image to swap directly) -->
+          <div class="lg:col-span-5 relative">
+            <div
+              class="direct-image-editable relative rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-brand-primary group cursor-pointer"
+              data-section="hero"
+              data-img-url={hero.image_url || '/images/hero-technician-ac.jpg'}
+              data-img-alt={hero.image_alt || 'NorthStar HVAC technician at work'}
+              title="Click image to change or upload new photo"
+            >
+              <img
+                id="canvas-hero-img"
+                src={hero.image_url || '/images/hero-technician-ac.jpg'}
+                alt={hero.image_alt || 'NorthStar HVAC technician at work'}
+                class="w-full h-380 sm:h-460 object-cover group-hover:opacity-95 transition-opacity"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent"></div>
+
+              <!-- In-place Image Edit Overlay Hover Pill -->
+              <div class="absolute top-16 right-16 px-12 py-6 bg-brand-primary/90 text-white rounded-md text-caption font-bold flex items-center gap-6 shadow-md border border-white/20">
+                <span>📷 Click to change image</span>
+              </div>
+
+              <!-- Floating Workmanship Guarantee Card -->
+              <div class="absolute bottom-16 left-16 right-16 bg-brand-primary/95 backdrop-blur-md border border-white/15 p-16 rounded-lg flex items-center gap-14">
+                <div class="w-38 h-38 rounded-full bg-feedback-success/20 text-feedback-success flex items-center justify-center shrink-0">
+                  <Icon name="check" size={18} />
+                </div>
+                <div class="text-caption">
+                  <div
+                    id="canvas-hero-card-title"
+                    class="direct-inline-editable font-bold text-white"
+                    contenteditable="true"
+                    data-section="hero"
+                    data-extra-field="trust_card_title"
+                    data-placeholder="Enter card title..."
+                  >{heroExtra.trust_card_title || 'Full 90-Day Workmanship Guarantee'}</div>
+                  <div
+                    id="canvas-hero-card-desc"
+                    class="direct-inline-editable text-slate-300"
+                    contenteditable="true"
+                    data-section="hero"
+                    data-extra-field="trust_card_desc"
+                    data-placeholder="Enter card description..."
+                  >{heroExtra.trust_card_desc || 'Zero hidden trip charges on all diagnostic calls'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           2. TRUST SIGNALS BAR
+           ===================================================================== -->
+      <section
+        id="section-trust"
+        class="visual-section bg-neutral-surface border-b border-neutral-border py-28"
+        data-section-key="trust_signals"
+      >
+        <div class="container mx-auto px-16 lg:px-32">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-20">
+            {trustSignals.map((signal, idx) => (
+              <div class="flex items-center gap-14 p-8 rounded-md hover:bg-neutral-surface-alt transition-colors">
+                <div class="w-40 h-40 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center shrink-0 border border-neutral-border">
+                  <Icon name={signal.icon} size={20} class="text-brand-accent" />
+                </div>
+                <div>
+                  <div
+                    class="direct-inline-editable text-small font-heading font-bold text-brand-primary"
+                    contenteditable="true"
+                    data-section="trust_signals"
+                    data-array-index={idx}
+                    data-array-field="title"
+                    data-placeholder="Enter title..."
+                  >{signal.title}</div>
+                  <div
+                    class="direct-inline-editable text-caption text-text-muted"
+                    contenteditable="true"
+                    data-section="trust_signals"
+                    data-array-index={idx}
+                    data-array-field="text"
+                    data-placeholder="Enter text..."
+                  >{signal.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           3. CORE SERVICES GRID
+           ===================================================================== -->
+      <section
+        id="section-services"
+        class="visual-section py-64 container mx-auto px-16 lg:px-32"
+        data-section-key="services_intro"
+      >
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-40 gap-16">
+          <div class="space-y-6">
+            <div>
+              <span
+                id="canvas-services-badge"
+                class="direct-inline-editable text-caption font-bold tracking-widest text-brand-accent uppercase block"
+                contenteditable="true"
+                data-section="services_intro"
+                data-field="badge"
+                data-placeholder="Enter badge..."
+              >{servicesIntro.badge || 'PRECISION CLIMATE SOLUTIONS'}</span>
+            </div>
+
+            <div>
+              <h2
+                id="canvas-services-title"
+                class="direct-inline-editable text-h2 font-heading font-extrabold text-brand-primary"
+                contenteditable="true"
+                data-section="services_intro"
+                data-field="title"
+                data-placeholder="Enter heading..."
+              >{servicesIntro.title || 'Comprehensive HVAC Services'}</h2>
+            </div>
+
+            <div>
+              <p
+                id="canvas-services-subtitle"
+                class="direct-inline-editable text-body text-text-secondary max-w-2xl"
+                contenteditable="true"
+                data-section="services_intro"
+                data-field="subtitle"
+                data-placeholder="Enter subtitle..."
+              >{servicesIntro.subtitle || 'Engineered for high SEER2 energy efficiency, indoor air purity, and year-round indoor comfort.'}</p>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              id="canvas-services-primary-btn"
+              class="direct-button-editable h-40 px-18 bg-neutral-surface border border-neutral-border text-brand-primary font-semibold rounded-md flex items-center gap-8 shadow-sm"
+              data-section="services_intro"
+              data-btn-type="primary"
+              data-label-field="primary_btn_text"
+              data-url-field="primary_btn_url"
+              data-text={servicesIntro.primary_btn_text || 'Explore All Services'}
+              data-url={servicesIntro.primary_btn_url || '/services'}
+              title="Click to edit button"
+            >
+              <span class="btn-display-text">{servicesIntro.primary_btn_text || 'Explore All Services'}</span>
+              <Icon name="arrow-right" size={16} />
+            </button>
+          </div>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24">
+          {services.slice(0, 6).map((s) => (
+            <div class="bg-neutral-surface border border-neutral-border rounded-lg p-24 flex flex-col justify-between hover:border-brand-accent transition-all group">
+              <div>
+                <div class="flex items-center justify-between mb-16">
+                  <div class="w-40 h-40 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center">
+                    <Icon name="wrench" size={20} class="text-brand-accent" />
+                  </div>
+                  <span class="px-8 py-2 rounded text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
+                    {s.badge}
+                  </span>
+                </div>
+                <h3 class="font-heading font-bold text-h3 text-brand-primary mb-8">{s.title}</h3>
+                <p class="text-small text-text-secondary line-clamp-3 mb-16">{s.shortDescription}</p>
+              </div>
+              <div class="pt-16 border-t border-neutral-border flex items-center justify-between text-caption font-semibold">
+                <a href="/admin/services" class="text-brand-primary hover:text-brand-accent flex items-center gap-4">
+                  <span>Edit in Services CMS</span>
+                  <span>↗</span>
+                </a>
+                <span class="px-10 py-4 bg-brand-primary text-white rounded text-caption">Book</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           4. EMERGENCY CALLOUT BANNER
+           ===================================================================== -->
+      <section
+        id="section-emergency"
+        class="visual-section bg-brand-primary text-white py-48"
+        data-section-key="emergency_cta"
+      >
+        <div class="container mx-auto px-16 lg:px-32">
+          <div class="bg-brand-secondary/90 border border-brand-accent/30 rounded-xl p-32 lg:p-40 flex flex-col lg:flex-row items-center justify-between gap-28">
+            <div class="space-y-10 max-w-2xl">
+              <div>
+                <span
+                  id="canvas-emergency-badge"
+                  class="direct-inline-editable px-10 py-4 rounded-full text-caption font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 inline-block"
+                  contenteditable="true"
+                  data-section="emergency_cta"
+                  data-field="badge"
+                  data-placeholder="Enter badge..."
+                >{emergencyCta.badge || 'URGENT EMERGENCY CALLOUT'}</span>
+              </div>
+
+              <div>
+                <h3
+                  id="canvas-emergency-title"
+                  class="direct-inline-editable text-h2 font-heading font-extrabold text-white"
+                  contenteditable="true"
+                  data-section="emergency_cta"
+                  data-field="title"
+                  data-placeholder="Enter emergency heading..."
+                >{emergencyCta.title || 'HVAC Failure During Extreme Weather?'}</h3>
+              </div>
+
+              <div>
+                <p
+                  id="canvas-emergency-subtitle"
+                  class="direct-inline-editable text-slate-300 text-body"
+                  contenteditable="true"
+                  data-section="emergency_cta"
+                  data-field="subtitle"
+                  data-placeholder="Enter emergency description..."
+                >{emergencyCta.subtitle || 'Our fully stocked mobile service vans are radio-dispatched 24/7 across the metro territory with genuine OEM parts on board.'}</p>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row gap-12 shrink-0 w-full lg:w-auto">
+              <button
+                type="button"
+                class="direct-button-editable h-44 px-20 bg-brand-accent text-white font-bold rounded-md flex items-center justify-center gap-8 shadow"
+                data-section="emergency_cta"
+                data-btn-type="primary"
+                data-label-field="primary_btn_text"
+                data-url-field="primary_btn_url"
+                data-text={emergencyCta.primary_btn_text || 'Emergency Dispatch'}
+                data-url={emergencyCta.primary_btn_url || '/emergency'}
+                title="Click to edit button"
+              >
+                <span class="btn-display-text">{emergencyCta.primary_btn_text || 'Emergency Dispatch'}</span>
+                <span class="text-caption opacity-80">⚙️</span>
+              </button>
+
+              <button
+                type="button"
+                class="direct-button-editable h-44 px-20 bg-transparent border border-white/30 text-white font-semibold rounded-md flex items-center justify-center gap-8 hover:bg-white/10"
+                data-section="emergency_cta"
+                data-btn-type="secondary"
+                data-label-field="secondary_btn_text"
+                data-url-field="secondary_btn_url"
+                data-text={emergencyCta.secondary_btn_text || 'Call (555) 014-7824'}
+                data-url={emergencyCta.secondary_btn_url || 'tel:5550147824'}
+                title="Click to edit phone button"
+              >
+                <span class="btn-display-text">{emergencyCta.secondary_btn_text || 'Call (555) 014-7824'}</span>
+                <span class="text-caption opacity-80">⚙️</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           5. WHY CHOOSE US
+           ===================================================================== -->
+      <section
+        id="section-why-us"
+        class="visual-section py-64 container mx-auto px-16 lg:px-32"
+        data-section-key="why_us"
+      >
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-48 items-center">
+          <!-- Left Info -->
+          <div class="lg:col-span-7 space-y-20">
+            <div>
+              <span
+                id="canvas-why-us-badge"
+                class="direct-inline-editable text-caption font-bold tracking-widest text-brand-accent uppercase block"
+                contenteditable="true"
+                data-section="why_us"
+                data-field="badge"
+                data-placeholder="Enter badge..."
+              >{whyUs.badge || 'THE NORTHSTAR STANDARD'}</span>
+            </div>
+
+            <div>
+              <h2
+                id="canvas-why-us-title"
+                class="direct-inline-editable text-h2 font-heading font-extrabold text-brand-primary"
+                contenteditable="true"
+                data-section="why_us"
+                data-field="title"
+                data-placeholder="Enter heading..."
+              >{whyUs.title || 'Why Local Homeowners Trust NorthStar'}</h2>
+            </div>
+
+            <div>
+              <p
+                id="canvas-why-us-desc"
+                class="direct-inline-editable text-body text-text-secondary leading-relaxed"
+                contenteditable="true"
+                data-section="why_us"
+                data-field="description"
+                data-placeholder="Enter description..."
+              >{whyUs.description || 'We believe you deserve honest heating and cooling craftsmanship without manufactured sales pressure.'}</p>
+            </div>
+
+            <!-- 4 Features -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 pt-12">
+              {whyUsExtra.features.map((feat: any, idx: number) => (
+                <div class="p-14 bg-neutral-surface-alt rounded-lg border border-neutral-border">
+                  <div
+                    class="direct-inline-editable font-heading font-bold text-small text-brand-primary mb-4"
+                    contenteditable="true"
+                    data-section="why_us"
+                    data-feature-index={idx}
+                    data-feature-field="title"
+                    data-placeholder="Enter title..."
+                  >{feat.title}</div>
+                  <div
+                    class="direct-inline-editable text-caption text-text-muted leading-relaxed"
+                    contenteditable="true"
+                    data-section="why_us"
+                    data-feature-index={idx}
+                    data-feature-field="desc"
+                    data-placeholder="Enter description..."
+                  >{feat.desc}</div>
+                </div>
+              ))}
+            </div>
+
+            <div class="pt-8">
+              <button
+                type="button"
+                class="direct-button-editable h-42 px-20 bg-brand-primary text-white font-semibold rounded-md flex items-center gap-8 shadow-sm"
+                data-section="why_us"
+                data-btn-type="primary"
+                data-label-field="primary_btn_text"
+                data-url-field="primary_btn_url"
+                data-text={whyUs.primary_btn_text || 'Read Our Full Story'}
+                data-url={whyUs.primary_btn_url || '/about'}
+                title="Click to edit button"
+              >
+                <span class="btn-display-text">{whyUs.primary_btn_text || 'Read Our Full Story'}</span>
+                <span class="text-caption opacity-80">⚙️</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Image -->
+          <div class="lg:col-span-5 relative">
+            <div
+              class="direct-image-editable relative rounded-xl overflow-hidden shadow-xl border border-neutral-border group cursor-pointer"
+              data-section="why_us"
+              data-img-url={whyUs.image_url || '/images/technician-furnace-inspection.jpg'}
+              data-img-alt={whyUs.image_alt || 'Licensed HVAC technician inspecting furnace'}
+              title="Click image to change or upload new photo"
+            >
+              <img
+                id="canvas-why-us-img"
+                src={whyUs.image_url || '/images/technician-furnace-inspection.jpg'}
+                alt={whyUs.image_alt || 'Licensed HVAC technician inspecting furnace'}
+                class="w-full h-380 sm:h-440 object-cover group-hover:opacity-95 transition-opacity"
+              />
+              <div class="absolute top-16 right-16 px-12 py-6 bg-brand-primary/90 text-white rounded-md text-caption font-bold flex items-center gap-6 shadow-md border border-white/20">
+                <span>📷 Click to change image</span>
+              </div>
+              <div class="absolute bottom-16 left-16 right-16 bg-brand-primary/95 text-white p-14 rounded-lg text-caption font-semibold flex items-center gap-10">
+                <Icon name="check" size={18} class="text-emerald-400 shrink-0" />
+                <span
+                  id="canvas-why-us-badge-overlay"
+                  class="direct-inline-editable"
+                  contenteditable="true"
+                  data-section="why_us"
+                  data-extra-field="badge_overlay"
+                  data-placeholder="Enter overlay badge..."
+                >{whyUsExtra.badge_overlay || 'Clean Drop Cloth & Boot Covers on Every Call'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           6. HOW IT WORKS 3-STEP PROCESS
+           ===================================================================== -->
+      <section
+        id="section-how-it-works"
+        class="visual-section bg-neutral-surface py-64 border-y border-neutral-border"
+        data-section-key="how_it_works"
+      >
+        <div class="container mx-auto px-16 lg:px-32">
+          <div class="text-center max-w-2xl mx-auto mb-40 space-y-6">
+            <div>
+              <span
+                id="canvas-steps-badge"
+                class="direct-inline-editable text-caption font-bold tracking-widest text-brand-accent uppercase block"
+                contenteditable="true"
+                data-section="how_it_works"
+                data-field="badge"
+                data-placeholder="Enter badge..."
+              >{howItWorks.badge || 'SEAMLESS PROCESS'}</span>
+            </div>
+
+            <div>
+              <h2
+                id="canvas-steps-title"
+                class="direct-inline-editable text-h2 font-heading font-extrabold text-brand-primary"
+                contenteditable="true"
+                data-section="how_it_works"
+                data-field="title"
+                data-placeholder="Enter title..."
+              >{howItWorks.title || 'How It Works in 3 Simple Steps'}</h2>
+            </div>
+
+            <div>
+              <p
+                id="canvas-steps-subtitle"
+                class="direct-inline-editable text-body text-text-secondary"
+                contenteditable="true"
+                data-section="how_it_works"
+                data-field="subtitle"
+                data-placeholder="Enter subtitle..."
+              >{howItWorks.subtitle || 'Restoring your home comfort should be straightforward and stress-free.'}</p>
+            </div>
+          </div>
+
+          <!-- Steps Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-24">
+            {stepsList.map((st, idx) => (
+              <div class="bg-white p-24 rounded-lg border border-neutral-border shadow-sm flex flex-col justify-between hover:border-brand-accent transition-all">
+                <div>
+                  <div class="w-36 h-36 rounded-full bg-brand-primary text-white font-bold flex items-center justify-center mb-16 text-small">
+                    {st.step}
+                  </div>
+                  <h3
+                    class="direct-inline-editable font-heading font-bold text-h3 text-brand-primary mb-8"
+                    contenteditable="true"
+                    data-section="how_it_works"
+                    data-step-index={idx}
+                    data-step-field="title"
+                    data-placeholder="Enter step title..."
+                  >{st.title}</h3>
+                  <p
+                    class="direct-inline-editable text-small text-text-secondary leading-relaxed"
+                    contenteditable="true"
+                    data-section="how_it_works"
+                    data-step-index={idx}
+                    data-step-field="desc"
+                    data-placeholder="Enter step description..."
+                  >{st.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           7. SERVICE AREAS
+           ===================================================================== -->
+      <section
+        id="section-service-areas"
+        class="visual-section py-56 container mx-auto px-16 lg:px-32"
+        data-section-key="service_areas"
+      >
+        <div class="bg-neutral-surface-alt border border-neutral-border rounded-xl p-32 lg:p-40 flex flex-col lg:flex-row items-center justify-between gap-24">
+          <div class="space-y-6 max-w-xl">
+            <div>
+              <span
+                id="canvas-areas-badge"
+                class="direct-inline-editable text-caption font-bold tracking-widest text-brand-accent uppercase block"
+                contenteditable="true"
+                data-section="service_areas"
+                data-field="badge"
+                data-placeholder="Enter badge..."
+              >{serviceAreasSec.badge || 'LOCAL COMMUNITY DISPATCH'}</span>
+            </div>
+
+            <div>
+              <h3
+                id="canvas-areas-title"
+                class="direct-inline-editable text-h2 font-heading font-extrabold text-brand-primary"
+                contenteditable="true"
+                data-section="service_areas"
+                data-field="title"
+                data-placeholder="Enter heading..."
+              >{serviceAreasSec.title || 'Serving Neighborhoods Across the Metro Region'}</h3>
+            </div>
+
+            <div>
+              <p
+                id="canvas-areas-subtitle"
+                class="direct-inline-editable text-body text-text-secondary"
+                contenteditable="true"
+                data-section="service_areas"
+                data-field="subtitle"
+                data-placeholder="Enter subtitle..."
+              >{serviceAreasSec.subtitle || 'Our radio-dispatched mobile technicians are strategically positioned for 45-minute response times.'}</p>
+            </div>
+
+            <!-- Neighborhood Tags -->
+            <div class="flex flex-wrap gap-8 pt-8">
+              {serviceAreas.map((area: string) => (
+                <span class="px-12 py-5 bg-white border border-neutral-border rounded-md text-caption font-semibold text-brand-primary">
+                  📍 {area}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              class="direct-button-editable h-44 px-22 bg-brand-primary text-white font-semibold rounded-md flex items-center gap-8 shadow-sm"
+              data-section="service_areas"
+              data-btn-type="primary"
+              data-label-field="primary_btn_text"
+              data-url-field="primary_btn_url"
+              data-text={serviceAreasSec.primary_btn_text || 'Check Your ZIP Code'}
+              data-url={serviceAreasSec.primary_btn_url || '/service-areas'}
+              title="Click to edit button"
+            >
+              <span class="btn-display-text">{serviceAreasSec.primary_btn_text || 'Check Your ZIP Code'}</span>
+              <span class="text-caption opacity-80">⚙️</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           8. REVIEWS SECTION
+           ===================================================================== -->
+      <section
+        id="section-reviews"
+        class="visual-section py-64 container mx-auto px-16 lg:px-32"
+        data-section-key="reviews_intro"
+      >
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-40 gap-16">
+          <div class="space-y-6">
+            <div>
+              <span
+                id="canvas-reviews-badge"
+                class="direct-inline-editable text-caption font-bold tracking-widest text-brand-accent uppercase block"
+                contenteditable="true"
+                data-section="reviews_intro"
+                data-field="badge"
+                data-placeholder="Enter badge..."
+              >{reviewsIntro.badge || 'VERIFIED LOCAL FEEDBACK'}</span>
+            </div>
+
+            <div>
+              <h2
+                id="canvas-reviews-title"
+                class="direct-inline-editable text-h2 font-heading font-extrabold text-brand-primary"
+                contenteditable="true"
+                data-section="reviews_intro"
+                data-field="title"
+                data-placeholder="Enter heading..."
+              >{reviewsIntro.title || '5-Star Reputations in Every Neighborhood'}</h2>
+            </div>
+
+            <div>
+              <p
+                id="canvas-reviews-subtitle"
+                class="direct-inline-editable text-body text-text-secondary max-w-2xl"
+                contenteditable="true"
+                data-section="reviews_intro"
+                data-field="subtitle"
+                data-placeholder="Enter subtitle..."
+              >{reviewsIntro.subtitle || 'Real feedback from local residents who trust NorthStar for honest heating and cooling craftsmanship.'}</p>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              class="direct-button-editable h-40 px-18 bg-neutral-surface border border-neutral-border text-brand-primary font-semibold rounded-md flex items-center gap-8 shadow-sm"
+              data-section="reviews_intro"
+              data-btn-type="primary"
+              data-label-field="primary_btn_text"
+              data-url-field="primary_btn_url"
+              data-text={reviewsIntro.primary_btn_text || 'View All 1,200+ Reviews'}
+              data-url={reviewsIntro.primary_btn_url || '/reviews'}
+              title="Click to edit button"
+            >
+              <span class="btn-display-text">{reviewsIntro.primary_btn_text || 'View All 1,200+ Reviews'}</span>
+              <Icon name="arrow-right" size={16} />
+            </button>
+          </div>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-24">
+          {reviews.slice(0, 3).map((r) => (
+            <div class="bg-neutral-surface border border-neutral-border rounded-lg p-24 flex flex-col justify-between hover:border-brand-accent transition-all group">
+              <div>
+                <div class="flex items-center gap-4 text-amber-400 mb-14">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Icon name="star" size={14} class={i < r.rating ? 'fill-current text-amber-400' : 'text-slate-300'} />
+                  ))}
+                </div>
+                <p class="text-small text-text-secondary italic mb-20 line-clamp-4 leading-relaxed">
+                  "{r.quote}"
+                </p>
+              </div>
+              <div class="pt-16 border-t border-neutral-border flex items-center justify-between">
+                <div>
+                  <div class="font-heading font-bold text-small text-brand-primary">{r.author}</div>
+                  <div class="text-caption text-text-muted">{r.location}</div>
+                </div>
+                <a href="/admin/reviews" class="text-caption font-semibold text-brand-accent hover:underline">
+                  Manage Reviews ↗
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           9. FINANCING BANNER
+           ===================================================================== -->
+      <section
+        id="section-financing"
+        class="visual-section bg-neutral-surface-alt border-y border-neutral-border py-48"
+        data-section-key="financing_cta"
+      >
+        <div class="container mx-auto px-16 lg:px-32 text-center max-w-3xl space-y-12">
+          <div>
+            <span
+              id="canvas-financing-badge"
+              class="direct-inline-editable px-12 py-5 rounded-full text-caption font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 inline-block"
+              contenteditable="true"
+              data-section="financing_cta"
+              data-field="badge"
+              data-placeholder="Enter badge..."
+            >{financingCta.badge || '0% APR AVAILABLE FOR 36 MONTHS'}</span>
+          </div>
+
+          <div>
+            <h2
+              id="canvas-financing-title"
+              class="direct-inline-editable text-h2 font-heading font-extrabold text-brand-primary"
+              contenteditable="true"
+              data-section="financing_cta"
+              data-field="title"
+              data-placeholder="Enter heading..."
+            >{financingCta.title || 'Need a Replacement System? Flexible Payment Options Available.'}</h2>
+          </div>
+
+          <div>
+            <p
+              id="canvas-financing-subtitle"
+              class="direct-inline-editable text-body text-text-secondary leading-relaxed"
+              contenteditable="true"
+              data-section="financing_cta"
+              data-field="subtitle"
+              data-placeholder="Enter subtitle..."
+            >{financingCta.subtitle || 'Plans starting as low as $89/month for qualifying high-efficiency SEER2 heat pumps and furnaces.'}</p>
+          </div>
+
+          <div class="pt-4">
+            <button
+              type="button"
+              class="direct-button-editable h-44 px-24 bg-brand-primary text-white font-bold rounded-md flex items-center gap-8 shadow-sm mx-auto"
+              data-section="financing_cta"
+              data-btn-type="primary"
+              data-label-field="primary_btn_text"
+              data-url-field="primary_btn_url"
+              data-text={financingCta.primary_btn_text || 'Explore Financing Plans'}
+              data-url={financingCta.primary_btn_url || '/financing'}
+              title="Click to edit button"
+            >
+              <span class="btn-display-text">{financingCta.primary_btn_text || 'Explore Financing Plans'}</span>
+              <span class="text-caption opacity-80">⚙️</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           10. FINAL CALL TO ACTION
+           ===================================================================== -->
+      <section
+        id="section-final-cta"
+        class="visual-section bg-gradient-to-b from-brand-secondary to-brand-primary text-white py-64"
+        data-section-key="final_cta"
+      >
+        <div class="container mx-auto px-16 lg:px-32 text-center max-w-3xl space-y-16">
+          <div>
+            <span
+              id="canvas-final-badge"
+              class="direct-inline-editable px-12 py-5 rounded-full text-caption font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 inline-block"
+              contenteditable="true"
+              data-section="final_cta"
+              data-field="badge"
+              data-placeholder="Enter badge..."
+            >{finalCta.badge || 'PROMPT COMFORT RESTORATION'}</span>
+          </div>
+
+          <div>
+            <h2
+              id="canvas-final-title"
+              class="direct-inline-editable text-h1 sm:text-display font-heading font-extrabold text-white"
+              contenteditable="true"
+              data-section="final_cta"
+              data-field="title"
+              data-placeholder="Enter heading..."
+            >{finalCta.title || 'Restore Your Home Comfort Today'}</h2>
+          </div>
+
+          <div>
+            <p
+              id="canvas-final-subtitle"
+              class="direct-inline-editable text-slate-200 text-body-large leading-relaxed"
+              contenteditable="true"
+              data-section="final_cta"
+              data-field="subtitle"
+              data-placeholder="Enter subtitle..."
+            >{finalCta.subtitle || 'Same-day emergency AC and furnace repair appointments available across our local service territory.'}</p>
+          </div>
+
+          <!-- Buttons Row -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-16 pt-8">
+            <button
+              type="button"
+              class="direct-button-editable h-48 px-24 bg-brand-accent text-white font-bold rounded-md flex items-center gap-8 shadow-lg"
+              data-section="final_cta"
+              data-btn-type="primary"
+              data-label-field="primary_btn_text"
+              data-url-field="primary_btn_url"
+              data-text={finalCta.primary_btn_text || 'Book Service Online'}
+              data-url={finalCta.primary_btn_url || '/book'}
+              title="Click to edit button"
+            >
+              <span class="btn-display-text">{finalCta.primary_btn_text || 'Book Service Online'}</span>
+              <span class="text-caption opacity-80">⚙️</span>
+            </button>
+
+            <button
+              type="button"
+              class="direct-button-editable h-48 px-24 bg-transparent border border-white/20 text-white font-semibold rounded-md flex items-center gap-8 hover:bg-white/10"
+              data-section="final_cta"
+              data-btn-type="secondary"
+              data-label-field="secondary_btn_text"
+              data-url-field="secondary_btn_url"
+              data-text={finalCta.secondary_btn_text || 'Call (555) 014-7824'}
+              data-url={finalCta.secondary_btn_url || 'tel:5550147824'}
+              title="Click to edit phone button"
+            >
+              <span class="btn-display-text">{finalCta.secondary_btn_text || 'Call (555) 014-7824'}</span>
+              <span class="text-caption opacity-80">⚙️</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</AdminLayout>
+
+<!-- Visual Editor CSS Enhancements -->
+<style is:global>
+  /* Direct inline editable elements (text, headings, badges) */
+  .direct-inline-editable {
+    position: relative;
+    cursor: text !important;
+    outline: none !important;
+    transition: box-shadow 0.15s ease, background-color 0.15s ease;
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: -2px -4px;
+  }
+  .direct-inline-editable:hover {
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.4) !important;
+    background-color: rgba(2, 132, 199, 0.05);
+  }
+  .direct-inline-editable:focus {
+    box-shadow: 0 0 0 3px #0284c7 !important;
+    background-color: rgba(2, 132, 199, 0.1);
+  }
+  .direct-inline-editable:empty::before {
+    content: attr(data-placeholder);
+    color: rgba(148, 163, 184, 0.8);
+    pointer-events: none;
+    font-style: italic;
+  }
+
+  /* Button editables */
+  .direct-button-editable {
+    cursor: pointer !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .direct-button-editable:hover {
+    box-shadow: 0 0 0 3px #0284c7 !important;
+  }
+
+  /* Image editables */
+  .direct-image-editable:hover {
+    box-shadow: 0 0 0 4px #0284c7 !important;
+  }
+
+  /* Responsive viewport preview frames */
+  .preview-tablet-frame {
+    max-width: 768px !important;
+    border: 8px solid #334155 !important;
+    border-radius: 24px !important;
+  }
+  .preview-mobile-frame {
+    max-width: 390px !important;
+    border: 10px solid #1e293b !important;
+    border-radius: 36px !important;
+  }
+</style>
+
+<!-- Client-side Visual Editor Script -->
+<script is:inline define:vars={{ initialCmsData }}>
+  (function () {
+    const cmsState = JSON.parse(JSON.stringify(initialCmsData));
+    let isDirty = false;
+    let activeImageTarget = null;
+    let activeButtonTarget = null;
+
+    const canvasWrapper = document.getElementById('visual-canvas-wrapper');
+    const saveStatusPill = document.getElementById('save-status-pill');
+    const saveStatusLabel = document.getElementById('save-status-label');
+    const btnGlobalSave = document.getElementById('btn-global-save');
+    const btnSaveText = document.getElementById('btn-save-text');
+    const toast = document.getElementById('toast');
+
+    // Popovers & Modals
+    const mediaModal = document.getElementById('media-modal');
+    const mediaModalClose = document.getElementById('media-modal-close');
+    const mediaSearchInput = document.getElementById('media-search-input');
+    const mediaFileInput = document.getElementById('media-file-input');
+    const mediaGridContainer = document.getElementById('media-grid-container');
+
+    const btnPopover = document.getElementById('button-inline-popover');
+    const btnPopoverClose = document.getElementById('popover-btn-close');
+    const btnPopoverDone = document.getElementById('popover-btn-done');
+    const btnPopoverText = document.getElementById('popover-input-text');
+    const btnPopoverUrl = document.getElementById('popover-input-url');
+
+    const imgPopover = document.getElementById('image-inline-popover');
+    const imgPopoverClose = document.getElementById('popover-img-close');
+    const imgPopoverDone = document.getElementById('popover-img-done');
+    const imgPopoverPreview = document.getElementById('popover-img-preview');
+    const imgPopoverAlt = document.getElementById('popover-input-img-alt');
+    const btnChooseMedia = document.getElementById('popover-btn-choose-media');
+
+    function showToast(msg, isError = false) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.className = `fixed bottom-24 right-24 z-50 px-20 py-12 rounded-md shadow-2xl text-small font-semibold text-white transition-all transform duration-300 ${
+        isError ? 'bg-feedback-error' : 'bg-brand-primary border border-brand-accent'
+      }`;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4000);
+    }
+
+    function setDirty(dirty) {
+      isDirty = dirty;
+      if (dirty) {
+        saveStatusPill.className = 'inline-flex items-center justify-center gap-6 px-12 py-6 rounded-full text-caption font-semibold bg-amber-50 text-amber-700 border border-amber-200 transition-all whitespace-nowrap shrink-0 min-w-[145px]';
+        saveStatusPill.querySelector('span').className = 'w-6 h-6 rounded-full bg-amber-500 shrink-0';
+        saveStatusLabel.textContent = 'Unsaved changes';
+      } else {
+        saveStatusPill.className = 'inline-flex items-center justify-center gap-6 px-12 py-6 rounded-full text-caption font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all whitespace-nowrap shrink-0 min-w-[145px]';
+        saveStatusPill.querySelector('span').className = 'w-6 h-6 rounded-full bg-emerald-500 shrink-0';
+        saveStatusLabel.textContent = 'All changes saved';
+      }
+    }
+
+    window.addEventListener('beforeunload', (e) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return e.returnValue;
+      }
+    });
+
+    // Viewport Mode Switcher
+    const btnDesktop = document.getElementById('btn-view-desktop');
+    const btnTablet = document.getElementById('btn-view-tablet');
+    const btnMobile = document.getElementById('btn-view-mobile');
+
+    function setViewportMode(mode) {
+      [btnDesktop, btnTablet, btnMobile].forEach(b => {
+        b.className = 'px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all';
+      });
+
+      canvasWrapper.classList.remove('preview-tablet-frame', 'preview-mobile-frame');
+
+      if (mode === 'desktop') {
+        btnDesktop.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all';
+      } else if (mode === 'tablet') {
+        btnTablet.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all';
+        canvasWrapper.classList.add('preview-tablet-frame');
+      } else if (mode === 'mobile') {
+        btnMobile.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all';
+        canvasWrapper.classList.add('preview-mobile-frame');
+      }
+    }
+
+    btnDesktop?.addEventListener('click', () => setViewportMode('desktop'));
+    btnTablet?.addEventListener('click', () => setViewportMode('tablet'));
+    btnMobile?.addEventListener('click', () => setViewportMode('mobile'));
+
+    // Section Jump Dropdown
+    const sectionSelect = document.getElementById('section-jump-select');
+    sectionSelect?.addEventListener('change', (e) => {
+      const targetId = e.target.value;
+      if (!targetId) return;
+      const targetSec = document.getElementById(targetId);
+      if (targetSec) {
+        targetSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    // 1. DIRECT INLINE TEXT EDITING LISTENERS
+    document.querySelectorAll('.direct-inline-editable').forEach(el => {
+      el.addEventListener('input', () => {
+        setDirty(true);
+        const section = el.getAttribute('data-section');
+        const field = el.getAttribute('data-field');
+        const extraField = el.getAttribute('data-extra-field');
+        const arrayIdx = el.getAttribute('data-array-index');
+        const arrayField = el.getAttribute('data-array-field');
+        const featIdx = el.getAttribute('data-feature-index');
+        const featField = el.getAttribute('data-feature-field');
+        const stepIdx = el.getAttribute('data-step-index');
+        const stepField = el.getAttribute('data-step-field');
+
+        const val = el.innerText.trim();
+
+        if (section && field && cmsState[section]) {
+          cmsState[section][field] = val;
+        } else if (section && extraField && cmsState[section]) {
+          if (!cmsState[section].extra) cmsState[section].extra = {};
+          cmsState[section].extra[extraField] = val;
+        } else if (section === 'trust_signals' && arrayIdx !== null && arrayField) {
+          const idx = parseInt(arrayIdx, 10);
+          if (cmsState.trust_signals.items?.[idx]) {
+            cmsState.trust_signals.items[idx][arrayField] = val;
+          }
+        } else if (section === 'why_us' && featIdx !== null && featField) {
+          const idx = parseInt(featIdx, 10);
+          if (cmsState.why_us.extra?.features?.[idx]) {
+            cmsState.why_us.extra.features[idx][featField] = val;
+          }
+        } else if (section === 'how_it_works' && stepIdx !== null && stepField) {
+          const idx = parseInt(stepIdx, 10);
+          if (cmsState.how_it_works.steps?.[idx]) {
+            cmsState.how_it_works.steps[idx][stepField] = val;
+          }
+        }
+      });
+    });
+
+    // 2. DIRECT IN-PLACE BUTTON EDITING
+    document.querySelectorAll('.direct-button-editable').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        activeButtonTarget = btn;
+
+        const section = btn.getAttribute('data-section');
+        const labelField = btn.getAttribute('data-label-field');
+        const urlField = btn.getAttribute('data-url-field');
+        const currentText = (cmsState[section]?.[labelField] !== undefined) ? cmsState[section][labelField] : (btn.getAttribute('data-text') || '');
+        const currentUrl = (cmsState[section]?.[urlField] !== undefined) ? cmsState[section][urlField] : (btn.getAttribute('data-url') || '');
+
+        btnPopoverText.value = currentText;
+        btnPopoverUrl.value = currentUrl;
+
+        // Position popover directly above or below button
+        const rect = btn.getBoundingClientRect();
+        btnPopover.style.top = Math.max(20, rect.bottom + 8) + 'px';
+        btnPopover.style.left = Math.min(window.innerWidth - 340, Math.max(20, rect.left)) + 'px';
+        btnPopover.classList.remove('hidden');
+        btnPopoverText.focus();
+      });
+    });
+
+    function closeButtonPopover() {
+      if (activeButtonTarget) {
+        const section = activeButtonTarget.getAttribute('data-section');
+        const labelField = activeButtonTarget.getAttribute('data-label-field');
+        const urlField = activeButtonTarget.getAttribute('data-url-field');
+
+        const newText = btnPopoverText.value.trim();
+        const newUrl = btnPopoverUrl.value.trim();
+
+        if (cmsState[section]) {
+          cmsState[section][labelField] = newText;
+          cmsState[section][urlField] = newUrl;
+        }
+
+        const displayText = activeButtonTarget.querySelector('.btn-display-text');
+        if (displayText) displayText.textContent = newText;
+        setDirty(true);
+      }
+      btnPopover.classList.add('hidden');
+      activeButtonTarget = null;
+    }
+
+    btnPopoverClose?.addEventListener('click', () => {
+      btnPopover.classList.add('hidden');
+      activeButtonTarget = null;
+    });
+    btnPopoverDone?.addEventListener('click', closeButtonPopover);
+
+    // 3. DIRECT IN-PLACE IMAGE EDITING
+    document.querySelectorAll('.direct-image-editable').forEach(imgWrapper => {
+      imgWrapper.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        activeImageTarget = imgWrapper;
+
+        const section = imgWrapper.getAttribute('data-section');
+        const currentUrl = cmsState[section]?.image_url || imgWrapper.getAttribute('data-img-url') || '';
+        const currentAlt = cmsState[section]?.image_alt || imgWrapper.getAttribute('data-img-alt') || '';
+
+        imgPopoverPreview.src = currentUrl;
+        imgPopoverAlt.value = currentAlt;
+
+        const rect = imgWrapper.getBoundingClientRect();
+        imgPopover.style.top = Math.max(20, rect.top + 20) + 'px';
+        imgPopover.style.left = Math.min(window.innerWidth - 370, Math.max(20, rect.left + 20)) + 'px';
+        imgPopover.classList.remove('hidden');
+      });
+    });
+
+    function closeImagePopover() {
+      if (activeImageTarget) {
+        const section = activeImageTarget.getAttribute('data-section');
+        const newAlt = imgPopoverAlt.value.trim();
+        if (cmsState[section]) {
+          cmsState[section].image_alt = newAlt;
+        }
+        const img = activeImageTarget.querySelector('img');
+        if (img) img.alt = newAlt;
+        setDirty(true);
+      }
+      imgPopover.classList.add('hidden');
+      activeImageTarget = null;
+    }
+
+    imgPopoverClose?.addEventListener('click', () => {
+      imgPopover.classList.add('hidden');
+      activeImageTarget = null;
+    });
+    imgPopoverDone?.addEventListener('click', closeImagePopover);
+
+    // Media Modal Integration
+    btnChooseMedia?.addEventListener('click', () => {
+      mediaModal.classList.remove('hidden');
+    });
+
+    mediaModalClose?.addEventListener('click', () => {
+      mediaModal.classList.add('hidden');
+    });
+
+    mediaModal?.addEventListener('click', (e) => {
+      if (e.target === mediaModal) mediaModal.classList.add('hidden');
+    });
+
+    mediaGridContainer?.addEventListener('click', (e) => {
+      const card = e.target.closest('.media-item-card');
+      if (!card || !activeImageTarget) return;
+
+      const url = card.getAttribute('data-url');
+      const alt = card.getAttribute('data-alt');
+
+      const section = activeImageTarget.getAttribute('data-section');
+      if (cmsState[section]) {
+        cmsState[section].image_url = url;
+        cmsState[section].image_alt = alt;
+      }
+
+      const img = activeImageTarget.querySelector('img');
+      if (img) {
+        img.src = url;
+        img.alt = alt;
+      }
+      imgPopoverPreview.src = url;
+      imgPopoverAlt.value = alt;
+
+      setDirty(true);
+      mediaModal.classList.add('hidden');
+      showToast('Image updated directly on page!');
+    });
+
+    // Media Upload
+    mediaFileInput?.addEventListener('change', async () => {
+      const file = mediaFileInput.files?.[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('alt_text', file.name.replace(/\.[^/.]+$/, ''));
+
+      try {
+        showToast('Uploading image...');
+        const res = await fetch('/api/admin/media', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': window.__CSRF_TOKEN__ || ''
+          },
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success && data.media) {
+          showToast('Image uploaded successfully!');
+          if (activeImageTarget) {
+            const url = data.media.url;
+            const alt = data.media.alt_text || data.media.file_name;
+            const section = activeImageTarget.getAttribute('data-section');
+            if (cmsState[section]) {
+              cmsState[section].image_url = url;
+              cmsState[section].image_alt = alt;
+            }
+            const img = activeImageTarget.querySelector('img');
+            if (img) {
+              img.src = url;
+              img.alt = alt;
+            }
+            imgPopoverPreview.src = url;
+            imgPopoverAlt.value = alt;
+            setDirty(true);
+            mediaModal.classList.add('hidden');
+          }
+        } else {
+          showToast(data.error || 'Upload failed', true);
+        }
+      } catch (err) {
+        showToast('Upload error: ' + err.message, true);
+      }
+    });
+
+    mediaSearchInput?.addEventListener('input', () => {
+      const q = mediaSearchInput.value.toLowerCase().trim();
+      const cards = mediaGridContainer.querySelectorAll('.media-item-card');
+      cards.forEach(c => {
+        const fn = (c.getAttribute('data-filename') || '').toLowerCase();
+        const alt = (c.getAttribute('data-alt') || '').toLowerCase();
+        if (!q || fn.includes(q) || alt.includes(q)) {
+          c.classList.remove('hidden');
+        } else {
+          c.classList.add('hidden');
+        }
+      });
+    });
+
+    // 4. GLOBAL SAVE CHANGES
+    async function saveAllChanges() {
+      btnGlobalSave.disabled = true;
+      if (btnSaveText) btnSaveText.textContent = 'Saving...';
+      saveStatusLabel.textContent = 'Saving changes...';
+
+      // Gather current innerText from DOM to ensure 100% fidelity
+      const heroBadge = document.getElementById('canvas-hero-badge')?.innerText.trim() || cmsState.hero.badge;
+      const heroTitle = document.getElementById('canvas-hero-title')?.innerText.trim() || cmsState.hero.title;
+      const heroSubtitle = document.getElementById('canvas-hero-subtitle')?.innerText.trim() || cmsState.hero.subtitle;
+      const servicesTitle = document.getElementById('canvas-services-title')?.innerText.trim() || cmsState.services_intro.title;
+      const servicesSubtitle = document.getElementById('canvas-services-subtitle')?.innerText.trim() || cmsState.services_intro.subtitle;
+      const emergencyTitle = document.getElementById('canvas-emergency-title')?.innerText.trim() || cmsState.emergency_cta.title;
+      const whyUsTitle = document.getElementById('canvas-why-us-title')?.innerText.trim() || cmsState.why_us.title;
+      const whyUsDesc = document.getElementById('canvas-why-us-desc')?.innerText.trim() || cmsState.why_us.description;
+      const stepsTitle = document.getElementById('canvas-steps-title')?.innerText.trim() || cmsState.how_it_works.title;
+      const areasTitle = document.getElementById('canvas-areas-title')?.innerText.trim() || cmsState.service_areas.title;
+      const reviewsTitle = document.getElementById('canvas-reviews-title')?.innerText.trim() || cmsState.reviews_intro.title;
+      const financingTitle = document.getElementById('canvas-financing-title')?.innerText.trim() || cmsState.financing_cta.title;
+      const finalTitle = document.getElementById('canvas-final-title')?.innerText.trim() || cmsState.final_cta.title;
+
+      const sectionsPayload = [
+        {
+          section_key: 'hero',
+          title: heroTitle,
+          subtitle: heroSubtitle,
+          badge: heroBadge,
+          primary_btn_text: cmsState.hero.primary_btn_text,
+          primary_btn_url: cmsState.hero.primary_btn_url,
+          secondary_btn_text: cmsState.hero.secondary_btn_text,
+          secondary_btn_url: cmsState.hero.secondary_btn_url,
+          image_url: cmsState.hero.image_url,
+          image_alt: cmsState.hero.image_alt,
+          is_enabled: cmsState.hero.is_enabled,
+          extra_data: cmsState.hero.extra
+        },
+        {
+          section_key: 'trust_signals',
+          is_enabled: cmsState.trust_signals.is_enabled,
+          extra_data: cmsState.trust_signals.items
+        },
+        {
+          section_key: 'services_intro',
+          title: servicesTitle,
+          subtitle: servicesSubtitle,
+          badge: cmsState.services_intro.badge,
+          primary_btn_text: cmsState.services_intro.primary_btn_text,
+          primary_btn_url: cmsState.services_intro.primary_btn_url,
+          is_enabled: cmsState.services_intro.is_enabled
+        },
+        {
+          section_key: 'emergency_cta',
+          title: emergencyTitle,
+          subtitle: cmsState.emergency_cta.subtitle,
+          badge: cmsState.emergency_cta.badge,
+          primary_btn_text: cmsState.emergency_cta.primary_btn_text,
+          primary_btn_url: cmsState.emergency_cta.primary_btn_url,
+          secondary_btn_text: cmsState.emergency_cta.secondary_btn_text,
+          secondary_btn_url: cmsState.emergency_cta.secondary_btn_url,
+          is_enabled: cmsState.emergency_cta.is_enabled
+        },
+        {
+          section_key: 'why_us',
+          title: whyUsTitle,
+          description: whyUsDesc,
+          badge: cmsState.why_us.badge,
+          image_url: cmsState.why_us.image_url,
+          image_alt: cmsState.why_us.image_alt,
+          primary_btn_text: cmsState.why_us.primary_btn_text,
+          primary_btn_url: cmsState.why_us.primary_btn_url,
+          is_enabled: cmsState.why_us.is_enabled,
+          extra_data: cmsState.why_us.extra
+        },
+        {
+          section_key: 'how_it_works',
+          title: stepsTitle,
+          subtitle: cmsState.how_it_works.subtitle,
+          badge: cmsState.how_it_works.badge,
+          is_enabled: cmsState.how_it_works.is_enabled,
+          extra_data: cmsState.how_it_works.steps
+        },
+        {
+          section_key: 'service_areas',
+          title: areasTitle,
+          subtitle: cmsState.service_areas.subtitle,
+          badge: cmsState.service_areas.badge,
+          primary_btn_text: cmsState.service_areas.primary_btn_text,
+          primary_btn_url: cmsState.service_areas.primary_btn_url,
+          is_enabled: cmsState.service_areas.is_enabled,
+          extra_data: cmsState.service_areas.areas
+        },
+        {
+          section_key: 'reviews_intro',
+          title: reviewsTitle,
+          subtitle: cmsState.reviews_intro.subtitle,
+          badge: cmsState.reviews_intro.badge,
+          primary_btn_text: cmsState.reviews_intro.primary_btn_text,
+          primary_btn_url: cmsState.reviews_intro.primary_btn_url,
+          is_enabled: cmsState.reviews_intro.is_enabled
+        },
+        {
+          section_key: 'financing_cta',
+          title: financingTitle,
+          subtitle: cmsState.financing_cta.subtitle,
+          badge: cmsState.financing_cta.badge,
+          primary_btn_text: cmsState.financing_cta.primary_btn_text,
+          primary_btn_url: cmsState.financing_cta.primary_btn_url,
+          is_enabled: cmsState.financing_cta.is_enabled
+        },
+        {
+          section_key: 'final_cta',
+          title: finalTitle,
+          subtitle: cmsState.final_cta.subtitle,
+          badge: cmsState.final_cta.badge,
+          primary_btn_text: cmsState.final_cta.primary_btn_text,
+          primary_btn_url: cmsState.final_cta.primary_btn_url,
+          secondary_btn_text: cmsState.final_cta.secondary_btn_text,
+          secondary_btn_url: cmsState.final_cta.secondary_btn_url,
+          is_enabled: cmsState.final_cta.is_enabled
+        }
+      ];
+
+      try {
+        const res = await fetch('/api/admin/homepage', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': window.__CSRF_TOKEN__ || ''
+          },
+          body: JSON.stringify({ sections: sectionsPayload })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          setDirty(false);
+          showToast('✓ Saved! Changes broadcasted to public website in real time.');
+        } else {
+          showToast(data.error || 'Failed to save changes', true);
+          setDirty(true);
+        }
+      } catch (err) {
+        showToast('Network error: ' + err.message, true);
+        setDirty(true);
+      } finally {
+        btnGlobalSave.disabled = false;
+        if (btnSaveText) btnSaveText.textContent = 'Save Changes';
+      }
+    }
+
+    btnGlobalSave?.addEventListener('click', saveAllChanges);
+  })();
+</script>

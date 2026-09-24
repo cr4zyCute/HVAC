@@ -1,0 +1,237 @@
+---
+import '../../styles/global.css';
+
+// Read query params if redirected
+const url = new URL(Astro.request.url);
+const redirectTarget = url.searchParams.get('redirect') || '/admin';
+---
+
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-neutral-background">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | NorthStar HVAC Control Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-full flex flex-col font-body antialiased text-text-primary bg-neutral-background selection:bg-brand-accent selection:text-white">
+
+  <!-- Mobile Top Brand Bar (collapses on < lg, matching AdminLayout mobile pattern) -->
+  <header class="lg:hidden bg-brand-primary border-b border-brand-secondary px-20 py-16 flex items-center justify-between">
+    <div class="flex items-center gap-12">
+      <div class="w-36 h-36 rounded-md bg-brand-secondary text-brand-accent flex items-center justify-center shadow-sm">
+        <svg class="w-18 h-18" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+        </svg>
+      </div>
+      <div>
+        <span class="text-body font-bold font-heading text-white block leading-tight">NorthStar HVAC</span>
+        <span class="text-caption text-slate-400 block leading-tight">Control Center</span>
+      </div>
+    </div>
+    <a href="/" class="text-small text-slate-300 hover:text-white font-medium inline-flex items-center gap-6 transition-colors">
+      <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Website
+    </a>
+  </header>
+
+  <!-- Split Screen Two-Column Auth Shell -->
+  <div class="flex-1 flex flex-col lg:flex-row min-h-screen">
+
+    <!-- Left Branding Panel (Desktop: 42% width, solid brand navy #0F2238 with realistic background photo & high-contrast gradient overlay) -->
+    <aside class="hidden lg:flex lg:w-[42%] xl:w-[40%] bg-brand-primary flex-col justify-between p-36 xl:p-48 border-r border-brand-secondary relative overflow-hidden">
+      <!-- Background Image & Navy Gradient Overlay -->
+      <div class="absolute inset-0 z-0">
+        <picture>
+          <source srcset="/images/admin-auth-bg.webp" type="image/webp" />
+          <img 
+            src="/images/admin-auth-bg.jpg" 
+            alt="NorthStar HVAC Senior Technician inspecting modern heating equipment" 
+            class="w-full h-full object-cover object-center filter brightness-[0.55] contrast-[1.10]" 
+            loading="eager"
+          />
+        </picture>
+        <!-- Dual Dark Navy (#0F2238) Gradient Overlays: horizontal gradient for text legibility + vertical vignette -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0F2238]/98 via-[#0F2238]/90 to-[#0F2238]/75"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0F2238]/80 via-transparent to-[#0F2238]/95"></div>
+      </div>
+
+      <!-- Foreground Brand Content (z-10) -->
+      <div class="relative z-10 flex flex-col justify-between h-full">
+        <!-- Top: Back to public website -->
+        <div>
+          <a href="/" class="inline-flex items-center gap-8 text-small font-medium text-slate-300 hover:text-white transition-colors group">
+            <svg class="w-16 h-16 group-hover:-translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to NorthStar Public Site
+          </a>
+        </div>
+
+        <!-- Vertically Centered Brand Message (Single, un-duplicated block) -->
+        <div class="my-auto py-32 max-w-md">
+          <div class="inline-flex items-center justify-center w-56 h-56 rounded-lg bg-brand-secondary/90 border border-brand-secondary text-brand-accent shadow-md mb-24 backdrop-blur-sm">
+            <svg class="w-28 h-28" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+            </svg>
+          </div>
+
+          <h1 class="text-h1 font-heading font-extrabold text-white tracking-tight leading-tight">
+            NorthStar HVAC
+          </h1>
+
+          <p class="text-body-large text-slate-200 mt-12 font-medium leading-relaxed">
+            Business Operations &amp; Control Center
+          </p>
+
+          <div class="mt-32 inline-flex items-center gap-8 px-14 py-8 rounded-full bg-brand-primary/80 border border-slate-700/80 text-caption text-slate-200 backdrop-blur-sm shadow-sm">
+            <span class="w-8 h-8 rounded-full bg-emerald-400 animate-pulse"></span>
+            Authorized Personnel Only &bull; End-to-End Encrypted
+          </div>
+        </div>
+
+        <!-- Bottom: Copyright & Session Protocol Notice -->
+        <div class="text-caption text-slate-400 font-medium">
+          &copy; {new Date().getFullYear()} NorthStar HVAC Services. All rights reserved.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Form Panel (Remaining width, centered card on soft neutral background) -->
+    <main class="flex-1 flex items-center justify-center p-20 sm:p-32 lg:p-48 bg-neutral-background">
+      <div class="w-full max-w-[420px] bg-neutral-surface rounded-lg border border-neutral-border shadow-md p-28 sm:p-36">
+
+        <!-- Single Heading & Subtext -->
+        <div class="mb-24">
+          <h2 class="text-h2 font-heading font-bold text-brand-primary tracking-tight leading-snug">
+            Sign In
+          </h2>
+          <p class="text-small text-text-muted mt-6 font-medium">
+            Enter your credentials to access the operations dashboard.
+          </p>
+        </div>
+
+        <!-- Error Alert Banner -->
+        <div id="error-alert" class="hidden mb-20 p-12 rounded-md bg-red-50 border border-brand-emergency/30 text-small text-brand-emergency font-medium leading-relaxed"></div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="space-y-20">
+          <input type="hidden" id="redirect-input" value={redirectTarget} />
+
+          <div>
+            <label for="email" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary mb-8">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="admin@northstarhvac.com"
+              class="w-full h-48 px-16 text-body bg-neutral-surface border border-neutral-border rounded-md text-text-primary placeholder:text-text-muted/60 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-secondary/20 transition-all"
+            />
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-8">
+              <label for="password" class="block text-caption font-heading font-bold uppercase tracking-wider text-text-secondary">
+                Password
+              </label>
+              <a href="/admin/forgot-password" class="text-small font-medium text-brand-accent hover:text-brand-accent-hover hover:underline transition-colors">
+                Forgot password?
+              </a>
+            </div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              placeholder="••••••••••••"
+              class="w-full h-48 px-16 text-body bg-neutral-surface border border-neutral-border rounded-md text-text-primary placeholder:text-text-muted/60 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-secondary/20 transition-all"
+            />
+          </div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full h-48 px-24 bg-brand-accent hover:bg-brand-accent-hover text-white text-body font-body font-semibold rounded-md shadow-sm hover:shadow active:scale-[0.98] transition-all flex items-center justify-center gap-8 cursor-pointer mt-24"
+          >
+            <span id="btn-text">Sign In</span>
+            <svg id="btn-spinner" class="hidden animate-spin h-16 w-16 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Security Reassurance Line (Single, un-duplicated) -->
+        <div class="mt-24 pt-20 border-t border-neutral-border text-center">
+          <p class="text-caption text-text-muted flex items-center justify-center gap-6">
+            <svg class="w-14 h-14 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Protected by OWASP session security &amp; rate limiting.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form') as HTMLFormElement;
+    const errorAlert = document.getElementById('error-alert') as HTMLDivElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const btnText = document.getElementById('btn-text') as HTMLSpanElement;
+    const btnSpinner = document.getElementById('btn-spinner') as HTMLElement;
+    const redirectInput = document.getElementById('redirect-input') as HTMLInputElement;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorAlert.classList.add('hidden');
+      errorAlert.textContent = '';
+
+      const email = (document.getElementById('email') as HTMLInputElement).value;
+      const password = (document.getElementById('password') as HTMLInputElement).value;
+
+      submitBtn.disabled = true;
+      btnText.textContent = 'Authenticating...';
+      btnSpinner.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/api/admin/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          errorAlert.textContent = data.error || 'Authentication failed. Please verify credentials.';
+          errorAlert.classList.remove('hidden');
+          submitBtn.disabled = false;
+          btnText.textContent = 'Sign In';
+          btnSpinner.classList.add('hidden');
+          return;
+        }
+
+        // Redirect on successful login
+        const target = redirectInput.value || '/admin';
+        window.location.href = target;
+      } catch (err: any) {
+        errorAlert.textContent = 'Network error: ' + err.message;
+        errorAlert.classList.remove('hidden');
+        submitBtn.disabled = false;
+        btnText.textContent = 'Sign In';
+        btnSpinner.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

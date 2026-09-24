@@ -1,0 +1,234 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Accordion from '@/components/ui/Accordion.astro';
+
+const emergencyScenarios = [
+  {
+    title: "Freezing Indoor Temperatures (< 55°F)",
+    risk: "High Risk: Burst Pipes & Hypothermia",
+    description: "When exterior temperatures plummet below freezing and your furnace won't ignite, plumbing lines in exterior walls can freeze and burst within hours. We prioritize homes with infants or elderly residents.",
+    icon: "flame"
+  },
+  {
+    title: "Burning Electrical Odors or Smoke",
+    risk: "Critical Risk: Electrical Fire Danger",
+    description: "A sharp electrical, metallic, or burning plastic odor indicates a failing blower motor, melted contactor, or overheating wiring. Shut off power at the main electrical breaker immediately.",
+    icon: "zap"
+  },
+  {
+    title: "Carbon Monoxide Alarm Sounding",
+    risk: "Life Safety Emergency: Evacuate First",
+    description: "If your CO detector alarms or you smell sulfur/rotten eggs, immediately evacuate everyone from the premises and dial 911 or your local gas utility from outside. Call us once authorities clear the home.",
+    icon: "alert-triangle"
+  },
+  {
+    title: "Severe Water Leaking from Ceiling / Air Handler",
+    risk: "Structural & Mold Damage Risk",
+    description: "A blocked primary condensate drain line or cracked drain pan overflowing into drywall can cause thousands in structural damage and ceiling collapse. Shut off cooling immediately.",
+    icon: "droplet"
+  }
+];
+
+const waitingSteps = [
+  {
+    step: "1",
+    title: "Turn System to OFF at Thermostat",
+    text: "Prevent further compressor damage or motor overheating by setting your thermostat mode switch to OFF."
+  },
+  {
+    step: "2",
+    title: "Isolate Power if Burning Smell Exists",
+    text: "Flip the furnace emergency power switch (often located near the unit entrance) or turn off the HVAC breaker."
+  },
+  {
+    step: "3",
+    title: "Clear 3-Foot Access Clearance",
+    text: "Ensure pathways to the attic, basement, or utility closet and outdoor condenser unit are clear of clutter."
+  },
+  {
+    step: "4",
+    title: "Keep Your Phone Nearby",
+    text: "Our dispatcher will call and send a live GPS technician arrival link when the truck is 15 minutes away."
+  }
+];
+
+const faqs = [
+  {
+    question: "How fast will a technician arrive at my house?",
+    answer: "Our average emergency arrival time across the metro service area is 38 to 55 minutes. We prioritize calls based on weather severity and household vulnerability (e.g. infants, seniors, medical needs)."
+  },
+  {
+    question: "Do you charge surprise overtime or holiday rates?",
+    answer: "No. We operate on a clear, upfront flat-rate emergency diagnostic fee that is quoted to you before our van rolls. You will know the exact diagnostic cost before you commit."
+  },
+  {
+    question: "Will the technician have parts to fix my unit tonight?",
+    answer: "Our emergency vans are rolling warehouses stocked with universal capacitors, contactors, hot surface igniters, flame sensors, fan motors, and transformers. Over 90% of emergency issues are resolved on the spot."
+  }
+];
+---
+
+<Layout 
+  title="24/7 Emergency HVAC Repair & Dispatch — NorthStar HVAC" 
+  description="Emergency heating and air conditioning repair available 24/7/365. Average response time under 45 minutes across the metro area. Direct hotline: (555) 014-7824."
+>
+  <!-- Urgent Hero Section -->
+  <section class="bg-brand-primary text-white border-b border-brand-secondary py-64 md:py-80 relative overflow-hidden">
+    <div class="container relative z-10">
+      <div class="max-w-3xl space-y-24">
+        <!-- Live Dispatch Pill -->
+        <div class="inline-flex items-center gap-10 bg-red-600/90 text-white px-16 py-8 rounded-full text-caption font-bold tracking-wider uppercase shadow-md">
+          <span class="w-8 h-8 rounded-full bg-white animate-ping"></span>
+          24/7/365 EMERGENCY DISPATCH ACTIVE
+        </div>
+
+        <h1 class="text-h1 font-heading font-extrabold text-white leading-tight">
+          Emergency Heating &amp; AC Repair When You Need It Most
+        </h1>
+
+        <p class="text-body text-text-muted leading-relaxed">
+          No heat in sub-freezing temperatures? Complete cooling failure during a severe heatwave? Our licensed master technicians are on-call and rolling right now.
+        </p>
+
+        <!-- Direct Emergency Call Box -->
+        <div class="bg-brand-secondary border-2 border-brand-accent p-24 md:p-32 rounded-xl shadow-lg space-y-16 max-w-xl">
+          <div class="flex items-center justify-between">
+            <span class="text-caption font-bold uppercase tracking-wider text-amber-400">
+              Immediate Phone Dispatch Line:
+            </span>
+            <span class="text-[12px] font-semibold text-emerald-400 flex items-center gap-6">
+              <span class="w-6 h-6 rounded-full bg-emerald-400 animate-pulse"></span>
+              Avg. Response: 38 Mins
+            </span>
+          </div>
+
+          <a 
+            href="tel:5550147824" 
+            class="flex items-center justify-center gap-12 py-16 px-24 bg-red-600 hover:bg-red-700 text-white font-heading font-extrabold text-h2 rounded-lg transition-transform hover:scale-[1.02] shadow-md"
+          >
+            <Icon name="phone" size={28} />
+            <span>(555) 014-7824</span>
+          </a>
+
+          <p class="text-caption text-center text-text-muted">
+            Tap to connect directly with an on-call emergency dispatcher. Zero automated phone trees.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Dispatch Status Bar -->
+  <section class="bg-neutral-bg border-b border-neutral-border py-20">
+    <div class="container flex flex-wrap items-center justify-between gap-16 text-small text-text-secondary">
+      <div class="flex items-center gap-10 font-bold text-brand-primary">
+        <span class="w-8 h-8 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Central Dispatch Board: Active</span>
+      </div>
+      <div><strong>3 Mobile Vans</strong> Currently Dispatched in Metro Region</div>
+      <div><strong>Current Ambient Service Load:</strong> Normal Dispatch Protocol</div>
+    </div>
+  </section>
+
+  <!-- Critical Emergency Scenarios Grid -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container space-y-48">
+      <div class="max-w-2xl space-y-12">
+        <Badge variant="emergency">SAFETY CRITERIA</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          What Qualifies as an HVAC Emergency?
+        </h2>
+        <p class="text-body text-text-secondary">
+          If you are experiencing any of the following critical conditions, call our direct emergency line immediately.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-32">
+        {emergencyScenarios.map((scen) => (
+          <div class="bg-neutral-bg p-32 rounded-lg border border-neutral-border space-y-16 hover:border-red-400 transition-colors shadow-sm">
+            <div class="flex items-center justify-between">
+              <div class="w-44 h-44 rounded-md bg-red-50 text-red-600 flex items-center justify-center">
+                <Icon name={scen.icon as any} size={22} />
+              </div>
+              <span class="text-[11px] font-bold text-red-700 bg-red-50 px-8 py-2 rounded-sm border border-red-200">
+                {scen.risk}
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-h3 font-heading font-bold text-brand-primary">{scen.title}</h3>
+              <p class="text-small text-text-secondary leading-relaxed mt-8">
+                {scen.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety Checklist While Waiting -->
+  <section class="py-80 bg-neutral-bg border-y border-neutral-border">
+    <div class="container space-y-48">
+      <div class="text-center max-w-2xl mx-auto space-y-12">
+        <Badge variant="neutral">HOMEOWNER SAFETY PROTOCOL</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          What to Do While Waiting for Your Technician
+        </h2>
+        <p class="text-body text-text-secondary">
+          Follow these immediate steps to safeguard your family and protect your equipment from further damage.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-24">
+        {waitingSteps.map((step) => (
+          <div class="bg-neutral-surface p-28 rounded-lg border border-neutral-border space-y-12 shadow-sm">
+            <div class="w-36 h-36 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-small">
+              {step.step}
+            </div>
+            <h3 class="font-heading font-bold text-body text-brand-primary">{step.title}</h3>
+            <p class="text-small text-text-secondary leading-relaxed">{step.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Emergency FAQs -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container max-w-3xl space-y-40">
+      <div class="text-center space-y-12">
+        <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Emergency Information</span>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Emergency Service Questions
+        </h2>
+      </div>
+
+      <Accordion items={faqs} />
+    </div>
+  </section>
+
+  <!-- Emergency Call Banner -->
+  <section class="bg-red-700 text-white py-64 border-t border-red-800">
+    <div class="container text-center space-y-24 max-w-2xl mx-auto">
+      <h2 class="text-h2 font-heading font-extrabold text-white">
+        Don't Wait in the Cold or Heat
+      </h2>
+      <p class="text-body text-red-100">
+        Call now to speak directly with an on-call dispatcher. We will have a certified technician on the way to your door immediately.
+      </p>
+      <div class="pt-8">
+        <a 
+          href="tel:5550147824"
+          class="inline-flex items-center gap-12 px-36 py-16 bg-white text-red-700 font-heading font-extrabold text-h3 rounded-lg shadow-lg hover:bg-neutral-100 transition-colors"
+        >
+          <Icon name="phone" size={24} />
+          <span>Call (555) 014-7824</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

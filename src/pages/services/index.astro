@@ -1,0 +1,212 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import ServiceCard from '@/components/ui/ServiceCard.astro';
+import Accordion from '@/components/ui/Accordion.astro';
+import CTABanner from '@/components/sections/CTABanner.astro';
+import defaultServices from '@/content/services.json';
+import { db, ensureDbInitialized } from '@/lib/db';
+
+await ensureDbInitialized();
+
+const dbServicesRes = await db.execute('SELECT * FROM services WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC');
+const services = dbServicesRes.rows.length > 0
+  ? dbServicesRes.rows.map(s => {
+      let feats: string[] = [];
+      try { feats = JSON.parse(s.features_json as string || '[]'); } catch (e) { feats = []; }
+      return {
+        slug: s.slug as string,
+        title: s.title as string,
+        category: 'Residential HVAC',
+        badge: Number(s.starting_price) > 0 ? `From $${Number(s.starting_price).toFixed(0)}` : 'Flat Rate',
+        icon: 'wrench',
+        shortDescription: s.short_desc as string,
+        fullDescription: s.full_desc as string,
+        features: feats,
+        priceStarting: `$${Number(s.starting_price).toFixed(0)}`
+      };
+    })
+  : defaultServices;
+
+const faqs = [
+  {
+    question: "How do I know whether my AC or furnace needs repair or full replacement?",
+    answer: "We use the industry standard 5,000 Rule: multiply your system's age in years by the estimated repair cost. If the result exceeds $5,000 and the unit is over 10-12 years old, replacement often makes the best long-term financial sense. Our certified technicians perform an honest diagnostic and always provide both repair and replacement options."
+  },
+  {
+    question: "Do you charge extra for evening or weekend emergency diagnostic calls?",
+    answer: "We believe in upfront, transparent flat-rate pricing. We provide straightforward diagnostic rates before any technician leaves our shop, with zero hidden travel fees or surprise add-ons once work is completed."
+  },
+  {
+    question: "Are your technicians NATE and EPA certified?",
+    answer: "Yes, 100% of NorthStar technicians hold active EPA Universal and NATE certifications. Each team member completes over 80 hours of mandatory ongoing manufacturer training annually on the latest heat pump and inverter systems."
+  },
+  {
+    question: "What is included in the 90-day workmanship guarantee?",
+    answer: "Every repair completed by NorthStar includes our 90-day parts and labor guarantee. If the same component fails within 90 days of our repair, we return and fix it at zero cost to you."
+  }
+];
+---
+
+<Layout 
+  title="HVAC Services Directory — NorthStar Heating & Air Conditioning" 
+  description="Explore comprehensive heating, cooling, and preventive maintenance services. Upfront flat-rate pricing, certified technicians, and 24/7 emergency dispatch."
+>
+  <!-- 1. Hero Header -->
+  <section class="bg-neutral-bg border-b border-neutral-border py-64 md:py-80">
+    <div class="container">
+      <div class="max-w-3xl space-y-16">
+        <Badge variant="info">COMPLETE SERVICE DIRECTORY</Badge>
+        <h1 class="text-h1 font-heading font-extrabold text-brand-primary leading-tight">
+          Precision Heating, Cooling &amp; Maintenance Services
+        </h1>
+        <p class="text-body text-text-secondary leading-relaxed">
+          From emergency midnight compressor troubleshooting to high-efficiency seasonal tune-ups, our certified HVAC technicians arrive in fully equipped rolling warehouses ready to solve problems on the spot.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-16 pt-8">
+          <Button href="/book" variant="primary" size="lg">
+            Schedule a Service
+            <Icon name="calendar" size={18} />
+          </Button>
+          <Button href="/emergency" variant="emergency" size="lg">
+            <Icon name="alert-triangle" size={18} />
+            24/7 Emergency Dispatch
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Services Grid Section -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container space-y-48">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-16 border-b border-neutral-border pb-24">
+        <div>
+          <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Our Core Specializations</span>
+          <h2 class="text-h2 font-heading font-bold text-brand-primary mt-8">
+            Engineered for Total Home Comfort
+          </h2>
+        </div>
+        <p class="text-small text-text-muted max-w-md">
+          Select any service below to explore common warning symptoms, comprehensive scope of work, and step-by-step diagnostic workflows.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-32">
+        {services.map((service) => (
+          <ServiceCard
+            title={service.title}
+            category={service.category}
+            shortDescription={service.shortDescription}
+            slug={service.slug}
+            badge={service.badge}
+            icon={service.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Why NorthStar Engineering Standards -->
+  <section class="py-80 bg-neutral-bg border-y border-neutral-border">
+    <div class="container space-y-48">
+      <div class="text-center max-w-2xl mx-auto space-y-12">
+        <Badge variant="neutral">THE NORTHSTAR STANDARD</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Why Homeowners Trust Our Craftsmanship
+        </h2>
+        <p class="text-body text-text-secondary">
+          We don't guess or swap parts blindly. Every service call follows strict engineering diagnostics to pinpoint the true root cause.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-32">
+        <div class="bg-neutral-surface p-32 rounded-lg border border-neutral-border space-y-16 shadow-sm">
+          <div class="w-48 h-48 rounded-md bg-blue-50 text-brand-primary flex items-center justify-center">
+            <Icon name="wrench" size={24} />
+          </div>
+          <h3 class="text-h3 font-heading font-bold text-brand-primary">Digital Diagnostics</h3>
+          <p class="text-small text-text-secondary leading-relaxed">
+            We use high-precision digital manifolds, infrared cameras, and combustion analyzers to measure exact subcooling, superheat, and static pressures before recommending any repair.
+          </p>
+          <ul class="text-caption text-text-muted space-y-6 pt-8 border-t border-neutral-border">
+            <li class="flex items-center gap-8">
+              <Icon name="check" size={14} class="text-emerald-600" />
+              <span>No guessing or part swapping</span>
+            </li>
+            <li class="flex items-center gap-8">
+              <Icon name="check" size={14} class="text-emerald-600" />
+              <span>Full written digital condition report</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-neutral-surface p-32 rounded-lg border border-neutral-border space-y-16 shadow-sm">
+          <div class="w-48 h-48 rounded-md bg-amber-50 text-brand-accent flex items-center justify-center">
+            <Icon name="shield" size={24} />
+          </div>
+          <h3 class="text-h3 font-heading font-bold text-brand-primary">Upfront Flat-Rate Pricing</h3>
+          <p class="text-small text-text-secondary leading-relaxed">
+            Never worry about runaway hourly billing. We provide a firm, itemized quote for your approval before our tools touch your unit. What we quote is what you pay.
+          </p>
+          <ul class="text-caption text-text-muted space-y-6 pt-8 border-t border-neutral-border">
+            <li class="flex items-center gap-8">
+              <Icon name="check" size={14} class="text-emerald-600" />
+              <span>Zero hidden mileage or trip surcharges</span>
+            </li>
+            <li class="flex items-center gap-8">
+              <Icon name="check" size={14} class="text-emerald-600" />
+              <span>Flexible payment and financing options</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-neutral-surface p-32 rounded-lg border border-neutral-border space-y-16 shadow-sm">
+          <div class="w-48 h-48 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <Icon name="truck" size={24} />
+          </div>
+          <h3 class="text-h3 font-heading font-bold text-brand-primary">Fully Stocked Vans</h3>
+          <p class="text-small text-text-secondary leading-relaxed">
+            Our vans are loaded with OEM capacitors, contactors, motors, igniters, and safety limit controls, enabling us to complete 92% of repairs on the very first trip.
+          </p>
+          <ul class="text-caption text-text-muted space-y-6 pt-8 border-t border-neutral-border">
+            <li class="flex items-center gap-8">
+              <Icon name="check" size={14} class="text-emerald-600" />
+              <span>Genuine factory OEM replacement parts</span>
+            </li>
+            <li class="flex items-center gap-8">
+              <Icon name="check" size={14} class="text-emerald-600" />
+              <span>Back on the road within hours, not days</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Frequently Asked Questions -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container max-w-4xl space-y-40">
+      <div class="text-center space-y-12">
+        <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Expert Answers</span>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Frequently Asked Service Questions
+        </h2>
+      </div>
+
+      <Accordion items={faqs} />
+    </div>
+  </section>
+
+  <!-- 5. Conversion Banner -->
+  <CTABanner
+    title="Ready to Restore Your Home's Climate?"
+    subtitle="Book online in under 2 minutes or speak directly with an on-call master technician."
+    primaryCta={{ label: "Book a Service", href: "/book" }}
+    secondaryCta={{ label: "Call (555) 014-7824", href: "tel:5550147824" }}
+    variant="primary"
+  />
+</Layout>

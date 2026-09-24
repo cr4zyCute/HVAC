@@ -1,0 +1,64 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Enable local backend proxy when testing locally
+local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  # ===========================================================================
+  # 1. SITE SETTINGS & BRANDING
+  # ===========================================================================
+  - name: "site_settings"
+    label: "Company & Site Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "Company Info, Phone, & Booking Text"
+        file: "src/data/siteConfig.json"
+        format: "json"
+        fields:
+          # --- COMPANY DETAILS ---
+          - label: "Company Information"
+            name: "company"
+            widget: "object"
+            fields:
+              - { label: "Company Full Name", name: "name", widget: "string", hint: "e.g. NorthStar HVAC" }
+              - { label: "Brand First Word", name: "brandFirst", widget: "string", hint: "e.g. NorthStar" }
+              - { label: "Brand Accent Word", name: "brandAccent", widget: "string", hint: "e.g. HVAC (colored orange in logo)" }
+              - { label: "Company Tagline", name: "tagline", widget: "string", hint: "e.g. Comfort You Can Count On" }
+              - { label: "Short Description", name: "description", widget: "text", hint: "Used in website footer and search summaries" }
+              - { label: "Main Phone (Formatted)", name: "phone", widget: "string", hint: "e.g. (555) 014-7824" }
+              - { label: "Phone Digits Only", name: "phoneRaw", widget: "string", hint: "e.g. 5550147824 (used for clickable tel: links)" }
+              - { label: "Emergency Dispatch Hotline", name: "emergencyHotline", widget: "string", hint: "e.g. (555) 014-7824" }
+              - { label: "Support Email", name: "email", widget: "string", hint: "e.g. dispatch@northstarhvac.example" }
+              - { label: "License Number", name: "license", widget: "string", hint: "e.g. MN HVAC-LIC #849201" }
+              - { label: "Business Address", name: "address", widget: "string", hint: "e.g. 742 Evergreen Terrace, Minneapolis, MN 55401" }
+              - { label: "Operating Hours", name: "operatingHours", widget: "string", hint: "e.g. Open 24 Hours / 7 Days a Week" }
+              - { label: "Dispatch Area Notice", name: "dispatchNotice", widget: "string", hint: "e.g. Serving Residential & Light Commercial Across Metro Region" }
+              - { label: "Review Rating Score", name: "ratingScore", widget: "string", hint: "e.g. 4.9 / 5.0" }
+              - { label: "Review Rating Summary", name: "ratingSummary", widget: "string", hint: "e.g. across 180+ verified local homeowners" }
+
+          # --- BOOKING PAGE CONTENT ---
+          - label: "Booking Page Content"
+            name: "booking"
+            widget: "object"
+            fields:
+              - { label: "Online Booking Badge", name: "badge", widget: "string", hint: "e.g. ONLINE BOOKING SYSTEM" }
+              - { label: "Hero Title", name: "heroTitle", widget: "string", hint: "e.g. Schedule Your HVAC Service Online" }
+              - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
+              - { label: "Guarantees Card Title", name: "guaranteeTitle", widget: "string", hint: "e.g. The NorthStar Guarantee" }
+              - label: "Guarantees Checklist (4 Points)"
+                name: "guarantees"
+                widget: "list"
+                fields:
+                  - { label: "Guarantee Title", name: "title", widget: "string" }
+                  - { label: "Guarantee Description", name: "description", widget: "string" }
+              - { label: "Emergency Callout Title", name: "emergencyHotlineTitle", widget: "string", hint: "e.g. Immediate Freeze or Heat Emergency?" }
+              - { label: "Emergency Callout Subtitle", name: "emergencyHotlineSubtitle", widget: "string", hint: "e.g. 24/7 Priority Emergency Dispatch" }
+

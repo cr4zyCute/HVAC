@@ -1,0 +1,319 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Accordion from '@/components/ui/Accordion.astro';
+import CTABanner from '@/components/sections/CTABanner.astro';
+
+const plans = [
+  {
+    badge: "MOST POPULAR",
+    badgeVariant: "info" as const,
+    title: "0% APR for 18 Months",
+    rate: "0% Interest",
+    term: "18 Months Equal Payments",
+    description: "Ideal for urgent furnace or AC replacements where you want zero interest with fixed equal payments spread over a year and a half.",
+    features: [
+      "Zero interest if paid within 18 months",
+      "Equal monthly installments",
+      "No early prepayment penalties",
+      "Quick 60-second soft-credit pre-approval"
+    ],
+    popular: true
+  },
+  {
+    badge: "LOWEST PAYMENT",
+    badgeVariant: "success" as const,
+    title: "Low Monthly Term (Up to 84 Mo.)",
+    rate: "From $49/mo",
+    term: "60 to 84 Months",
+    description: "Best for complete high-efficiency heat pump or dual-fuel system installations wanting the lowest possible monthly impact.",
+    features: [
+      "Predictable fixed low monthly payments",
+      "Qualifies for full $2,000 federal tax rebates",
+      "Energy bill savings offset payment cost",
+      "Pay off anytime with zero penalty"
+    ],
+    popular: false
+  },
+  {
+    badge: "EMERGENCY REPAIR",
+    badgeVariant: "warning" as const,
+    title: "Rapid Emergency Micro-Credit",
+    rate: "Instant Decision",
+    term: "12 to 24 Months",
+    description: "Designed specifically for sudden unexpected breakdowns (compressors, blowers, heat exchangers) starting at $500.",
+    features: [
+      "Instant on-the-spot mobile approval",
+      "High approval rate across credit tiers",
+      "Paperless digital contract on tech tablet",
+      "Work begins the same day"
+    ],
+    popular: false
+  }
+];
+
+const faqs = [
+  {
+    question: "Does checking my pre-approval impact my credit score?",
+    answer: "No. Our initial pre-qualification uses a soft credit check that does not impact your credit score in any way. A hard inquiry only occurs if you choose to accept the loan terms and finalize your agreement."
+  },
+  {
+    question: "Can I combine financing with federal tax credits and local utility rebates?",
+    answer: "Yes, absolutely! You can finance the total gross installation cost, and when you receive your federal tax credit (up to $2,000 under the Inflation Reduction Act Section 25C) or utility rebate check (up to $1,500), you can apply that lump sum directly against your loan balance without any prepayment penalty."
+  },
+  {
+    question: "How quickly can financing be approved for an emergency repair?",
+    answer: "Pre-approvals take less than 60 seconds on our technician's field tablet. Once approved, the technician can begin repairs immediately with no downtime."
+  },
+  {
+    question: "Are there any hidden application or processing fees?",
+    answer: "None. All financing plans have clear, upfront terms with zero application fees, zero annual fees, and zero prepayment penalties."
+  }
+];
+---
+
+<Layout 
+  title="HVAC Financing & Payment Plans — NorthStar HVAC" 
+  description="Flexible HVAC financing options including 0% APR for 18 months and affordable monthly plans from $49/mo. Instant pre-approval with zero credit impact."
+>
+  <!-- Hero Section -->
+  <section class="bg-neutral-bg border-b border-neutral-border py-64 md:py-80">
+    <div class="container">
+      <div class="max-w-3xl space-y-16">
+        <Badge variant="info">AFFORDABLE HOME COMFORT</Badge>
+        <h1 class="text-h1 font-heading font-extrabold text-brand-primary leading-tight">
+          Comfort Within Reach: Flexible HVAC Financing Plans
+        </h1>
+        <p class="text-body text-text-secondary leading-relaxed">
+          An unexpected heating failure or AC breakdown shouldn't deplete your family's savings. We partner with top-rated financial institutions to offer low rates, 0% APR promotional periods, and fast approvals.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-16 pt-8">
+          <Button href="#calculator" variant="primary" size="lg">
+            Estimate Monthly Payment
+            <Icon name="chevron-right" size={18} />
+          </Button>
+          <Button href="/contact" variant="outline" size="lg">
+            Speak to a Specialist
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans Grid -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container space-y-48">
+      <div class="text-center max-w-2xl mx-auto space-y-12">
+        <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Tailored Payment Options</span>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Choose the Right Plan for Your Home
+        </h2>
+        <p class="text-body text-text-secondary">
+          Whether you need a quick repair or a complete high-efficiency system replacement, we have an option tailored for you.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-32 items-stretch">
+        {plans.map((p) => (
+          <div class={`p-32 rounded-lg border flex flex-col justify-between space-y-24 shadow-sm relative ${
+            p.popular ? 'border-brand-primary bg-neutral-surface ring-2 ring-brand-primary/20' : 'border-neutral-border bg-neutral-bg'
+          }`}>
+            <div class="space-y-16">
+              <Badge variant={p.badgeVariant} size="sm">{p.badge}</Badge>
+              <h3 class="text-h3 font-heading font-bold text-brand-primary">{p.title}</h3>
+              
+              <div class="py-12 border-y border-neutral-border">
+                <div class="text-h2 font-heading font-extrabold text-brand-primary">{p.rate}</div>
+                <div class="text-caption font-semibold text-text-muted">{p.term}</div>
+              </div>
+
+              <p class="text-small text-text-secondary leading-relaxed">
+                {p.description}
+              </p>
+
+              <ul class="space-y-10 text-small text-text-secondary pt-8">
+                {p.features.map((feat) => (
+                  <li class="flex items-start gap-8">
+                    <Icon name="check" size={16} class="text-emerald-600 mt-2 shrink-0" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="pt-16 border-t border-neutral-border">
+              <Button href="/book" variant={p.popular ? "primary" : "secondary"} size="md" class="w-full">
+                Apply &amp; Book Service
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Payment Calculator -->
+  <section id="calculator" class="py-80 bg-neutral-bg border-y border-neutral-border">
+    <div class="container max-w-4xl space-y-40">
+      <div class="text-center space-y-12">
+        <Badge variant="neutral">REAL-TIME ESTIMATOR</Badge>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Estimate Your Monthly HVAC Investment
+        </h2>
+        <p class="text-body text-text-secondary">
+          Adjust the estimated project cost and term below to see your calculated monthly payment.
+        </p>
+      </div>
+
+      <div class="bg-neutral-surface p-32 md:p-48 rounded-xl border border-neutral-border shadow-md space-y-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-32">
+          <!-- Inputs -->
+          <div class="space-y-24">
+            <div>
+              <div class="flex justify-between items-center mb-8">
+                <label for="project-amount" class="text-small font-heading font-bold text-brand-primary">
+                  Estimated Project Total:
+                </label>
+                <span id="amount-display" class="text-h3 font-heading font-bold text-brand-primary">$4,500</span>
+              </div>
+              <input 
+                type="range" 
+                id="project-amount" 
+                min="1000" 
+                max="15000" 
+                step="500" 
+                value="4500"
+                class="w-full h-8 bg-neutral-border rounded-lg appearance-none cursor-pointer accent-brand-primary"
+              />
+              <div class="flex justify-between text-caption text-text-muted mt-4">
+                <span>$1,000 (Repair)</span>
+                <span>$7,500 (AC/Furnace)</span>
+                <span>$15,000 (Full Heat Pump)</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="loan-term" class="block text-small font-heading font-bold text-brand-primary mb-8">
+                Financing Term &amp; Rate:
+              </label>
+              <select 
+                id="loan-term" 
+                class="w-full px-16 py-12 border border-neutral-border rounded-md text-small bg-neutral-bg focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+              >
+                <option value="18-0">18 Months (0% APR Promotional)</option>
+                <option value="36-7.99">36 Months (7.99% Fixed APR)</option>
+                <option value="60-8.99">60 Months (8.99% Fixed APR)</option>
+                <option value="84-9.99">84 Months (9.99% Fixed APR)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Result Display Box -->
+          <div class="bg-brand-primary text-white p-32 rounded-lg flex flex-col justify-between space-y-20">
+            <div>
+              <span class="text-caption font-bold tracking-wider text-brand-accent uppercase block">Estimated Payment</span>
+              <div class="flex items-baseline gap-8 mt-8">
+                <span id="monthly-payment" class="text-[44px] font-heading font-extrabold text-white">$250</span>
+                <span class="text-small text-text-muted">/ month</span>
+              </div>
+              <p class="text-caption text-text-muted mt-8 leading-relaxed">
+                *Estimated monthly payment based on selected term. Subject to credit approval. Zero down payment required.
+              </p>
+            </div>
+
+            <div class="pt-16 border-t border-brand-secondary">
+              <Button href="/book" variant="emergency" size="md" class="w-full justify-center">
+                Pre-Qualify Now (No Credit Hit)
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rebates & Incentives Spotlight -->
+  <section class="py-80 bg-neutral-surface">
+    <div class="container">
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-32 md:p-48 grid grid-cols-1 lg:grid-cols-12 gap-32 items-center">
+        <div class="lg:col-span-8 space-y-16">
+          <span class="inline-flex items-center gap-6 text-[12px] font-bold text-emerald-800 bg-emerald-100 px-8 py-4 rounded-sm">
+            FEDERAL &amp; LOCAL TAX CREDITS
+          </span>
+          <h2 class="text-h2 font-heading font-bold text-emerald-950">
+            Save Up to $3,500 with Energy Rebates
+          </h2>
+          <p class="text-body text-emerald-900 leading-relaxed">
+            High-efficiency heat pumps and ENERGY STAR rated inverter air conditioners qualify for up to $2,000 under the Inflation Reduction Act (IRA Section 25C) plus up to $1,500 in local utility incentives.
+          </p>
+          <div class="flex items-center gap-16 text-small text-emerald-900 font-semibold pt-4">
+            <span class="flex items-center gap-6"><Icon name="check" size={16} class="text-emerald-700" /> Instant paperwork assistance</span>
+            <span class="flex items-center gap-6"><Icon name="check" size={16} class="text-emerald-700" /> AHRI certified efficiency ratings</span>
+          </div>
+        </div>
+        <div class="lg:col-span-4 text-center lg:text-right">
+          <Button href="/contact" variant="primary" size="lg">
+            Check Your Rebate Eligibility
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="py-80 bg-neutral-bg border-t border-neutral-border">
+    <div class="container max-w-3xl space-y-40">
+      <div class="text-center space-y-12">
+        <span class="text-caption font-bold tracking-wider text-brand-accent uppercase">Common Inquiries</span>
+        <h2 class="text-h2 font-heading font-bold text-brand-primary">
+          Financing Questions &amp; Answers
+        </h2>
+      </div>
+
+      <Accordion items={faqs} />
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="Get Pre-Approved for HVAC Financing in 60 Seconds"
+    subtitle="Keep your home comfortable today with zero upfront stress."
+    primaryCta={{ label: "Apply & Schedule", href: "/book" }}
+    secondaryCta={{ label: "Call (555) 014-7824", href: "tel:5550147824" }}
+    variant="primary"
+  />
+
+  <!-- Calculator Script -->
+  <script is:inline>
+    const slider = document.getElementById('project-amount');
+    const amountDisplay = document.getElementById('amount-display');
+    const termSelect = document.getElementById('loan-term');
+    const monthlyDisplay = document.getElementById('monthly-payment');
+
+    function calculatePayment() {
+      const amount = parseFloat(slider?.value || '4500');
+      amountDisplay.textContent = `$${amount.toLocaleString()}`;
+
+      const [termMonthsStr, rateStr] = (termSelect?.value || '18-0').split('-');
+      const months = parseInt(termMonthsStr);
+      const apr = parseFloat(rateStr);
+
+      let monthly = 0;
+      if (apr === 0) {
+        monthly = Math.round(amount / months);
+      } else {
+        const monthlyRate = (apr / 100) / 12;
+        monthly = Math.round((amount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1));
+      }
+
+      monthlyDisplay.textContent = `$${monthly}`;
+    }
+
+    slider?.addEventListener('input', calculatePayment);
+    termSelect?.addEventListener('change', calculatePayment);
+    calculatePayment();
+  </script>
+</Layout>

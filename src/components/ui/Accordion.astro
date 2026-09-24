@@ -1,0 +1,35 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  question: string;
+  answer: string;
+  open?: boolean;
+}
+
+const {
+  question,
+  answer,
+  open = false,
+} = Astro.props;
+---
+
+<details class="group bg-neutral-surface border border-neutral-border rounded-md overflow-hidden transition-colors duration-150 open:border-neutral-border-focus" open={open}>
+  <summary class="flex items-center justify-between p-20 md:p-24 cursor-pointer select-none font-heading font-bold text-body md:text-h3 text-brand-primary list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
+    <span>{question}</span>
+    <span class="w-32 h-32 rounded-full bg-neutral-surface-alt flex items-center justify-center text-brand-primary shrink-0 ml-16 transition-transform duration-200 group-open:rotate-180">
+      <Icon name="chevron-down" size={18} />
+    </span>
+  </summary>
+  <div class="px-20 md:px-24 pb-20 md:pb-24 pt-4 text-body text-text-secondary border-t border-neutral-divider leading-relaxed">
+    {answer}
+  </div>
+</details>
+
+<style>
+  /* Remove default disclosure triangle */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+

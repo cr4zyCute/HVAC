@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  hideHeaderFooter?: boolean;
+}
+
+const {
+  title = "NorthStar HVAC Services — Comfort You Can Count On",
+  description = "Licensed, upfront flat-rate heating & AC repairs, 24/7 emergency dispatch, and seasonal maintenance across our local community.",
+  hideHeaderFooter = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body class="min-h-screen flex flex-col bg-neutral-background text-text-primary antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-16 focus:left-16 focus:z-50 focus:px-20 focus:py-12 focus:bg-brand-primary focus:text-white focus:font-bold focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-accent"
+    >
+      Skip to main content
+    </a>
+    {!hideHeaderFooter && <Header />}
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    {!hideHeaderFooter && <Footer />}
+    <script is:inline src="/scripts/realtime-client.js"></script>
+  </body>
+</html>

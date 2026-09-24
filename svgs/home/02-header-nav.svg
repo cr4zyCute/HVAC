@@ -1,0 +1,70 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 88" width="1440" height="88" fill="none">
+  <!-- Section: Main Header & Navigation (Desktop 1440px) -->
+  <g id="Main-Header">
+    <!-- Header Background -->
+    <rect width="1440" height="88" fill="#FFFFFF"/>
+    <line x1="0" y1="87.5" x2="1440" y2="87.5" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Brand Logo Group -->
+    <g id="Brand-Logo" transform="translate(80, 20)">
+      <!-- Star / Compass Geometric Icon -->
+      <g id="Logo-Icon">
+        <rect width="48" height="48" rx="10" fill="#0F2238"/>
+        <!-- Compass North Star -->
+        <path d="M24 10L26.5 21.5L38 24L26.5 26.5L24 38L21.5 26.5L10 24L21.5 21.5L24 10Z" fill="#FFFFFF"/>
+        <circle cx="24" cy="24" r="3" fill="#E65100"/>
+      </g>
+      <!-- Brand Text -->
+      <text x="60" y="27" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" letter-spacing="-0.3">NorthStar</text>
+      <text x="161" y="27" fill="#E65100" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" letter-spacing="-0.3">HVAC</text>
+      <text x="60" y="42" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="500" letter-spacing="0.4">COMFORT YOU CAN COUNT ON</text>
+    </g>
+
+    <!-- Navigation Menu Items -->
+    <g id="Nav-Links" transform="translate(420, 36)">
+      <!-- Services (Active / With Dropdown) -->
+      <g id="Nav-Services">
+        <text x="0" y="14" fill="#0F2238" font-family="'Inter', sans-serif" font-size="15" font-weight="600">Services</text>
+        <path d="M66 10L70 14L74 10" stroke="#0F2238" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <g id="Nav-About" transform="translate(100, 0)">
+        <text x="0" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">About</text>
+      </g>
+
+      <g id="Nav-Areas" transform="translate(170, 0)">
+        <text x="0" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Service Areas</text>
+      </g>
+
+      <g id="Nav-Financing" transform="translate(290, 0)">
+        <text x="0" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Financing</text>
+      </g>
+
+      <g id="Nav-Reviews" transform="translate(385, 0)">
+        <text x="0" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Reviews</text>
+      </g>
+
+      <g id="Nav-Contact" transform="translate(470, 0)">
+        <text x="0" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Contact</text>
+      </g>
+    </g>
+
+    <!-- Right Header Actions -->
+    <g id="Header-Actions" transform="translate(1040, 20)">
+      <!-- Quick Phone Text Block -->
+      <g id="Phone-Block" transform="translate(0, 4)">
+        <text x="0" y="14" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="0.5">NEED IMMEDIATE SERVICE?</text>
+        <text x="0" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">(555) 014-7824</text>
+      </g>
+
+      <!-- Primary Action CTA Button -->
+      <g id="CTA-Button" transform="translate(195, 0)">
+        <rect width="165" height="48" rx="8" fill="#E65100"/>
+        <text x="32" y="30" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle">Book a Service</text>
+        <path d="M125 24H140M140 24L134 18M140 24L134 30" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+</svg>
+
+

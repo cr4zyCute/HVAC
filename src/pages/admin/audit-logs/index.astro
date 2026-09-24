@@ -1,0 +1,123 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { db, ensureDbInitialized } from '../../../lib/db';
+
+await ensureDbInitialized();
+
+const user = Astro.locals.user;
+if (user?.role !== 'owner') {
+  return Astro.redirect('/admin?error=forbidden');
+}
+
+const logsRes = await db.execute(`
+  SELECT a.*, u.email as actor_email, u.name as actor_name
+  FROM audit_logs a
+  LEFT JOIN users u ON a.user_id = u.id
+  ORDER BY a.created_at DESC
+  LIMIT 100
+`);
+
+const logs = logsRes.rows;
+
+function getActionColor(action: string) {
+  if (action.includes('DELETE') || action.includes('FAILED') || action.includes('EXCEEDED')) {
+    return 'bg-red-50 text-red-700 border-red-200';
+  }
+  if (action.includes('CREATE') || action.includes('SUBMITTED')) {
+    return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+  }
+  if (action.includes('UPDATE') || action.includes('RESET')) {
+    return 'bg-blue-50 text-blue-700 border-blue-200';
+  }
+  return 'bg-slate-100 text-slate-700 border-slate-300';
+}
+---
+
+<AdminLayout
+  title="Security Audit Logs"
+  activeSection="audit-logs"
+  breadcrumbs={[{ label: 'Audit Logs' }]}
+>
+  <div class="mb-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-16">
+    <div>
+      <div class="flex items-center gap-8">
+        <h1 class="text-h2 font-heading text-[#0F2238] tracking-tight">Security &amp; Operational Audit Trail</h1>
+        <span class="px-8 py-4 rounded font-bold uppercase tracking-wider text-[10px] bg-amber-100 text-amber-800">Owner Only</span>
+      </div>
+      <p class="text-sm text-[#64748B] mt-4">
+        Immutable record of all authenticated actions, customer inquiries, status mutations, and security events.
+      </p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl border border-[#E2E8F0] shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-[#E2E8F0] bg-slate-50/75 text-[11px] font-bold text-[#475569] uppercase tracking-wider">
+            <th class="py-14 px-20">Timestamp</th>
+            <th class="py-14 px-20">Action Event</th>
+            <th class="py-14 px-20">Entity</th>
+            <th class="py-14 px-20">Actor</th>
+            <th class="py-14 px-20">Details</th>
+            <th class="py-14 px-20">IP Address</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#E2E8F0] text-xs">
+          {logs.map((log) => {
+            const date = new Date(log.created_at as string);
+            const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const badgeColor = getActionColor(log.action as string);
+
+            return (
+              <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="py-16 px-20 font-mono text-[11px] text-[#64748B] whitespace-nowrap">
+                  {dateStr}
+                </td>
+
+                <td class="py-16 px-20 whitespace-nowrap">
+                  <span class={`inline-block px-8 py-4 rounded border text-[10px] font-bold font-mono uppercase tracking-wider ${badgeColor}`}>
+                    {log.action}
+                  </span>
+                </td>
+
+                <td class="py-16 px-20 whitespace-nowrap">
+                  <span class="font-medium text-[#0F172A]">{log.entity_type}</span>
+                  {log.entity_id && (
+                    <span class="text-[10px] text-[#64748B] font-mono block mt-2">{log.entity_id}</span>
+                  )}
+                </td>
+
+                <td class="py-16 px-20 whitespace-nowrap">
+                  {log.actor_email ? (
+                    <div>
+                      <span class="font-semibold text-[#0F172A]">{log.actor_name || 'Admin'}</span>
+                      <span class="text-[10px] text-[#64748B] block mt-2">{log.actor_email}</span>
+                    </div>
+                  ) : (
+                    <span class="text-[#94A3B8] italic">Anonymous / System</span>
+                  )}
+                </td>
+
+                <td class="py-16 px-20 max-w-xs md:max-w-md">
+                  {log.details_json ? (
+                    <code class="text-[11px] font-mono text-[#334155] bg-slate-100 px-8 py-4 rounded inline-block break-all">
+                      {log.details_json}
+                    </code>
+                  ) : (
+                    <span class="text-[#94A3B8]">—</span>
+                  )}
+                </td>
+
+                <td class="py-16 px-20 font-mono text-[11px] text-[#64748B] whitespace-nowrap">
+                  {log.ip_address || '127.0.0.1'}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+

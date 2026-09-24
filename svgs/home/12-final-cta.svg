@@ -1,0 +1,39 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 380" width="1440" height="380" fill="none">
+  <!-- Section: Final Conversion CTA (Desktop 1440px) -->
+  <g id="Final-CTA-Section">
+    <rect width="1440" height="380" fill="#F8FAFC"/>
+
+    <g transform="translate(80, 50)">
+      <!-- Card Container with Soft Shadow and Border -->
+      <rect width="1280" height="280" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+
+      <g transform="translate(60, 50)">
+        <text x="0" y="20" fill="#E65100" font-family="'Inter', sans-serif" font-size="13" font-weight="700" letter-spacing="1">EXPERIENCE RELIABLE CLIMATE CONTROL</text>
+        <text x="0" y="66" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="38" font-weight="800">Ready to Get Your Comfort Back?</text>
+        <text x="0" y="100" fill="#475569" font-family="'Inter', sans-serif" font-size="16" font-weight="400">
+          <tspan x="0" dy="0">Schedule professional HVAC service with NorthStar.</tspan>
+          <tspan x="0" dy="24">Convenient arrival windows, transparent estimates, and</tspan>
+          <tspan x="0" dy="24">certified technicians ready to restore your home comfort.</tspan>
+        </text>
+
+        <!-- CTA Action Group -->
+        <g transform="translate(0, 150)">
+          <!-- Primary CTA Button -->
+          <g>
+            <rect width="180" height="50" rx="8" fill="#E65100"/>
+            <text x="90" y="31" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle">Book a Service</text>
+          </g>
+
+          <!-- Secondary Call Us Button -->
+          <g transform="translate(195, 0)">
+            <rect width="200" height="50" rx="8" fill="#FFFFFF" stroke="#0F2238" stroke-width="2"/>
+            <path d="M4.5 3C4.5 9.07513 9.42487 14 15.5 14L17.5 12C17.8 11.7 18.2 11.6 18.6 11.8L21.2 12.9C21.7 13.1 22 13.6 22 14.1V17C22 17.5523 21.5523 18 21 18C10.5066 18 2 9.49341 2 -1C2 -1.55228 2.44772 -2 3 -2H5.9C6.4 -2 6.9 -1.7 7.1 -1.2L8.2 1.4C8.4 1.8 8.3 2.2 8 2.5L6 4.5" transform="translate(20, 16) scale(0.9)" stroke="#0F2238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="114" y="31" fill="#0F2238" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle">(555) 014-7824</text>
+          </g>
+
+          <text x="430" y="32" fill="#64748B" font-family="'Inter', sans-serif" font-size="13">No obligation quote • 24/7 Phone Dispatch</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

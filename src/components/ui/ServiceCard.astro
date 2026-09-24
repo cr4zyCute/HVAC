@@ -1,0 +1,61 @@
+---
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  category?: string;
+  badge?: string;
+  icon?: string;
+}
+
+const {
+  title,
+  description,
+  slug,
+  category,
+  badge,
+  icon = 'fan',
+} = Astro.props;
+---
+
+<div class="card flex flex-col justify-between h-full bg-neutral-surface border border-neutral-border rounded-lg p-24 md:p-32 hover:border-neutral-border-focus hover:shadow-md transition-all duration-200 group">
+  <div>
+    <div class="flex items-center justify-between mb-20">
+      <div class="w-48 h-48 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center group-hover:bg-brand-accent group-hover:text-white transition-colors duration-200">
+        <Icon name={icon} size={24} />
+      </div>
+      {badge && <Badge variant="info" size="sm">{badge}</Badge>}
+    </div>
+
+    {category && (
+      <span class="text-caption font-bold uppercase tracking-wider text-brand-accent mb-4 block">
+        {category}
+      </span>
+    )}
+
+    <h3 class="font-heading font-bold text-h3 text-brand-primary mb-12 group-hover:text-brand-accent transition-colors">
+      <a href={`/services/${slug}`}>
+        {title}
+      </a>
+    </h3>
+
+    <p class="text-body text-text-secondary line-clamp-3 leading-relaxed mb-24">
+      {description}
+    </p>
+  </div>
+
+  <div class="pt-20 border-t border-neutral-divider flex items-center justify-between gap-12">
+    <a href={`/services/${slug}`} class="text-small font-bold text-brand-primary hover:text-brand-accent inline-flex items-center gap-6 transition-colors">
+      <span>Service Scope</span>
+      <Icon name="arrow-right" size={14} />
+    </a>
+    <Button href="/book" variant="primary" size="sm">
+      Book Repair
+    </Button>
+  </div>
+</div>
+

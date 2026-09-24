@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 834 1440" width="834" height="1440">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="834" height="1440" fill="#FFFFFF"/>
+  <!-- Tablet Header (834px) -->
+  <g id="Tablet-Header">
+    <rect width="834" height="40" fill="#0F2238"/>
+    <text x="32" y="25" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Serving Metro Region • 24/7 Emergency Dispatch Active</text>
+    <text x="802" y="25" fill="#F59E0B" font-family="'Inter', sans-serif" font-size="12" font-weight="700" text-anchor="end">(555) 014-7824</text>
+    
+    <rect y="40" width="834" height="74" fill="#FFFFFF"/>
+    <line x1="0" y1="114" x2="834" y2="114" stroke="#E2E8F0" stroke-width="1"/>
+    
+    <!-- Logo -->
+    <g transform="translate(32, 54)">
+      <rect width="36" height="36" rx="6" fill="#0F2238"/>
+      <polygon points="18 9 20.5 14.5 26.5 15.2 22 19 23.5 25 18 22 12.5 25 14 19 9.5 15.2 15.5 14.5 18 9" fill="#FFFFFF"/>
+      <text x="46" y="20" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="800">NorthStar HVAC</text>
+      <text x="46" y="33" fill="#E65100" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.5">COMFORT YOU CAN COUNT ON</text>
+    </g>
+
+    <!-- Nav actions -->
+    <g transform="translate(560, 56)">
+      <rect width="140" height="40" rx="6" fill="#E65100"/>
+      <text x="70" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">Book Service</text>
+
+      <g transform="translate(160, 4)">
+        <rect width="32" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+        <line x1="8" y1="11" x2="24" y2="11" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+        <line x1="8" y1="16" x2="24" y2="16" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+        <line x1="8" y1="21" x2="24" y2="21" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+  <g id="Detail-Hero" transform="translate(32, 140)">
+    <text x="0" y="14" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Services &gt; Cooling &gt; <tspan font-weight="700" fill="#0F2238">Air Conditioning Repair</tspan></text>
+    <text x="0" y="54" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="800">Air Conditioning Repair</text>
+    <text x="0" y="88" fill="#475569" font-family="'Inter', sans-serif" font-size="15">
+      <tspan x="0" dy="0">Fast diagnosis, upfront flat-rate pricing, and long-lasting cooling repairs</tspan>
+      <tspan x="0" dy="22">by licensed HVAC specialists across your local neighborhood.</tspan>
+    </text>
+  </g>
+
+  <!-- Symptoms Grid (2 cols x 3 rows) -->
+  <g id="Symptoms" transform="translate(32, 280)">
+    <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1">COMMON WARNING SIGNS</text>
+    <text x="0" y="48" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="800">Is Your AC Showing These Symptoms?</text>
+
+    <g transform="translate(0, 75)">
+      <!-- Sym 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="370" height="130" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">AC Blowing Warm Air</text>
+        <text x="20" y="60" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Low refrigerant from leak, failed</tspan>
+          <tspan x="20" dy="20">compressor, or blown capacitor.</tspan>
+        </text>
+      </g>
+      <!-- Sym 2 -->
+      <g transform="translate(400, 0)">
+        <rect width="370" height="130" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Grinding or Buzzing</text>
+        <text x="20" y="60" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Worn blower motor bearings or</tspan>
+          <tspan x="20" dy="20">failing electrical contactor coils.</tspan>
+        </text>
+      </g>
+      <!-- Sym 3 -->
+      <g transform="translate(0, 145)">
+        <rect width="370" height="130" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Weak Airflow from Vents</text>
+        <text x="20" y="60" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Clogged air filters, failing motor,</tspan>
+          <tspan x="20" dy="20">or attic ductwork disconnection.</tspan>
+        </text>
+      </g>
+      <!-- Sym 4 -->
+      <g transform="translate(400, 145)">
+        <rect width="370" height="130" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Short Cycling Rapidly</text>
+        <text x="20" y="60" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Unit cycles on and off rapidly</tspan>
+          <tspan x="20" dy="20">without cooling, spiking power.</tspan>
+        </text>
+      </g>
+      <!-- Sym 5 (770px wide) -->
+      <g transform="translate(0, 290)">
+        <rect width="770" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Water Leaking Around Indoor Unit</text>
+        <text x="20" y="60" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Clogged condensate drain lines or cracked drain pan overflowing into drywall,</tspan>
+          <tspan x="20" dy="20">threatening ceiling water damage. Turn unit off and call immediately.</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- FAQ Accordion (770px) -->
+  <g id="FAQ" transform="translate(32, 790)">
+    <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1">FREQUENTLY ASKED QUESTIONS</text>
+    <text x="0" y="48" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="800">Air Conditioning Repair FAQ</text>
+
+    <g transform="translate(0, 75)">
+      <!-- Q1 Open -->
+      <rect width="770" height="110" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="20" y="34" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Should I repair my air conditioner or replace it entirely?</text>
+      <text x="20" y="64" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+        <tspan x="20" dy="0">If your AC is under 10 years old and repairs are under 50% of replacement, repairing is usually best.</tspan>
+        <tspan x="20" dy="20">For units over 12-15 years using phased-out R-22 Freon, a new high-efficiency SEER2 unit saves more.</tspan>
+      </text>
+
+      <!-- Q2 Closed -->
+      <g transform="translate(0, 125)">
+        <rect width="770" height="54" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="20" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">How long does an emergency AC repair call take?</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Tablet Footer (Y: 1100) -->
+  <g id="Tablet-Footer" transform="translate(0, 1100)">
+    <rect width="834" height="340" fill="#0A1829"/>
+    <g transform="translate(32, 40)">
+      <text x="0" y="22" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">NorthStar HVAC Services</text>
+      <text x="0" y="46" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="13">
+        <tspan x="0" dy="0">Professional residential and commercial HVAC service.</tspan>
+        <tspan x="0" dy="18">24/7 Emergency Dispatch: (555) 014-7824</tspan>
+      </text>
+
+      <line x1="0" y1="80" x2="770" y2="80" stroke="#1E293B" stroke-width="1"/>
+
+      <!-- 3 Columns -->
+      <g transform="translate(0, 110)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">Services</text>
+        <text x="0" y="42" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">AC Repair • AC Installation</text>
+        <text x="0" y="62" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Heating Repair • Maintenance</text>
+        <text x="0" y="82" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Indoor Air Quality • Emergency</text>
+      </g>
+
+      <g transform="translate(280, 110)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">Company</text>
+        <text x="0" y="42" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">About NorthStar</text>
+        <text x="0" y="62" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Service Areas</text>
+        <text x="0" y="82" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Financing • Reviews</text>
+      </g>
+
+      <g transform="translate(560, 110)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">Contact</text>
+        <text x="0" y="42" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="12" font-weight="600">(555) 014-7824</text>
+        <text x="0" y="62" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">hello@northstarhvac.example</text>
+        <text x="0" y="82" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Mon-Sun 24/7 Dispatch</text>
+      </g>
+
+      <line x1="0" y1="220" x2="770" y2="220" stroke="#1E293B" stroke-width="1"/>
+      <text x="0" y="248" fill="#64748B" font-family="'Inter', sans-serif" font-size="11">© 2026 NorthStar HVAC Services. Fictional business website UI design project.</text>
+    </g>
+  </g>
+</svg>

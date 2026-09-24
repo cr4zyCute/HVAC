@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NorthStar HVAC Services — Comfort You Can Count On</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. UTILITY TOP BAR
+       ========================================================================= -->
+  <div class="utility-bar">
+    <div class="container">
+      <div class="utility-left">
+        <div class="badge badge-emergency">
+          <span class="dot"></span>
+          24/7 DISPATCH ACTIVE
+        </div>
+        <span>Serving Residential &amp; Light Commercial Across Metro Region</span>
+      </div>
+      <div class="utility-right">
+        <span>LICENSED &amp; FULLY INSURED</span>
+        <span style="color: #334155;">|</span>
+        <a href="tel:5550147824" class="utility-phone">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (555) 014-7824
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. MAIN HEADER & NAVIGATION
+       ========================================================================= -->
+  <header class="main-header">
+    <div class="container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-symbol">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z" fill="#FFFFFF"/>
+            <circle cx="12" cy="11" r="2" fill="#E65100"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">NorthStar<span>HVAC</span></div>
+          <div class="logo-sub">COMFORT YOU CAN COUNT ON</div>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="service-detail.html" class="nav-link">Services</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="book-service.html" class="nav-link">Book Online</a>
+      </nav>
+
+      <div class="header-cta-group">
+        <button class="btn btn-outline" data-open-modal="callback">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Quick Callback
+        </button>
+        <button class="btn btn-accent" data-open-modal="booking">
+          Book a Service
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="mobile-menu-btn" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       3. HERO SECTION
+       ========================================================================= -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="badge badge-success">
+            <span class="dot"></span>
+            FAST SAME-DAY RESPONSE GUARANTEED
+          </div>
+          <h1>Reliable Heating &amp; AC Solutions for Lasting Comfort.</h1>
+          <p>From precision emergency AC repairs to high-efficiency furnace installations, licensed NorthStar technicians deliver transparent flat-rate pricing and respectful service.</p>
+          <div class="hero-actions">
+            <button class="btn btn-accent" data-open-modal="booking">
+              Schedule Service
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <button class="btn btn-outline-dark" data-open-modal="callback">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call (555) 014-7824
+            </button>
+          </div>
+        </div>
+        <div class="hero-image-wrapper">
+          <img src="assets/images/hero-technician-ac.jpg" alt="Licensed NorthStar HVAC Technician inspecting condenser">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. SERVICES GRID SECTION
+       ========================================================================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-overline">PRECISION CLIMATE SOLUTIONS</div>
+        <h2 class="section-title">Comprehensive HVAC Services</h2>
+        <p class="section-subtitle">Engineered for energy efficiency, indoor air purity, and year-round indoor comfort.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Service Card 1 -->
+        <div class="card">
+          <h3 class="card-title">Air Conditioning Repair</h3>
+          <p class="card-text">Rapid diagnosis and component fixes for warm air, compressor failures, refrigerant leaks, and electrical contactors.</p>
+          <div style="margin-top: 20px;">
+            <a href="service-detail.html" class="btn btn-sm btn-outline" style="margin-right: 8px;">View Details</a>
+            <button class="btn btn-sm btn-accent" data-open-modal="booking">Book Repair</button>
+          </div>
+        </div>
+
+        <!-- Service Card 2 -->
+        <div class="card">
+          <h3 class="card-title">Furnace &amp; Heating Fix</h3>
+          <p class="card-text">Gas ignition troubleshooting, cracked heat exchanger safety checks, and blower motor restoration for winter warmth.</p>
+          <div style="margin-top: 20px;">
+            <a href="service-detail.html" class="btn btn-sm btn-outline" style="margin-right: 8px;">View Details</a>
+            <button class="btn btn-sm btn-accent" data-open-modal="booking">Book Repair</button>
+          </div>
+        </div>
+
+        <!-- Service Card 3 -->
+        <div class="card">
+          <h3 class="card-title">24-Point Annual Tune-Up</h3>
+          <p class="card-text">Comprehensive electrical, mechanical, and airflow calibration that prevents sudden breakdown and saves up to 25% on bills.</p>
+          <div style="margin-top: 20px;">
+            <a href="service-detail.html" class="btn btn-sm btn-outline" style="margin-right: 8px;">View Details</a>
+            <button class="btn btn-sm btn-accent" data-open-modal="booking">Schedule Tune-Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. EMERGENCY CTA BANNER
+       ========================================================================= -->
+  <section class="section section-alt" style="padding-top: 0;">
+    <div class="container">
+      <div class="cta-banner">
+        <div>
+          <div class="badge badge-emergency" style="margin-bottom: 12px; background: rgba(220, 38, 38, 0.2); color: #FCA5A5;">
+            <span class="dot"></span>
+            URGENT EMERGENCY CALLOUT
+          </div>
+          <h2>HVAC Failure During Extreme Weather?</h2>
+          <p>Our fully stocked mobile service vans are radio-dispatched 24/7 across the metro territory.</p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn btn-emergency" data-open-modal="booking">
+            Dispatch a Van Now
+          </button>
+          <button class="btn btn-outline-dark" data-open-modal="callback">
+            Rapid Callback
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. CUSTOMER REVIEWS & "WRITE A REVIEW" SECTION
+       ========================================================================= -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <div class="section-overline">VERIFIED LOCAL HOMEOWNERS</div>
+          <h2 class="section-title">5-Star Reputations in Every Neighborhood</h2>
+          <p class="section-subtitle">Real feedback from local residents who trust NorthStar for honest heating and cooling craftsmanship.</p>
+        </div>
+        <!-- Write a Review Button -->
+        <button class="btn btn-accent" data-open-modal="review">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Write a Review
+        </button>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div style="color: #F59E0B; margin-bottom: 8px;">★★★★★</div>
+          <p class="card-text" style="font-style: italic; margin-bottom: 16px;">"Our AC compressor failed in the middle of a 95-degree heatwave. Technician Marcus arrived within 45 minutes, had the dual capacitor in stock in his van, and fixed it at the exact quoted price."</p>
+          <div style="font-weight: 700; color: #0F2238;">David Miller</div>
+          <div style="font-size: 12px; color: #64748B;">Oak Ridge Subdivision • Verified Homeowner</div>
+        </div>
+
+        <div class="card">
+          <div style="color: #F59E0B; margin-bottom: 8px;">★★★★★</div>
+          <p class="card-text" style="font-style: italic; margin-bottom: 16px;">"No sales pressure at all! Other contractors told us we needed a $12,000 new unit. NorthStar tested the contactor, found a loose wire, and saved us thousands. Honest company."</p>
+          <div style="font-weight: 700; color: #0F2238;">Sarah Jenkins</div>
+          <div style="font-size: 12px; color: #64748B;">Downtown Metro • Verified Homeowner</div>
+        </div>
+
+        <div class="card">
+          <div style="color: #F59E0B; margin-bottom: 8px;">★★★★★</div>
+          <p class="card-text" style="font-style: italic; margin-bottom: 16px;">"Annual maintenance tune-up was thorough. They cleaned the condenser coils, cleared the drain line, and showed digital pressure gauge readings before and after."</p>
+          <div style="font-weight: 700; color: #0F2238;">Robert Chen</div>
+          <div style="font-size: 12px; color: #64748B;">Westlake Heights • Verified Homeowner</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. FAQ SECTION
+       ========================================================================= -->
+  <section class="section section-alt">
+    <div class="container" style="max-width: 900px;">
+      <div class="section-header text-center">
+        <div class="section-overline">COMMON QUESTIONS</div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="accordion-item active">
+        <button class="accordion-header">
+          <span>How fast can a NorthStar technician arrive for an emergency call?</span>
+          <span class="accordion-icon">−</span>
+        </button>
+        <div class="accordion-body">
+          We maintain dedicated on-call service vans dispatched 24 hours a day. Typical arrival time for emergency cooling and heating loss is between 45 to 90 minutes across our metro territory.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span>Do you provide upfront pricing before starting any repairs?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          Yes! We operate on transparent flat-rate pricing. After testing and pinpointing the root cause, our technician presents a written quote with zero hidden diagnostic fees.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">
+          <span>What warranties cover parts and labor?</span>
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-body">
+          All repairs are backed by our 90-day workmanship guarantee and factory OEM manufacturer parts warranties (often 1 to 5 years depending on the component).
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. FOOTER
+       ========================================================================= -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: 16px;">
+            <div class="logo-symbol">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z" fill="#FFFFFF"/><circle cx="12" cy="11" r="2" fill="#E65100"/></svg>
+            </div>
+            <div class="logo-text" style="color: #FFFFFF;">NorthStar<span style="color: #E65100;">HVAC</span></div>
+          </div>
+          <p>Comfort You Can Count On. Licensed, insured, and background-checked technicians delivering 24/7 heating and cooling excellence across our local communities.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>COMPANY</h4>
+          <ul class="footer-links">
+            <li><a href="service-detail.html">Services Directory</a></li>
+            <li><a href="#about">About NorthStar</a></li>
+            <li><a href="#reviews">Customer Reviews</a></li>
+            <li><a href="book-service.html">Book Online</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>SERVICES</h4>
+          <ul class="footer-links">
+            <li><a href="service-detail.html">Air Conditioning Repair</a></li>
+            <li><a href="service-detail.html">Furnace &amp; Heating Fix</a></li>
+            <li><a href="service-detail.html">24-Point Annual Tune-Up</a></li>
+            <li><a href="service-detail.html">Emergency 24/7 Dispatch</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>DIRECT CONTACT</h4>
+          <p style="color: #64748B; font-size: 11px; font-weight: 700; margin-bottom: 4px;">24/7 DISPATCH LINE</p>
+          <p style="font-size: 18px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">(555) 014-7824</p>
+          <p style="color: #10B981; font-weight: 600;">• Open 24 Hours / 7 Days a Week</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 NorthStar HVAC Services. Fictional commercial template project.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL 1: MULTI-STEP BOOKING WIZARD
+       ========================================================================= -->
+  <div class="modal-backdrop" id="modal-booking">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Schedule an HVAC Service</h3>
+          <p>Fast online booking with upfront flat-rate pricing guarantee.</p>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Progress Bar -->
+        <div class="wizard-progress">
+          <div class="wizard-step-node active">
+            <div class="step-circle">1</div>
+            <span class="step-label">Service</span>
+          </div>
+          <div class="wizard-step-node">
+            <div class="step-circle">2</div>
+            <span class="step-label">Schedule</span>
+          </div>
+          <div class="wizard-step-node">
+            <div class="step-circle">3</div>
+            <span class="step-label">Details</span>
+          </div>
+        </div>
+
+        <!-- Step 1: Service Selection -->
+        <div class="wizard-step-content" data-step="1">
+          <div class="form-label">Select Required Service:</div>
+          <div class="service-select-grid">
+            <div class="service-card-select selected" data-service="Air Conditioning Repair">
+              <div>
+                <div style="font-weight: 700; color: #0F2238;">AC Repair</div>
+                <div style="font-size: 12px; color: #64748B;">Warm air, leaks, noises</div>
+              </div>
+            </div>
+            <div class="service-card-select" data-service="Heating & Furnace Fix">
+              <div>
+                <div style="font-weight: 700; color: #0F2238;">Heating / Furnace</div>
+                <div style="font-size: 12px; color: #64748B;">No heat, pilot light, blower</div>
+              </div>
+            </div>
+            <div class="service-card-select" data-service="24-Point Seasonal Tune-Up">
+              <div>
+                <div style="font-weight: 700; color: #0F2238;">Seasonal Tune-Up</div>
+                <div style="font-size: 12px; color: #64748B;">Inspection &amp; filter cleaning</div>
+              </div>
+            </div>
+            <div class="service-card-select" data-service="Emergency 24/7 Dispatch">
+              <div>
+                <div style="font-weight: 700; color: #DC2626;">Emergency 24/7</div>
+                <div style="font-size: 12px; color: #64748B;">Rapid response dispatch</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Urgency Level:</label>
+            <select class="form-input" id="book-urgency">
+              <option value="Same-Day Emergency">Emergency (Same Day / ASAP)</option>
+              <option value="Next Day">Next Day Service</option>
+              <option value="Flexible Window">Flexible within next 3 days</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Step 2: Date & Time Window -->
+        <div class="wizard-step-content" data-step="2" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Preferred Date:</label>
+            <input type="date" class="form-input" id="book-date" value="2026-09-25">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Select Preferred Arrival Window:</label>
+            <div class="time-slot-group">
+              <div class="time-chip selected" data-slot="Morning (8:00 AM – 12:00 PM)">
+                <div>Morning</div>
+                <div style="font-size: 11px; font-weight: normal;">8am – 12pm</div>
+              </div>
+              <div class="time-chip" data-slot="Afternoon (12:00 PM – 4:00 PM)">
+                <div>Afternoon</div>
+                <div style="font-size: 11px; font-weight: normal;">12pm – 4pm</div>
+              </div>
+              <div class="time-chip" data-slot="Evening (4:00 PM – 8:00 PM)">
+                <div>Evening</div>
+                <div style="font-size: 11px; font-weight: normal;">4pm – 8pm</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Contact Details -->
+        <div class="wizard-step-content" data-step="3" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Full Name:</label>
+            <input type="text" class="form-input" id="book-name" placeholder="e.g. John Miller" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number (for 15-min technician arrival call):</label>
+            <input type="tel" class="form-input" id="book-phone" placeholder="(555) 000-0000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service Street Address &amp; ZIP:</label>
+            <input type="text" class="form-input" id="book-address" placeholder="123 Oak St, Metro City, ZIP" required>
+          </div>
+        </div>
+
+        <!-- Confirmation State -->
+        <div id="wizard-confirmation" class="confirmation-box" style="display: none;">
+          <div class="confirmation-icon">✓</div>
+          <h3 style="font-size: 22px; font-weight: 800; color: #0F2238;">Appointment Confirmed!</h3>
+          <p style="color: #64748B; font-size: 14px; margin-top: 4px;">Your service ticket has been routed to our on-call dispatch desk.</p>
+          <div class="confirmation-code" id="booking-ref-code">NS-8492</div>
+          <p id="booking-summary-text" style="color: #475569; font-size: 14px; max-width: 440px; margin: 12px auto;"></p>
+          <button class="btn btn-accent" data-close-modal style="margin-top: 16px;">Done</button>
+        </div>
+      </div>
+
+      <div class="modal-footer" id="wizard-footer">
+        <button class="btn btn-sm btn-outline" id="wizard-back-btn" style="visibility: hidden;">Back</button>
+        <button class="btn btn-sm btn-accent" id="wizard-next-btn">Continue to Next Step</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2: WRITE A REVIEW
+       ========================================================================= -->
+  <div class="modal-backdrop" id="modal-review">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Write a Community Review</h3>
+          <p>Help your local neighbors find trustworthy HVAC craftsmanship.</p>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="review-form">
+          <div class="form-group text-center" style="text-align: center;">
+            <label class="form-label">Tap to Rate Your Experience:</label>
+            <div class="star-rating-box" style="justify-content: center;">
+              <span class="star-btn" data-rating="1">★</span>
+              <span class="star-btn" data-rating="2">★</span>
+              <span class="star-btn" data-rating="3">★</span>
+              <span class="star-btn" data-rating="4">★</span>
+              <span class="star-btn" data-rating="5">★</span>
+            </div>
+            <div class="rating-text" id="rating-label">5 Stars — Exceptional Service</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Service Received:</label>
+            <select class="form-input" id="review-service">
+              <option value="Air Conditioning Repair">Air Conditioning Repair</option>
+              <option value="Furnace Fix">Heating &amp; Furnace Fix</option>
+              <option value="Seasonal Tune-Up">Seasonal 24-Point Tune-Up</option>
+              <option value="New System Installation">New AC / Heat Pump Installation</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Name &amp; Neighborhood:</label>
+            <input type="text" class="form-input" id="review-author" placeholder="e.g. Michael T., Pine Valley" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Review Details:</label>
+            <textarea class="form-input" id="review-comment" placeholder="Tell neighbors about the technician's punctuality, honesty, and clean job site..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 10px;">Submit Verified Review</button>
+        </form>
+
+        <div id="review-success" class="confirmation-box" style="display: none;">
+          <div class="confirmation-icon">✓</div>
+          <h3 style="font-size: 20px; font-weight: 800; color: #0F2238;">Thank You For Your Feedback!</h3>
+          <p style="color: #64748B; font-size: 14px; margin-top: 6px;">Your review has been verified and added to our community directory.</p>
+          <button class="btn btn-accent" data-close-modal style="margin-top: 16px;">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 3: QUICK 10-MINUTE CALLBACK
+       ========================================================================= -->
+  <div class="modal-backdrop" id="modal-callback">
+    <div class="modal-container" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Request a Rapid Callback</h3>
+          <p>A coordinator will phone you directly within 10 minutes.</p>
+        </div>
+        <button class="modal-close-btn" data-close-modal aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="callback-form">
+          <div class="badge badge-success" style="margin-bottom: 16px; width: 100%; justify-content: center;">
+            <span class="dot"></span>
+            3 ON-CALL TECHNICIANS ACTIVE RIGHT NOW
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Phone Number:</label>
+            <input type="tel" class="form-input" id="callback-phone" placeholder="(555) 000-0000" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Name:</label>
+            <input type="text" class="form-input" id="callback-name" placeholder="First and last name" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Issue Brief:</label>
+            <select class="form-input" id="callback-issue">
+              <option value="No Cold Air / AC Blowing Warm">No Cold Air / AC Blowing Warm</option>
+              <option value="Strange Noise or Burning Smell">Strange Noise or Burning Smell</option>
+              <option value="Water Leaking Around Indoor Unit">Water Leaking Around Indoor Unit</option>
+              <option value="General Question / Schedule Call">General Question / Schedule Call</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 8px;">Request 10-Minute Call</button>
+        </form>
+
+        <div id="callback-success" class="confirmation-box" style="display: none;">
+          <div class="confirmation-icon">✓</div>
+          <h3 style="font-size: 20px; font-weight: 800; color: #0F2238;">Callback Requested!</h3>
+          <p style="color: #64748B; font-size: 14px; margin-top: 6px;">Our dispatch desk has received your request. Keep your phone nearby—we will call within 10 minutes.</p>
+          <button class="btn btn-accent" data-close-modal style="margin-top: 16px;">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/modals.js"></script>
+</body>
+</html>
+

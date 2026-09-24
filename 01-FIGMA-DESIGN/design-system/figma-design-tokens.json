@@ -1,0 +1,171 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "NorthStar HVAC Design System",
+  "version": "1.0.0",
+  "color": {
+    "brand": {
+      "primary": {
+        "value": "#0F2238",
+        "type": "color",
+        "description": "Deep corporate navy for high trust, primary text, and dark sections"
+      },
+      "secondary": {
+        "value": "#1E3A5F",
+        "type": "color",
+        "description": "Slate steel blue for secondary headers, icons, and card accents"
+      },
+      "accent": {
+        "value": "#E65100",
+        "type": "color",
+        "description": "Warm safety orange for primary conversion buttons ('Book a Service')"
+      },
+      "accentHover": {
+        "value": "#CC4400",
+        "type": "color",
+        "description": "Darker orange for hover/pressed states"
+      },
+      "emergency": {
+        "value": "#DC2626",
+        "type": "color",
+        "description": "Crisp emergency red for 24/7 dispatch badges and immediate call actions"
+      },
+      "emergencyHover": {
+        "value": "#B91C1C",
+        "type": "color",
+        "description": "Emergency red hover state"
+      }
+    },
+    "neutral": {
+      "background": {
+        "value": "#F8FAFC",
+        "type": "color",
+        "description": "Soft off-white / ice slate for overall page background"
+      },
+      "surface": {
+        "value": "#FFFFFF",
+        "type": "color",
+        "description": "Pure white for cards, inputs, and elevated containers"
+      },
+      "surfaceAlt": {
+        "value": "#F1F5F9",
+        "type": "color",
+        "description": "Subtle light gray for secondary cards and table rows"
+      },
+      "border": {
+        "value": "#E2E8F0",
+        "type": "color",
+        "description": "Clean boundary border for cards, inputs, and dividers"
+      },
+      "borderFocus": {
+        "value": "#1E3A5F",
+        "type": "color",
+        "description": "Prominent focus border for accessibility"
+      }
+    },
+    "text": {
+      "primary": {
+        "value": "#0F172A",
+        "type": "color",
+        "description": "High contrast dark slate for titles and body text"
+      },
+      "secondary": {
+        "value": "#334155",
+        "type": "color",
+        "description": "Medium slate for supporting copy and descriptions"
+      },
+      "muted": {
+        "value": "#64748B",
+        "type": "color",
+        "description": "Muted gray for labels, timestamps, and metadata"
+      },
+      "inverse": {
+        "value": "#FFFFFF",
+        "type": "color",
+        "description": "Pure white for text on dark navy or orange backgrounds"
+      }
+    },
+    "feedback": {
+      "success": {
+        "value": "#15803D",
+        "type": "color",
+        "description": "Success green for confirmation alerts and verified badges"
+      },
+      "warning": {
+        "value": "#B45309",
+        "type": "color",
+        "description": "Warning amber for service advisory notices"
+      },
+      "error": {
+        "value": "#B91C1C",
+        "type": "color",
+        "description": "Error red for form validation messages"
+      }
+    }
+  },
+  "spacing": {
+    "4": { "value": "4px", "type": "spacing" },
+    "8": { "value": "8px", "type": "spacing" },
+    "12": { "value": "12px", "type": "spacing" },
+    "16": { "value": "16px", "type": "spacing" },
+    "24": { "value": "24px", "type": "spacing" },
+    "32": { "value": "32px", "type": "spacing" },
+    "40": { "value": "40px", "type": "spacing" },
+    "48": { "value": "48px", "type": "spacing" },
+    "64": { "value": "64px", "type": "spacing" },
+    "80": { "value": "80px", "type": "spacing" },
+    "96": { "value": "96px", "type": "spacing" },
+    "120": { "value": "120px", "type": "spacing" }
+  },
+  "borderRadius": {
+    "none": { "value": "0px", "type": "borderRadius" },
+    "sm": { "value": "4px", "type": "borderRadius", "description": "Form inputs, badges, tags" },
+    "md": { "value": "8px", "type": "borderRadius", "description": "Buttons, service card corners, tabs" },
+    "lg": { "value": "12px", "type": "borderRadius", "description": "Feature containers, dialogs, review cards" },
+    "xl": { "value": "16px", "type": "borderRadius", "description": "Hero callouts, major banners" },
+    "full": { "value": "9999px", "type": "borderRadius", "description": "Pills, circular badges" }
+  },
+  "boxShadow": {
+    "sm": {
+      "value": "0 1px 2px 0 rgba(15, 23, 42, 0.05)",
+      "type": "boxShadow"
+    },
+    "md": {
+      "value": "0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05)",
+      "type": "boxShadow"
+    },
+    "lg": {
+      "value": "0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04)",
+      "type": "boxShadow"
+    },
+    "hover": {
+      "value": "0 20px 25px -5px rgba(15, 23, 42, 0.10), 0 8px 10px -6px rgba(15, 23, 42, 0.04)",
+      "type": "boxShadow"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "heading": { "value": "Plus Jakarta Sans, sans-serif", "type": "fontFamilies" },
+      "body": { "value": "Inter, sans-serif", "type": "fontFamilies" }
+    },
+    "fontSize": {
+      "caption": { "value": "12px", "type": "fontSizes" },
+      "small": { "value": "14px", "type": "fontSizes" },
+      "body": { "value": "16px", "type": "fontSizes" },
+      "bodyLarge": { "value": "18px", "type": "fontSizes" },
+      "h3": { "value": "24px", "type": "fontSizes" },
+      "h2": { "value": "32px", "type": "fontSizes" },
+      "h1": { "value": "40px", "type": "fontSizes" },
+      "display": { "value": "56px", "type": "fontSizes" }
+    },
+    "lineHeight": {
+      "caption": { "value": "16px", "type": "lineHeights" },
+      "small": { "value": "20px", "type": "lineHeights" },
+      "body": { "value": "24px", "type": "lineHeights" },
+      "bodyLarge": { "value": "28px", "type": "lineHeights" },
+      "h3": { "value": "32px", "type": "lineHeights" },
+      "h2": { "value": "40px", "type": "lineHeights" },
+      "h1": { "value": "48px", "type": "lineHeights" },
+      "display": { "value": "64px", "type": "lineHeights" }
+    }
+  }
+}

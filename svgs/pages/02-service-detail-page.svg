@@ -1,0 +1,503 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 2926" width="1440" height="2926" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Page Background Canvas -->
+  <rect width="1440" height="2926" fill="#F8FAFC"/>
+
+  <!-- ======================================================================= -->
+  <!-- 1. UTILITY TOP BAR (Y: 0, H: 44)                                        -->
+  <!-- ======================================================================= -->
+  <g id="Utility-Top-Bar">
+    <rect width="1440" height="44" fill="#0A1829"/>
+    <line x1="0" y1="43.5" x2="1440" y2="43.5" stroke="#1E293B" stroke-width="1"/>
+
+    <!-- Left Content: 24/7 Emergency Dispatch Badge -->
+    <g transform="translate(80, 12)">
+      <rect width="128" height="20" rx="10" fill="#DC2626" fill-opacity="0.15"/>
+      <circle cx="10" cy="10" r="3.5" fill="#EF4444"/>
+      <text x="20" y="14" fill="#F87171" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="0.5">24/7 DISPATCH</text>
+      <text x="140" y="14" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Serving Residential &amp; Light Commercial Across Metro Region</text>
+    </g>
+
+    <!-- Right Content: Contact & Phone -->
+    <g transform="translate(1120, 12)">
+      <!-- Lucide Phone Icon -->
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="translate(0, 1) scale(0.7)" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="22" y="14" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" letter-spacing="0.3">(555) 014-7824</text>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 2. MAIN HEADER & NAV (Y: 44, H: 88)                                     -->
+  <!-- ======================================================================= -->
+  <g id="Main-Header" transform="translate(0, 44)">
+    <rect width="1440" height="88" fill="#FFFFFF"/>
+    <line x1="0" y1="87.5" x2="1440" y2="87.5" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Brand Logo -->
+    <g transform="translate(80, 20)">
+      <rect width="48" height="48" rx="10" fill="#0F2238"/>
+      <path d="M24 10L26.5 21.5L38 24L26.5 26.5L24 38L21.5 26.5L10 24L21.5 21.5L24 10Z" fill="#FFFFFF"/>
+      <circle cx="24" cy="24" r="3" fill="#E65100"/>
+      <text x="60" y="27" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" letter-spacing="-0.3">NorthStar</text>
+      <text x="161" y="27" fill="#E65100" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" letter-spacing="-0.3">HVAC</text>
+      <text x="60" y="42" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="500" letter-spacing="0.4">COMFORT YOU CAN COUNT ON</text>
+    </g>
+
+    <!-- Nav Menu -->
+    <g transform="translate(420, 36)">
+      <!-- Services (Active Tab) -->
+      <g>
+        <text x="0" y="14" fill="#E65100" font-family="'Inter', sans-serif" font-size="15" font-weight="700">Services</text>
+        <rect x="0" y="24" width="60" height="2" fill="#E65100" rx="1"/>
+      </g>
+      <text x="96" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">About</text>
+      <text x="176" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Serving Areas</text>
+      <text x="306" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Financing</text>
+      <text x="410" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Reviews</text>
+      <text x="500" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Contact</text>
+    </g>
+
+    <!-- Primary Action: Book a Service -->
+    <g transform="translate(1195, 20)">
+      <rect width="165" height="48" rx="8" fill="#E65100"/>
+      <text x="82" y="29" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle">Book a Service</text>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 3. SERVICE HERO SECTION (Y: 132, H: 300)                                -->
+  <!-- ======================================================================= -->
+  <g id="Service-Hero" transform="translate(0, 132)">
+    <rect width="1440" height="300" fill="#0F2238"/>
+
+    <g transform="translate(80, 36)">
+      <!-- Breadcrumb -->
+      <text x="0" y="14" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="13">
+        Home &gt; Services &gt; <tspan fill="#FFFFFF" font-weight="600">Air Conditioning Repair</tspan>
+      </text>
+
+      <!-- Badge -->
+      <g transform="translate(0, 30)">
+        <rect width="190" height="26" rx="4" fill="#1E3A5F"/>
+        <text x="12" y="17" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="11" font-weight="700" letter-spacing="1">RESIDENTIAL &amp; COMMERCIAL</text>
+      </g>
+
+      <!-- H1 Page Title -->
+      <text x="0" y="98" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="800">Professional Air Conditioning Repair</text>
+
+      <!-- Subtitle Description -->
+      <text x="0" y="132" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="15">
+        <tspan x="0" dy="0">Fast diagnosis, upfront flat-rate pricing, and long-lasting cooling repairs by licensed HVAC specialists.</tspan>
+        <tspan x="0" dy="24">We fix compressors, fan motors, refrigerant leaks, electrical relays, and frozen evaporator coils.</tspan>
+      </text>
+
+      <!-- CTA Buttons Row -->
+      <g transform="translate(0, 184)">
+        <!-- Primary Button -->
+        <g>
+          <rect width="180" height="48" rx="8" fill="#E65100"/>
+          <text x="90" y="29" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle">Schedule Repair</text>
+        </g>
+        <!-- Secondary Button -->
+        <g transform="translate(196, 0)">
+          <rect width="210" height="48" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+          <text x="105" y="29" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle">Call (555) 014-7824</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 4. WARNING SIGNS / SYMPTOMS SECTION (Y: 512, H: 392)                     -->
+  <!-- ======================================================================= -->
+  <g id="Symptoms-Section" transform="translate(80, 512)">
+    <!-- Section Header -->
+    <text x="0" y="14" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.2">COMMON WARNING SIGNS</text>
+    <text x="0" y="46" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800">Is Your Air Conditioner Showing These Symptoms?</text>
+    <text x="0" y="74" fill="#64748B" font-family="'Inter', sans-serif" font-size="14">Recognizing system distress early prevents total compressor burnout and costly emergency replacement.</text>
+
+    <!-- Grid Container (Starts at Y: 98 inside Symptoms) -->
+    <!-- Row 1: 3 Cards (W: 400, H: 140, Gap: 40) -->
+    <g transform="translate(0, 98)">
+      <!-- Card 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="400" height="140" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <!-- Alert Icon Badge -->
+        <g transform="translate(20, 20)">
+          <circle cx="16" cy="16" r="16" fill="#FEE2E2"/>
+          <path d="M16 9V17M16 21V23" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <text x="62" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">AC Blowing Warm Air</text>
+        <text x="20" y="76" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Caused by low refrigerant charge, faulty</tspan>
+          <tspan x="20" dy="20">compressor relays, or a blown dual capacitor.</tspan>
+        </text>
+      </g>
+
+      <!-- Card 2 -->
+      <g transform="translate(440, 0)">
+        <rect width="400" height="140" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(20, 20)">
+          <circle cx="16" cy="16" r="16" fill="#FEE2E2"/>
+          <path d="M16 9V17M16 21V23" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <text x="62" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Strange Grinding or Buzzing Noises</text>
+        <text x="20" y="76" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Worn blower motor bearings, loose fan</tspan>
+          <tspan x="20" dy="20">blades, or failing electrical contactor coils.</tspan>
+        </text>
+      </g>
+
+      <!-- Card 3 -->
+      <g transform="translate(880, 0)">
+        <rect width="400" height="140" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(20, 20)">
+          <circle cx="16" cy="16" r="16" fill="#FEE2E2"/>
+          <path d="M16 9V17M16 21V23" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <text x="62" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Weak Airflow from Vents</text>
+        <text x="20" y="76" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Restricted air filters, failing blower motors,</tspan>
+          <tspan x="20" dy="20">or ductwork disconnections inside the attic.</tspan>
+        </text>
+      </g>
+    </g>
+
+    <!-- Row 2: 2 Cards (W: 620, H: 130, Gap: 40, Y: 262) -->
+    <g transform="translate(0, 262)">
+      <!-- Card 4 -->
+      <g transform="translate(0, 0)">
+        <rect width="620" height="130" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(20, 20)">
+          <circle cx="16" cy="16" r="16" fill="#FEE2E2"/>
+          <path d="M16 9V17M16 21V23" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <text x="62" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Frequent System Cycling (Short Cycling)</text>
+        <text x="20" y="72" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Unit cycles on and off every few minutes without reaching thermostat setpoint,</tspan>
+          <tspan x="20" dy="20">rapidly spiking power bills and stressing internal electrical relays.</tspan>
+        </text>
+      </g>
+
+      <!-- Card 5 -->
+      <g transform="translate(660, 0)">
+        <rect width="620" height="130" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(20, 20)">
+          <circle cx="16" cy="16" r="16" fill="#FEE2E2"/>
+          <path d="M16 9V17M16 21V23" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round"/>
+        </g>
+        <text x="62" y="32" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Water Leaking Around the Indoor Unit</text>
+        <text x="20" y="72" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Clogged condensate drain lines or cracked drain pan overflowing into drywall,</tspan>
+          <tspan x="20" dy="20">creating structural water damage risk. Shut unit off immediately.</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 5. COMPREHENSIVE SCOPE SECTION (Y: 984, H: 340) - 80px GAP! ZERO OVERLAP -->
+  <!-- ======================================================================= -->
+  <g id="Scope-Section" transform="translate(80, 984)">
+    <!-- Container Card (1280 x 340) -->
+    <rect width="1280" height="340" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Section Heading inside Container -->
+    <g transform="translate(48, 36)">
+      <text x="0" y="14" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.2">COMPREHENSIVE SCOPE</text>
+      <text x="0" y="44" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="800">What Our AC Repair Service Includes</text>
+
+      <!-- Checklist Grid (2 Cols x 4 Rows) -->
+      <!-- Column 1 (X: 0) -->
+      <g transform="translate(0, 72)">
+        <!-- Item 1 -->
+        <g transform="translate(0, 0)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Electronic Refrigerant Leak Scan</text>
+        </g>
+        <!-- Item 2 -->
+        <g transform="translate(0, 38)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Capacitor &amp; Contactor Testing</text>
+        </g>
+        <!-- Item 3 -->
+        <g transform="translate(0, 76)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Compressor Amp Draw Measurement</text>
+        </g>
+        <!-- Item 4 -->
+        <g transform="translate(0, 114)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Condensate Drain Line Vacuum Clearing</text>
+        </g>
+      </g>
+
+      <!-- Column 2 (X: 560) -->
+      <g transform="translate(560, 72)">
+        <!-- Item 5 -->
+        <g transform="translate(0, 0)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Thermostat Calibration &amp; Signal Check</text>
+        </g>
+        <!-- Item 6 -->
+        <g transform="translate(0, 38)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Condenser Fan Motor Inspection</text>
+        </g>
+        <!-- Item 7 -->
+        <g transform="translate(0, 76)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Evaporator Coil Temperature Split Check</text>
+        </g>
+        <!-- Item 8 -->
+        <g transform="translate(0, 114)">
+          <circle cx="12" cy="12" r="12" fill="#ECFDF5"/>
+          <path d="M8 12L11 15L16 9" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="36" y="16" fill="#0F2238" font-family="'Inter', sans-serif" font-size="14" font-weight="600">Full 90-Day Workmanship Guarantee</text>
+        </g>
+      </g>
+
+      <!-- Bottom Flat Rate Banner (W: 1184, H: 48) -->
+      <g transform="translate(0, 220)">
+        <rect width="1184" height="48" rx="8" fill="#F1F5F9"/>
+        <text x="20" y="29" font-family="'Inter', sans-serif" font-size="13">
+          <tspan font-weight="700" fill="#0F2238">Transparent Flat-Rate Pricing:</tspan>
+          <tspan fill="#475569"> We quote all repairs in writing before beginning work. No hidden diagnostic fees.</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 6. 4-STEP REPAIR PROCESS SECTION (Y: 1404, H: 270)                       -->
+  <!-- ======================================================================= -->
+  <g id="Process-Section" transform="translate(80, 1404)">
+    <text x="0" y="14" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.2">SYSTEMATIC REPAIR PROCESS</text>
+    <text x="0" y="46" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800">Our 4-Step AC Diagnostic &amp; Repair Process</text>
+
+    <!-- 4 Cards Row (W: 300 each, H: 200 - expanded so text never clips!) -->
+    <g transform="translate(0, 70)">
+      <!-- Step 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="300" height="190" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="20" y="20" width="36" height="36" rx="8" fill="#0F2238"/>
+        <text x="38" y="44" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" text-anchor="middle">1</text>
+        <text x="20" y="86" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Multi-Point Diagnostic</text>
+        <text x="20" y="116" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Technician tests voltage,</tspan>
+          <tspan x="20" dy="20">pressures, and airflow across</tspan>
+          <tspan x="20" dy="20">the indoor evaporator coil.</tspan>
+        </text>
+      </g>
+
+      <!-- Step 2 -->
+      <g transform="translate(326, 0)">
+        <rect width="300" height="190" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="20" y="20" width="36" height="36" rx="8" fill="#0F2238"/>
+        <text x="38" y="44" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" text-anchor="middle">2</text>
+        <text x="20" y="86" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Clear Quote &amp; Options</text>
+        <text x="20" y="116" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">We explain the root cause and</tspan>
+          <tspan x="20" dy="20">provide clear upfront pricing</tspan>
+          <tspan x="20" dy="20">before touching any tools.</tspan>
+        </text>
+      </g>
+
+      <!-- Step 3 -->
+      <g transform="translate(653, 0)">
+        <rect width="300" height="190" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="20" y="20" width="36" height="36" rx="8" fill="#E65100"/>
+        <text x="38" y="44" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" text-anchor="middle">3</text>
+        <text x="20" y="86" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Precision Component Fix</text>
+        <text x="20" y="116" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">Repairs executed using OEM</tspan>
+          <tspan x="20" dy="20">parts straight from our fully</tspan>
+          <tspan x="20" dy="20">stocked local service van.</tspan>
+        </text>
+      </g>
+
+      <!-- Step 4 -->
+      <g transform="translate(980, 0)">
+        <rect width="300" height="190" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <rect x="20" y="20" width="36" height="36" rx="8" fill="#15803D"/>
+        <text x="38" y="44" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" text-anchor="middle">4</text>
+        <text x="20" y="86" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Load Test &amp; Verification</text>
+        <text x="20" y="116" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="20" dy="0">System cycled through cooling</tspan>
+          <tspan x="20" dy="20">stages to confirm 18-22 deg</tspan>
+          <tspan x="20" dy="20">delta T split and peak SEER.</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 7. FREQUENTLY ASKED QUESTIONS (Y: 1754, H: 352)                         -->
+  <!-- ======================================================================= -->
+  <g id="FAQ-Section" transform="translate(80, 1754)">
+    <text x="0" y="14" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.2">FREQUENTLY ASKED QUESTIONS</text>
+    <text x="0" y="46" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800">Air Conditioning Repair FAQ</text>
+
+    <g transform="translate(0, 70)">
+      <!-- FAQ 1 (Expanded) -->
+      <g transform="translate(0, 0)">
+        <rect width="1280" height="114" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+        <text x="24" y="34" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Should I repair my air conditioner or replace it entirely?</text>
+        <!-- Minus Toggle Circle -->
+        <circle cx="1244" cy="28" r="14" fill="#F1F5F9"/>
+        <path d="M1238 28H1250" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+
+        <line x1="24" y1="52" x2="1256" y2="52" stroke="#F1F5F9" stroke-width="1"/>
+        <text x="24" y="76" fill="#475569" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="24" dy="0">If your AC is under 10 years old and repair costs are under 50% of replacement, repairing is usually most cost-effective.</tspan>
+          <tspan x="24" dy="22">For systems older than 12-15 years using phased-out R-22 Freon, upgrading to high-efficiency SEER2 delivers greater savings.</tspan>
+        </text>
+      </g>
+
+      <!-- FAQ 2 (Collapsed) -->
+      <g transform="translate(0, 128)">
+        <rect width="1280" height="64" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="24" y="38" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">How long does an AC repair typically take?</text>
+        <!-- Plus Toggle Circle -->
+        <circle cx="1244" cy="32" r="14" fill="#F1F5F9"/>
+        <path d="M1244 26V38M1238 32H1250" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+      </g>
+
+      <!-- FAQ 3 (Collapsed) -->
+      <g transform="translate(0, 206)">
+        <rect width="1280" height="64" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="24" y="38" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700">Do you offer warranties on AC repair parts and labor?</text>
+        <!-- Plus Toggle Circle -->
+        <circle cx="1244" cy="32" r="14" fill="#F1F5F9"/>
+        <path d="M1244 26V38M1238 32H1250" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 8. FINAL CTA BANNER (Y: 2186, H: 220)                                   -->
+  <!-- ======================================================================= -->
+  <g id="Final-CTA-Banner" transform="translate(80, 2186)">
+    <rect width="1280" height="220" rx="16" fill="#0F2238"/>
+
+    <g transform="translate(56, 44)">
+      <text x="0" y="28" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800">Restore Your Home Comfort Today</text>
+      <text x="0" y="60" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="15">Same-day emergency AC repairs available across our local service territory.</text>
+
+      <g transform="translate(0, 90)">
+        <rect width="180" height="48" rx="8" fill="#E65100"/>
+        <text x="90" y="29" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle">Book a Service</text>
+
+        <g transform="translate(196, 0)">
+          <rect width="210" height="48" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+          <text x="105" y="29" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle">Call (555) 014-7824</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 9. COMPLETE 4-COLUMN FOOTER (Y: 2486, H: 440)                           -->
+  <!-- ======================================================================= -->
+  <g id="Footer-Section" transform="translate(0, 2486)">
+    <rect width="1440" height="440" fill="#0A1829"/>
+
+    <g id="Footer-Columns" transform="translate(80, 60)">
+      <!-- Col 1: Brand Info -->
+      <g transform="translate(0, 0)">
+        <g id="Footer-Logo">
+          <rect width="40" height="40" rx="8" fill="#1E3A5F"/>
+          <path d="M20 8L22 17.5L32 20L22 22.5L20 32L18 22.5L8 20L18 17.5L20 8Z" fill="#FFFFFF"/>
+          <circle cx="20" cy="20" r="2.5" fill="#E65100"/>
+          <text x="50" y="23" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">NorthStar</text>
+          <text x="135" y="23" fill="#E65100" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">HVAC</text>
+        </g>
+
+        <text x="0" y="70" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="0" dy="0">Comfort You Can Count On.</tspan>
+          <tspan x="0" dy="22">Professional HVAC installation, repairs,</tspan>
+          <tspan x="0" dy="22">maintenance, and emergency response</tspan>
+          <tspan x="0" dy="22">for homes and businesses.</tspan>
+        </text>
+
+        <!-- Social Icons Row -->
+        <g transform="translate(0, 160)">
+          <circle cx="16" cy="16" r="16" fill="#1E293B"/>
+          <path d="M18 13H16.5C15.7 13 15 13.7 15 14.5V16H18L17.5 19H15V26H12V19H10V16H12V14C12 11.8 13.8 10 16 10H18V13Z" fill="#94A3B8"/>
+          <g transform="translate(42, 0)">
+            <circle cx="16" cy="16" r="16" fill="#1E293B"/>
+            <path d="M11 14H14V22H11V14ZM12.5 10C13.3 10 14 10.7 14 11.5C14 12.3 13.3 13 12.5 13C11.7 13 11 12.3 11 11.5C11 10.7 11.7 10 12.5 10ZM16 14H19V15.5H19.2C19.6 14.7 20.7 13.8 22 13.8C25 13.8 25.5 15.8 25.5 18.3V22H22.5V18.8C22.5 18 22.5 16.8 21.3 16.8C20.1 16.8 19.9 17.7 19.9 18.7V22H16.9V14H16Z" fill="#94A3B8"/>
+          </g>
+          <g transform="translate(84, 0)">
+            <circle cx="16" cy="16" r="16" fill="#1E293B"/>
+            <path d="M15 11L17 11L16 16L15 11ZM12 14L13.5 13L16 16.5L12 14ZM13 19L12 17.5L16.5 16.5L13 19ZM18 20L17 21L16.5 17L18 20ZM19 14.5L20 16L16.5 17L19 14.5Z" fill="#94A3B8"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- Col 2: Navigation Links -->
+      <g transform="translate(360, 0)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">COMPANY</text>
+        <g transform="translate(0, 42)">
+          <text x="0" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Services Directory</text>
+          <text x="0" y="28" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">About NorthStar</text>
+          <text x="0" y="56" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Service Areas</text>
+          <text x="0" y="84" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Financing Plans</text>
+          <text x="0" y="112" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Customer Reviews</text>
+          <text x="0" y="140" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Contact Us</text>
+        </g>
+      </g>
+
+      <!-- Col 3: Services Links -->
+      <g transform="translate(640, 0)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">SERVICES</text>
+        <g transform="translate(0, 42)">
+          <text x="0" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Air Conditioning Repair</text>
+          <text x="0" y="28" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">AC Installation &amp; Replacement</text>
+          <text x="0" y="56" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Heating &amp; Furnace Repair</text>
+          <text x="0" y="84" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Preventive Maintenance Tune-up</text>
+          <text x="0" y="112" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Indoor Air Quality (IAQ)</text>
+          <text x="0" y="140" fill="#F87171" font-family="'Inter', sans-serif" font-size="14" font-weight="600">24/7 Emergency Service</text>
+        </g>
+      </g>
+
+      <!-- Col 4: Contact & Hours -->
+      <g transform="translate(940, 0)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">DIRECT CONTACT</text>
+        <g transform="translate(0, 42)">
+          <text x="0" y="0" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600">24/7 DISPATCH LINE</text>
+          <text x="0" y="24" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700">(555) 014-7824</text>
+          <text x="0" y="60" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600">EMAIL SUPPORT</text>
+          <text x="0" y="80" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">hello@northstarhvac.example</text>
+          <text x="0" y="116" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600">OPERATING HOURS</text>
+          <text x="0" y="136" fill="#10B981" font-family="'Inter', sans-serif" font-size="13" font-weight="600">&#8226; Open 24 Hours / 7 Days a Week</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Copyright & Legal Line -->
+    <g id="Footer-Bottom" transform="translate(80, 360)">
+      <line x1="0" y1="0" x2="1280" y2="0" stroke="#1E293B" stroke-width="1"/>
+      <text x="0" y="42" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">
+        &#169; 2026 NorthStar HVAC Services. Fictional business website UI design project. All brand references and reviews are sample content.
+      </text>
+      <g transform="translate(940, 42)">
+        <text x="0" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Privacy Policy</text>
+        <text x="96" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Terms of Service</text>
+        <text x="210" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Accessibility</text>
+      </g>
+    </g>
+  </g>
+</svg>

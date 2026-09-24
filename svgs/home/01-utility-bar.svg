@@ -1,0 +1,36 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 44" width="1440" height="44" fill="none">
+  <!-- Section: Utility Top Bar (Desktop 1440px) -->
+  <g id="Utility-Top-Bar">
+    <!-- Background -->
+    <rect width="1440" height="44" fill="#0A1829"/>
+    <line x1="0" y1="43.5" x2="1440" y2="43.5" stroke="#1E293B" stroke-width="1"/>
+
+    <!-- Left Content: 24/7 Emergency Badge -->
+    <g id="Emergency-Badge" transform="translate(80, 12)">
+      <rect width="128" height="20" rx="10" fill="#DC2626" fill-opacity="0.15"/>
+      <circle cx="10" cy="10" r="3.5" fill="#EF4444"/>
+      <text x="20" y="14" fill="#F87171" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="0.5">24/7 DISPATCH</text>
+      
+      <text x="140" y="14" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12" font-weight="400">Serving Residential &amp; Light Commercial Across Metro Region</text>
+    </g>
+
+    <!-- Right Content: License & Quick Contact -->
+    <g id="Right-Info" transform="translate(1040, 12)">
+      <!-- License Badge -->
+      <g id="License-Info">
+        <text x="0" y="14" fill="#64748B" font-family="'Inter', sans-serif" font-size="12" font-weight="500">LICENSED &amp; INSURED</text>
+      </g>
+
+      <!-- Divider -->
+      <line x1="140" y1="2" x2="140" y2="18" stroke="#334155" stroke-width="1"/>
+
+      <!-- Phone Direct -->
+      <g id="Phone-Direct" transform="translate(156, 0)">
+        <path d="M2.5 1.5C2.5 7.02285 6.97715 11.5 12.5 11.5L14.5 9.5C14.8 9.2 15.2 9.1 15.6 9.3L18.2 10.4C18.7 10.6 19 11.1 19 11.6V14.5C19 15.0523 18.5523 15.5 18 15.5C8.61116 15.5 1 7.88884 1 0.5C1 -0.0522847 1.44772 -0.5 2 -0.5H4.9C5.4 -0.5 5.9 -0.2 6.1 0.3L7.2 2.9C7.4 3.3 7.3 3.7 7 4L5 6" transform="translate(0, 2) scale(0.85)" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="22" y="14" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" letter-spacing="0.3">(555) 014-7824</text>
+      </g>
+    </g>
+  </g>
+</svg>
+
+

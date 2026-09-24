@@ -1,0 +1,368 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1420" width="1440" height="1420" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Page Background Canvas -->
+  <rect width="1440" height="1420" fill="#F8FAFC"/>
+
+  <!-- ======================================================================= -->
+  <!-- 1. UTILITY TOP BAR (Y: 0, H: 44)                                        -->
+  <!-- ======================================================================= -->
+  <g id="Utility-Top-Bar">
+    <rect width="1440" height="44" fill="#0A1829"/>
+    <line x1="0" y1="43.5" x2="1440" y2="43.5" stroke="#1E293B" stroke-width="1"/>
+
+    <!-- Left Content: 24/7 Emergency Dispatch Badge -->
+    <g transform="translate(80, 12)">
+      <rect width="128" height="20" rx="10" fill="#DC2626" fill-opacity="0.15"/>
+      <circle cx="10" cy="10" r="3.5" fill="#EF4444"/>
+      <text x="20" y="14" fill="#F87171" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="0.5">24/7 DISPATCH</text>
+      <text x="140" y="14" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Serving Residential &amp; Light Commercial Across Metro Region</text>
+    </g>
+
+    <!-- Right Content: Contact & Phone -->
+    <g transform="translate(1120, 12)">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="translate(0, 1) scale(0.7)" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="22" y="14" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" letter-spacing="0.3">(555) 014-7824</text>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 2. MAIN HEADER & NAV (Y: 44, H: 88)                                     -->
+  <!-- ======================================================================= -->
+  <g id="Main-Header" transform="translate(0, 44)">
+    <rect width="1440" height="88" fill="#FFFFFF"/>
+    <line x1="0" y1="87.5" x2="1440" y2="87.5" stroke="#E2E8F0" stroke-width="1"/>
+
+    <!-- Brand Logo -->
+    <g transform="translate(80, 20)">
+      <rect width="48" height="48" rx="10" fill="#0F2238"/>
+      <path d="M24 10L26.5 21.5L38 24L26.5 26.5L24 38L21.5 26.5L10 24L21.5 21.5L24 10Z" fill="#FFFFFF"/>
+      <circle cx="24" cy="24" r="3" fill="#E65100"/>
+      <text x="60" y="27" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" letter-spacing="-0.3">NorthStar</text>
+      <text x="161" y="27" fill="#E65100" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800" letter-spacing="-0.3">HVAC</text>
+      <text x="60" y="42" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="500" letter-spacing="0.4">COMFORT YOU CAN COUNT ON</text>
+    </g>
+
+    <!-- Nav Menu -->
+    <g transform="translate(460, 36)">
+      <text x="0" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Services</text>
+      <text x="86" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">About</text>
+      <text x="156" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Serving Areas</text>
+      <text x="280" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Financing</text>
+      <text x="376" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Reviews</text>
+      <text x="460" y="14" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="500">Contact</text>
+    </g>
+
+    <!-- Header CTA Button -->
+    <g transform="translate(1190, 24)">
+      <rect width="170" height="40" rx="6" fill="#E65100"/>
+      <text x="85" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">Book Online &#8594;</text>
+    </g>
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 3. BOOKING SECTION: 2-COLUMN SPLIT LAYOUT (Y: 168, H: 760)              -->
+  <!-- ======================================================================= -->
+  <g id="Booking-Single-Page-Section" transform="translate(80, 168)">
+
+    <!-- === -->
+    <!-- LEFT COLUMN: Headline, NorthStar Guarantee, 24/7 Hotline, Reviews    -->
+    <!-- === -->
+    <g id="Left-Column" transform="translate(0, 0)">
+      <!-- Badge -->
+      <rect width="190" height="28" rx="14" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+      <circle cx="14" cy="14" r="4" fill="#2563EB"/>
+      <text x="26" y="18" fill="#1D4ED8" font-family="'Inter', sans-serif" font-size="11" font-weight="700" letter-spacing="0.5">ONLINE BOOKING SYSTEM</text>
+
+      <!-- H1 Headline -->
+      <text x="0" y="68" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="800" letter-spacing="-0.5">Schedule Your HVAC</text>
+      <text x="0" y="108" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="800" letter-spacing="-0.5">Service Online</text>
+
+      <!-- Subtitle Description -->
+      <text x="0" y="146" fill="#475569" font-family="'Inter', sans-serif" font-size="15" font-weight="400">
+        <tspan x="0" dy="0">Select your service, choose an arrival window that</tspan>
+        <tspan x="0" dy="24">works for you, and get instant dispatch confirmation</tspan>
+        <tspan x="0" dy="24">with zero upfront payment required.</tspan>
+      </text>
+
+      <!-- The NorthStar Guarantee Card -->
+      <g id="Guarantee-Card" transform="translate(0, 226)">
+        <rect width="500" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="24" y="36" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" letter-spacing="0.6">THE NORTHSTAR GUARANTEE</text>
+        <line x1="24" y1="50" x2="476" y2="50" stroke="#F1F5F9" stroke-width="1"/>
+
+        <!-- Item 1 -->
+        <g transform="translate(24, 68)">
+          <circle cx="10" cy="10" r="10" fill="#ECFDF5"/>
+          <path d="M6 10L9 13L14 7" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="30" y="14" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="700">No Upfront Payment <tspan font-weight="400" fill="#64748B">— Pay only after diagnosis &amp; approval</tspan></text>
+        </g>
+
+        <!-- Item 2 -->
+        <g transform="translate(24, 108)">
+          <circle cx="10" cy="10" r="10" fill="#ECFDF5"/>
+          <path d="M6 10L9 13L14 7" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="30" y="14" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="700">Upfront Flat-Rate Quote <tspan font-weight="400" fill="#64748B">— Zero hidden surprise fees</tspan></text>
+        </g>
+
+        <!-- Item 3 -->
+        <g transform="translate(24, 148)">
+          <circle cx="10" cy="10" r="10" fill="#ECFDF5"/>
+          <path d="M6 10L9 13L14 7" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="30" y="14" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="700">2-Hour Arrival Window <tspan font-weight="400" fill="#64748B">— On-time guaranteed with 20-min call</tspan></text>
+        </g>
+
+        <!-- Item 4 -->
+        <g transform="translate(24, 188)">
+          <circle cx="10" cy="10" r="10" fill="#ECFDF5"/>
+          <path d="M6 10L9 13L14 7" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="30" y="14" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="700">90-Day Guarantee <tspan font-weight="400" fill="#64748B">— Complete parts &amp; labor warranty</tspan></text>
+        </g>
+      </g>
+
+      <!-- Immediate Emergency Dispatch Callout Card -->
+      <g id="Emergency-Hotline-Card" transform="translate(0, 480)">
+        <rect width="500" height="94" rx="12" fill="#FEF2F2" stroke="#FECACA" stroke-width="2"/>
+        <text x="24" y="28" fill="#B91C1C" font-family="'Inter', sans-serif" font-size="11" font-weight="700" letter-spacing="0.5">IMMEDIATE FREEZE OR HEAT EMERGENCY?</text>
+        <text x="24" y="58" fill="#DC2626" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="800">(555) 014-7824</text>
+        <text x="24" y="78" fill="#991B1B" font-family="'Inter', sans-serif" font-size="11" font-weight="500">24/7 Priority Emergency Dispatch</text>
+
+        <!-- Phone Icon Button -->
+        <circle cx="452" cy="47" r="22" fill="#DC2626"/>
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" transform="translate(442, 37) scale(0.85)" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- Customer Ratings & Social Proof -->
+      <g id="Social-Proof" transform="translate(0, 598)">
+        <!-- 5 Stars -->
+        <g fill="#F59E0B">
+          <polygon points="10,1 12.5,7 19,7.5 14,12 15.5,18 10,15 4.5,18 6,12 1,7.5 7.5,7"/>
+          <polygon points="10,1 12.5,7 19,7.5 14,12 15.5,18 10,15 4.5,18 6,12 1,7.5 7.5,7" transform="translate(22, 0)"/>
+          <polygon points="10,1 12.5,7 19,7.5 14,12 15.5,18 10,15 4.5,18 6,12 1,7.5 7.5,7" transform="translate(44, 0)"/>
+          <polygon points="10,1 12.5,7 19,7.5 14,12 15.5,18 10,15 4.5,18 6,12 1,7.5 7.5,7" transform="translate(66, 0)"/>
+          <polygon points="10,1 12.5,7 19,7.5 14,12 15.5,18 10,15 4.5,18 6,12 1,7.5 7.5,7" transform="translate(88, 0)"/>
+        </g>
+        <text x="116" y="15" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="700">4.9 / 5.0 Rating <tspan font-weight="400" fill="#64748B">across 180+ verified local homeowners</tspan></text>
+      </g>
+    </g>
+
+    <!-- === -->
+    <!-- RIGHT COLUMN: Multi-Step Booking Wizard Card Container               -->
+    <!-- === -->
+    <g id="Right-Column" transform="translate(540, 0)">
+
+      <!-- Stepper Progress Header -->
+      <g id="Stepper-Tabs" transform="translate(0, 0)">
+        <!-- Tab 1: Active -->
+        <g>
+          <text x="0" y="18" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">1. Service &amp; Urgency</text>
+          <line x1="0" y1="32" x2="220" y2="32" stroke="#0F2238" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Tab 2: Inactive -->
+        <g transform="translate(250, 0)">
+          <text x="0" y="18" fill="#94A3B8" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600">2. Date &amp; Window</text>
+          <line x1="0" y1="32" x2="220" y2="32" stroke="#E2E8F0" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <!-- Tab 3: Inactive -->
+        <g transform="translate(500, 0)">
+          <text x="0" y="18" fill="#94A3B8" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600">3. Address &amp; Info</text>
+          <line x1="0" y1="32" x2="220" y2="32" stroke="#E2E8F0" stroke-width="4" stroke-linecap="round"/>
+        </g>
+      </g>
+
+      <!-- Booking Card Window -->
+      <g id="Booking-Form-Card" transform="translate(0, 52)">
+        <rect width="740" height="650" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- Title & Subtitle -->
+        <text x="36" y="46" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="800">What do you need help with?</text>
+        <text x="36" y="72" fill="#64748B" font-family="'Inter', sans-serif" font-size="14">Choose the primary reason for your visit:</text>
+
+        <!-- Service Option 1 (Selected): AC Repair -->
+        <g transform="translate(36, 96)">
+          <rect width="324" height="100" rx="10" fill="#F8FAFC" stroke="#0F2238" stroke-width="2"/>
+          <circle cx="28" cy="30" r="9" fill="#0F2238"/>
+          <circle cx="28" cy="30" r="3.5" fill="#FFFFFF"/>
+          <text x="48" y="34" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Air Conditioning Repair</text>
+          <text x="48" y="58" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Blowing warm air, strange noises,</text>
+          <text x="48" y="76" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">or leaking water</text>
+        </g>
+
+        <!-- Service Option 2: Heating & Furnace -->
+        <g transform="translate(380, 96)">
+          <rect width="324" height="100" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="28" cy="30" r="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+          <text x="48" y="34" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Furnace &amp; Heating Fix</text>
+          <text x="48" y="58" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">No heat, clicking igniter, or safety</text>
+          <text x="48" y="76" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">shutoff issues</text>
+        </g>
+
+        <!-- Service Option 3: Annual Tune-Up -->
+        <g transform="translate(36, 212)">
+          <rect width="324" height="100" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="28" cy="30" r="9" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+          <text x="48" y="34" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">24-Point Annual Tune-Up</text>
+          <text x="48" y="58" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Preventive maintenance, coil cleaning,</text>
+          <text x="48" y="76" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">and safety inspection</text>
+        </g>
+
+        <!-- Service Option 4: Emergency Dispatch -->
+        <g transform="translate(380, 212)">
+          <rect width="324" height="100" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+          <circle cx="28" cy="30" r="9" fill="#FFFFFF" stroke="#FCA5A5" stroke-width="2"/>
+          <text x="48" y="34" fill="#DC2626" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Emergency Dispatch</text>
+          <text x="48" y="58" fill="#991B1B" font-family="'Inter', sans-serif" font-size="12">Priority emergency response for</text>
+          <text x="48" y="76" fill="#991B1B" font-family="'Inter', sans-serif" font-size="12">extreme weather failures</text>
+        </g>
+
+        <!-- Urgency Divider & Header -->
+        <line x1="36" y1="336" x2="704" y2="336" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="36" y="368" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">How urgently do you need service?</text>
+
+        <!-- Urgency Radio Options (3 Pills) -->
+        <g transform="translate(36, 386)">
+          <!-- Urgency 1: Urgent -->
+          <g>
+            <rect width="216" height="52" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+            <circle cx="24" cy="26" r="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+            <text x="42" y="31" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Today / Urgent</text>
+          </g>
+
+          <!-- Urgency 2 (Selected): Within 24h -->
+          <g transform="translate(226, 0)">
+            <rect width="216" height="52" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+            <circle cx="24" cy="26" r="7" fill="#2563EB"/>
+            <circle cx="24" cy="26" r="3" fill="#FFFFFF"/>
+            <text x="42" y="31" fill="#1E3A8A" font-family="'Inter', sans-serif" font-size="13" font-weight="700">Within 24 Hours</text>
+          </g>
+
+          <!-- Urgency 3: Flexible -->
+          <g transform="translate(452, 0)">
+            <rect width="216" height="52" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+            <circle cx="24" cy="26" r="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+            <text x="42" y="31" fill="#0F2238" font-family="'Inter', sans-serif" font-size="13" font-weight="600">Flexible (This Week)</text>
+          </g>
+        </g>
+
+        <!-- Bottom Action Bar -->
+        <line x1="36" y1="470" x2="704" y2="470" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- Security / Guarantee Microcopy -->
+        <g transform="translate(36, 502)">
+          <circle cx="10" cy="10" r="10" fill="#F1F5F9"/>
+          <path d="M10 6C8.895 6 8 6.895 8 8V10H12V8C12 6.895 11.105 6 10 6ZM7 10V14H13V10H7Z" fill="#64748B"/>
+          <text x="28" y="15" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Zero upfront charges. Payment handled after technician inspection.</text>
+        </g>
+
+        <!-- Next Button -->
+        <g transform="translate(444, 488)">
+          <rect width="260" height="48" rx="8" fill="#0F2238"/>
+          <text x="115" y="30" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="14" font-weight="700" text-anchor="middle">Next: Choose Time Window</text>
+          <path d="M205 24L200 19M205 24L200 29" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Step Indicator Pill -->
+        <g transform="translate(36, 574)">
+          <rect width="668" height="46" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="20" y="28" fill="#0F2238" font-family="'Inter', sans-serif" font-size="12" font-weight="600">Upcoming Steps: <tspan font-weight="400" fill="#64748B">Step 2 (Arrival Windows: Morning, Afternoon, Evening) &#8594; Step 3 (Address &amp; Confirmation)</tspan></text>
+        </g>
+
+      </g>
+    </g>
+
+  </g>
+
+  <!-- ======================================================================= -->
+  <!-- 4. SITE FOOTER (Y: 960, H: 460)                                         -->
+  <!-- ======================================================================= -->
+  <g id="Main-Footer" transform="translate(0, 960)">
+    <rect width="1440" height="460" fill="#0A1829"/>
+
+    <g id="Footer-Content" transform="translate(80, 80)">
+      <!-- Col 1: Brand Info -->
+      <g transform="translate(0, 0)">
+        <rect width="48" height="48" rx="10" fill="#1E293B"/>
+        <path d="M24 10L26.5 21.5L38 24L26.5 26.5L24 38L21.5 26.5L10 24L21.5 21.5L24 10Z" fill="#FFFFFF"/>
+        <circle cx="24" cy="24" r="3" fill="#E65100"/>
+        <text x="60" y="27" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800">NorthStar</text>
+        <text x="161" y="27" fill="#E65100" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="800">HVAC</text>
+        <text x="0" y="76" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">
+          <tspan x="0" dy="0">Comfort You Can Count On.</tspan>
+          <tspan x="0" dy="22">Professional HVAC installation, repairs,</tspan>
+          <tspan x="0" dy="22">maintenance, and emergency response</tspan>
+          <tspan x="0" dy="22">for homes and businesses.</tspan>
+        </text>
+
+        <!-- Social Icons Row -->
+        <g transform="translate(0, 160)">
+          <circle cx="16" cy="16" r="16" fill="#1E293B"/>
+          <path d="M18 13H16.5C15.7 13 15 13.7 15 14.5V16H18L17.5 19H15V26H12V19H10V16H12V14C12 11.8 13.8 10 16 10H18V13Z" fill="#94A3B8"/>
+          <g transform="translate(42, 0)">
+            <circle cx="16" cy="16" r="16" fill="#1E293B"/>
+            <path d="M11 14H14V22H11V14ZM12.5 10C13.3 10 14 10.7 14 11.5C14 12.3 13.3 13 12.5 13C11.7 13 11 12.3 11 11.5C11 10.7 11.7 10 12.5 10ZM16 14H19V15.5H19.2C19.6 14.7 20.7 13.8 22 13.8C25 13.8 25.5 15.8 25.5 18.3V22H22.5V18.8C22.5 18 22.5 16.8 21.3 16.8C20.1 16.8 19.9 17.7 19.9 18.7V22H16.9V14H16Z" fill="#94A3B8"/>
+          </g>
+          <g transform="translate(84, 0)">
+            <circle cx="16" cy="16" r="16" fill="#1E293B"/>
+            <path d="M15 11L17 11L16 16L15 11ZM12 14L13.5 13L16 16.5L12 14ZM13 19L12 17.5L16.5 16.5L13 19ZM18 20L17 21L16.5 17L18 20ZM19 14.5L20 16L16.5 17L19 14.5Z" fill="#94A3B8"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- Col 2: Navigation Links -->
+      <g transform="translate(360, 0)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">COMPANY</text>
+        <g transform="translate(0, 42)">
+          <text x="0" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Services Directory</text>
+          <text x="0" y="28" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">About NorthStar</text>
+          <text x="0" y="56" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Service Areas</text>
+          <text x="0" y="84" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Financing Plans</text>
+          <text x="0" y="112" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Customer Reviews</text>
+          <text x="0" y="140" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Contact Us</text>
+        </g>
+      </g>
+
+      <!-- Col 3: Services Links -->
+      <g transform="translate(640, 0)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">SERVICES</text>
+        <g transform="translate(0, 42)">
+          <text x="0" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Air Conditioning Repair</text>
+          <text x="0" y="28" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">AC Installation &amp; Replacement</text>
+          <text x="0" y="56" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Heating &amp; Furnace Repair</text>
+          <text x="0" y="84" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Preventive Maintenance Tune-up</text>
+          <text x="0" y="112" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">Indoor Air Quality (IAQ)</text>
+          <text x="0" y="140" fill="#F87171" font-family="'Inter', sans-serif" font-size="14" font-weight="600">24/7 Emergency Service</text>
+        </g>
+      </g>
+
+      <!-- Col 4: Contact & Hours -->
+      <g transform="translate(940, 0)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">DIRECT CONTACT</text>
+        <g transform="translate(0, 42)">
+          <text x="0" y="0" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600">24/7 DISPATCH LINE</text>
+          <text x="0" y="24" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700">(555) 014-7824</text>
+          <text x="0" y="60" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600">EMAIL SUPPORT</text>
+          <text x="0" y="80" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="14">hello@northstarhvac.example</text>
+          <text x="0" y="116" fill="#64748B" font-family="'Inter', sans-serif" font-size="11" font-weight="600">OPERATING HOURS</text>
+          <text x="0" y="136" fill="#10B981" font-family="'Inter', sans-serif" font-size="13" font-weight="600">&#8226; Open 24 Hours / 7 Days a Week</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Copyright & Legal Line -->
+    <g id="Footer-Bottom" transform="translate(80, 360)">
+      <line x1="0" y1="0" x2="1280" y2="0" stroke="#1E293B" stroke-width="1"/>
+      <text x="0" y="42" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">
+        &#169; 2026 NorthStar HVAC Services. Fictional business website UI design project. All brand references and reviews are sample content.
+      </text>
+      <g transform="translate(940, 42)">
+        <text x="0" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Privacy Policy</text>
+        <text x="96" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Terms of Service</text>
+        <text x="210" y="0" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Accessibility</text>
+      </g>
+    </g>
+  </g>
+</svg>

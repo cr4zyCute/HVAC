@@ -1,0 +1,56 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  author: string;
+  location: string;
+  quote: string;
+  rating?: number;
+  service?: string;
+  verified?: boolean;
+}
+
+const {
+  author,
+  location,
+  quote,
+  rating = 5,
+  service,
+  verified = true,
+} = Astro.props;
+---
+
+<div class="card flex flex-col justify-between h-full bg-neutral-surface border border-neutral-border rounded-lg p-24 md:p-32 hover:shadow-md transition-all duration-200">
+  <div>
+    <!-- Rating Stars -->
+    <div class="flex items-center gap-4 text-amber-500 mb-16" aria-label={`${rating} out of 5 stars`}>
+      {Array.from({ length: rating }).map(() => (
+        <Icon name="star" size={18} class="fill-current text-amber-500" />
+      ))}
+    </div>
+
+    {service && (
+      <span class="text-caption font-semibold text-brand-accent mb-8 block">
+        {service}
+      </span>
+    )}
+
+    <blockquote class="text-body text-text-secondary italic leading-relaxed mb-24">
+      "{quote}"
+    </blockquote>
+  </div>
+
+  <div class="pt-20 border-t border-neutral-divider flex items-center justify-between">
+    <div>
+      <div class="font-heading font-bold text-body text-brand-primary">{author}</div>
+      <div class="text-caption text-text-muted">{location}</div>
+    </div>
+    {verified && (
+      <Badge variant="success" size="sm">
+        Verified Homeowner
+      </Badge>
+    )}
+  </div>
+</div>
+

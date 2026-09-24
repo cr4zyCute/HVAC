@@ -1,0 +1,583 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Button from '@/components/ui/Button.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+import ServiceCard from '@/components/ui/ServiceCard.astro';
+import ReviewCard from '@/components/ui/ReviewCard.astro';
+import StepCard from '@/components/ui/StepCard.astro';
+import CTABanner from '@/components/sections/CTABanner.astro';
+
+import defaultServices from '@/content/services.json';
+import defaultReviews from '@/content/reviews.json';
+import { db, ensureDbInitialized, getHomepageSections, getSiteSettings } from '@/lib/db';
+
+await ensureDbInitialized();
+
+const [sections, siteSettings, dbServicesRes, dbReviewsRes] = await Promise.all([
+  getHomepageSections(),
+  getSiteSettings(),
+  db.execute('SELECT * FROM services WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC LIMIT 6'),
+  db.execute('SELECT * FROM reviews WHERE is_approved = 1 ORDER BY is_featured DESC, created_at DESC LIMIT 6')
+]);
+
+// Helper to safely parse JSON
+function safeJson(str: string, fallback: any = {}) {
+  try {
+    return JSON.parse(str || '{}');
+  } catch {
+    return fallback;
+  }
+}
+
+// 1. Hero Data
+const hero = sections['hero'] || {
+  title: 'Reliable Heating & AC Solutions for Lasting Comfort.',
+  subtitle: 'From precision emergency AC repairs to high-efficiency furnace installations, licensed NorthStar technicians deliver transparent flat-rate pricing and respectful service across your neighborhood.',
+  badge: 'Fast Same-Day Response Guaranteed',
+  image_url: '/images/hero-technician-ac.jpg',
+  image_alt: 'Certified NorthStar HVAC technician testing outdoor condensing unit with digital manifold gauges',
+  primary_btn_text: 'Schedule Service',
+  primary_btn_url: '/book',
+  secondary_btn_text: siteSettings['phone_primary'] ? `Call ${siteSettings['phone_primary']}` : 'Call (555) 014-7824',
+  secondary_btn_url: siteSettings['phone_raw'] ? `tel:${siteSettings['phone_raw']}` : 'tel:5550147824',
+  is_enabled: 1
+};
+const heroExtra = safeJson(hero.extra_data_json, {
+  rating_score: '4.9 / 5.0 Rating',
+  rating_subtext: 'across Google & Yelp',
+  trust_card_title: 'Full 90-Day Workmanship Guarantee',
+  trust_card_desc: 'Zero hidden trip charges on all diagnostic calls'
+});
+
+// 2. Trust Signals Data
+const trustSection = sections['trust_signals'] || { is_enabled: 1 };
+const trustSignals: Array<{ icon: string; title: string; text: string }> = safeJson(trustSection.extra_data_json, [
+  { icon: 'shield', title: 'NATE & EPA Certified', text: 'Rigorous master technician standards' },
+  { icon: 'check', title: 'Upfront Flat Pricing', text: 'Written quotes before any work begins' },
+  { icon: 'star', title: '4.9★ Rated Locally', text: 'Over 1,200+ verified homeowner reviews' },
+  { icon: 'clock', title: '24/7 Live Dispatch', text: 'Average 45-min emergency van response' }
+]);
+
+// 3. Services Intro Data
+const servicesIntro = sections['services_intro'] || {
+  title: 'Comprehensive HVAC Services',
+  subtitle: 'Engineered for high SEER2 energy efficiency, indoor air purity, and year-round indoor comfort.',
+  badge: 'PRECISION CLIMATE SOLUTIONS',
+  primary_btn_text: 'Explore All Services',
+  primary_btn_url: '/services',
+  is_enabled: 1
+};
+
+// Services items from DB or fallback
+const services = dbServicesRes.rows.length > 0
+  ? dbServicesRes.rows.map(s => ({
+      slug: s.slug as string,
+      title: s.title as string,
+      category: 'Residential HVAC',
+      badge: Number(s.starting_price) > 0 ? `From $${Number(s.starting_price).toFixed(0)}` : 'Flat Rate',
+      icon: 'wrench',
+      shortDescription: s.short_desc as string,
+      fullDescription: s.full_desc as string
+    }))
+  : defaultServices;
+
+// 4. Emergency CTA Data
+const emergencyCta = sections['emergency_cta'] || {
+  badge: 'URGENT EMERGENCY CALLOUT',
+  title: 'HVAC Failure During Extreme Weather?',
+  subtitle: 'Our fully stocked mobile service vans are radio-dispatched 24/7 across the metro territory with genuine OEM parts on board.',
+  primary_btn_text: 'Emergency Dispatch',
+  primary_btn_url: '/emergency',
+  secondary_btn_text: siteSettings['emergency_phone'] ? `Call ${siteSettings['emergency_phone']}` : 'Call (555) 014-7824',
+  secondary_btn_url: siteSettings['phone_raw'] ? `tel:${siteSettings['phone_raw']}` : 'tel:5550147824',
+  is_enabled: 1
+};
+
+// 5. Why Choose Us Data
+const whyUs = sections['why_us'] || {
+  badge: 'THE NORTHSTAR STANDARD',
+  title: 'Why Local Homeowners Trust NorthStar',
+  description: 'We believe you deserve honest heating and cooling craftsmanship without manufactured sales pressure. When you call NorthStar, an experienced technician troubleshoots the root cause, explains your options clearly, and respects your home.',
+  image_url: '/images/technician-furnace-inspection.jpg',
+  image_alt: 'Licensed HVAC technician performing multi-point furnace combustion safety inspection',
+  primary_btn_text: 'Read Our Full Story',
+  primary_btn_url: '/about',
+  is_enabled: 1
+};
+const whyUsExtra = safeJson(whyUs.extra_data_json, {
+  badge_overlay: 'Clean Drop Cloth & Boot Covers on Every Call',
+  features: [
+    { title: 'Transparent Flat Pricing', desc: 'We quote all repairs in writing before beginning. No hidden diagnostic surprises.' },
+    { title: 'Fully Stocked Service Vans', desc: 'Over 90% of cooling and heating issues fixed on the very first trip.' },
+    { title: 'EPA & NATE Certified', desc: 'Work performed by technicians holding national HVAC engineering certifications.' },
+    { title: 'Zero Sales Pressure', desc: 'If a repair solves your comfort issue safely, we will never force a premature replacement.' }
+  ]
+});
+
+// 6. How It Works Data
+const howItWorks = sections['how_it_works'] || {
+  badge: 'SEAMLESS PROCESS',
+  title: 'How It Works in 3 Simple Steps',
+  subtitle: 'Restoring your home comfort should be straightforward and stress-free.',
+  is_enabled: 1
+};
+const stepsList: Array<{ step: number; title: string; desc: string; variant: 'primary' | 'accent' | 'success' }> = safeJson(howItWorks.extra_data_json, [
+  { step: 1, title: 'Schedule Online or Call', desc: 'Pick your preferred arrival window through our 60-second booking form or speak directly with our 24/7 dispatcher.', variant: 'primary' },
+  { step: 2, title: 'Diagnostic & Upfront Quote', desc: 'Technician conducts digital manifold testing, identifies the problem, and presents a written flat-rate quote before touching any tools.', variant: 'accent' },
+  { step: 3, title: 'Precision Fix & Guarantee', desc: 'Repairs are completed with OEM factory parts, load-tested for cooling delta T, and backed by our full 90-day guarantee.', variant: 'success' }
+]);
+
+// 7. Service Areas Data
+const serviceAreasSec = sections['service_areas'] || {
+  badge: 'LOCAL COMMUNITY DISPATCH',
+  title: 'Serving Neighborhoods Across the Metro Region',
+  subtitle: 'Our radio-dispatched mobile technicians are strategically positioned for 45-minute response times.',
+  primary_btn_text: 'Check Your ZIP Code',
+  primary_btn_url: '/service-areas',
+  is_enabled: 1
+};
+const serviceAreas: string[] = safeJson(serviceAreasSec.extra_data_json, [
+  'Downtown Metro', 'Oak Ridge Estates', 'Westlake Heights',
+  'Pine Valley', 'Riverdale Crossing', 'Eastridge Park'
+]);
+
+// 8. Reviews Section Data
+const reviewsIntro = sections['reviews_intro'] || {
+  badge: 'VERIFIED LOCAL FEEDBACK',
+  title: '5-Star Reputations in Every Neighborhood',
+  subtitle: 'Real feedback from local residents who trust NorthStar for honest heating and cooling craftsmanship.',
+  primary_btn_text: 'View All 1,200+ Reviews',
+  primary_btn_url: '/reviews',
+  is_enabled: 1
+};
+
+// Reviews from DB or fallback
+const reviews = dbReviewsRes.rows.length > 0
+  ? dbReviewsRes.rows.map(r => ({
+      author: r.author_name as string,
+      location: r.author_location as string,
+      quote: r.content as string,
+      rating: Number(r.rating),
+      service: r.service_type as string,
+      verified: true
+    }))
+  : defaultReviews;
+
+// 9. Financing Banner Data
+const financingCta = sections['financing_cta'] || {
+  badge: '0% APR AVAILABLE FOR 36 MONTHS',
+  title: 'Need a Replacement System? Flexible Payment Options Available.',
+  subtitle: 'Plans starting as low as $89/month for qualifying high-efficiency SEER2 heat pumps and furnaces.',
+  primary_btn_text: 'Explore Financing Plans',
+  primary_btn_url: '/financing',
+  is_enabled: 1
+};
+
+// 10. Final CTA Data
+const finalCta = sections['final_cta'] || {
+  badge: 'PROMPT COMFORT RESTORATION',
+  title: 'Restore Your Home Comfort Today',
+  subtitle: 'Same-day emergency AC and furnace repair appointments available across our local service territory.',
+  primary_btn_text: 'Book Service Online',
+  primary_btn_url: '/book',
+  secondary_btn_text: siteSettings['phone_primary'] ? `Call ${siteSettings['phone_primary']}` : 'Call (555) 014-7824',
+  secondary_btn_url: siteSettings['phone_raw'] ? `tel:${siteSettings['phone_raw']}` : 'tel:5550147824',
+  is_enabled: 1
+};
+---
+
+<Layout
+  title={`${siteSettings['brand_first'] || 'NorthStar'} HVAC Services — ${siteSettings['tagline'] || 'Comfort You Can Count On'}`}
+  description={siteSettings['description'] || 'Licensed residential and commercial heating and air conditioning repair, installation, and seasonal maintenance with transparent flat-rate pricing.'}
+>
+    <!-- =====================================================================
+         1. HERO SECTION
+         ===================================================================== -->
+    {hero.is_enabled !== 0 && (
+      <section class="bg-gradient-to-b from-brand-primary to-brand-secondary text-white py-64 lg:py-96 relative overflow-hidden">
+        <div class="container grid grid-cols-1 lg:grid-cols-12 gap-48 lg:gap-64 items-center">
+          <!-- Content Column -->
+          <div class="lg:col-span-7 space-y-24">
+            {hero.badge && (
+              <Badge variant="success" dot={true}>
+                {hero.badge}
+              </Badge>
+            )}
+
+            <h1 class="text-h1 sm:text-display font-heading font-extrabold tracking-tight leading-[1.1] text-white">
+              {hero.title}
+            </h1>
+
+            {hero.subtitle && (
+              <p class="text-body-large text-text-muted max-w-2xl leading-relaxed">
+                {hero.subtitle}
+              </p>
+            )}
+
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 pt-8">
+              {hero.primary_btn_text && (
+                <Button href={hero.primary_btn_url || '/book'} variant="primary" size="lg">
+                  <span>{hero.primary_btn_text}</span>
+                  <Icon name="arrow-right" size={18} />
+                </Button>
+              )}
+              {hero.secondary_btn_text && (
+                <Button href={hero.secondary_btn_url || 'tel:5550147824'} variant="outline" size="lg" class="text-white border-white/20 hover:bg-white/10 hover:border-white">
+                  <Icon name="phone" size={18} class="text-amber-400" />
+                  <span>{hero.secondary_btn_text}</span>
+                </Button>
+              )}
+            </div>
+
+            <!-- Trust Sub-badge -->
+            <div class="pt-16 flex items-center gap-16 text-caption text-text-muted">
+              <div class="flex items-center gap-4 text-amber-400">
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+                <Icon name="star" size={14} class="fill-current text-amber-400" />
+              </div>
+              <span><strong>{heroExtra.rating_score || '4.9 / 5.0 Rating'}</strong> {heroExtra.rating_subtext || 'across Google & Yelp'}</span>
+            </div>
+          </div>
+
+          <!-- Image Column -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-brand-primary">
+              <img
+                src={hero.image_url || '/images/hero-technician-ac.jpg'}
+                alt={hero.image_alt || 'NorthStar HVAC technician at work'}
+                class="w-full h-400 sm:h-480 lg:h-520 object-cover"
+                loading="eager"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent"></div>
+              <!-- Floating Trust Card -->
+              {heroExtra.trust_card_title && (
+                <div class="absolute bottom-20 left-20 right-20 bg-brand-primary/90 backdrop-blur-md border border-white/15 p-16 rounded-md flex items-center gap-16">
+                  <div class="w-40 h-40 rounded-full bg-feedback-success/20 text-feedback-success flex items-center justify-center shrink-0">
+                    <Icon name="check" size={20} />
+                  </div>
+                  <div class="text-caption">
+                    <div class="font-bold text-white">{heroExtra.trust_card_title}</div>
+                    <div class="text-text-muted">{heroExtra.trust_card_desc}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         2. TRUST SIGNALS BAR
+         ===================================================================== -->
+    {trustSection.is_enabled !== 0 && trustSignals.length > 0 && (
+      <section class="bg-neutral-surface border-b border-neutral-border py-32">
+        <div class="container">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-24 lg:gap-32">
+            {trustSignals.map(signal => (
+              <div class="flex items-center gap-16">
+                <div class="w-44 h-44 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center shrink-0">
+                  <Icon name={signal.icon} size={22} class="text-brand-accent" />
+                </div>
+                <div>
+                  <div class="text-small font-heading font-bold text-brand-primary">{signal.title}</div>
+                  <div class="text-caption text-text-muted">{signal.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         3. CORE SERVICES GRID
+         ===================================================================== -->
+    {servicesIntro.is_enabled !== 0 && (
+      <section class="py-80 container">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-48 gap-20">
+          <div>
+            {servicesIntro.badge && (
+              <span class="text-caption font-bold tracking-widest text-brand-accent uppercase block mb-8">
+                {servicesIntro.badge}
+              </span>
+            )}
+            <h2 class="text-h2 font-heading font-extrabold text-brand-primary">
+              {servicesIntro.title}
+            </h2>
+            {servicesIntro.subtitle && (
+              <p class="text-body text-text-secondary mt-8 max-w-2xl">
+                {servicesIntro.subtitle}
+              </p>
+            )}
+          </div>
+          {servicesIntro.primary_btn_text && (
+            <Button href={servicesIntro.primary_btn_url || '/services'} variant="outline" size="md">
+              <span>{servicesIntro.primary_btn_text}</span>
+              <Icon name="arrow-right" size={16} />
+            </Button>
+          )}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-32">
+          {services.slice(0, 3).map(service => (
+            <ServiceCard
+              title={service.title}
+              description={service.shortDescription}
+              slug={service.slug}
+              category={service.category}
+              badge={service.badge}
+              icon={service.icon}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         4. EMERGENCY CTA BANNER
+         ===================================================================== -->
+    {emergencyCta.is_enabled !== 0 && (
+      <CTABanner
+        variant="emergency"
+        badge={emergencyCta.badge}
+        title={emergencyCta.title}
+        subtitle={emergencyCta.subtitle}
+        buttonText={emergencyCta.primary_btn_text || 'Emergency Dispatch'}
+        buttonHref={emergencyCta.primary_btn_url || '/emergency'}
+        phoneText={emergencyCta.secondary_btn_text || siteSettings['phone_primary'] || 'Call (555) 014-7824'}
+      />
+    )}
+
+    <!-- =====================================================================
+         5. WHY CHOOSE US
+         ===================================================================== -->
+    {whyUs.is_enabled !== 0 && (
+      <section class="py-80 bg-neutral-surface border-y border-neutral-border">
+        <div class="container grid grid-cols-1 lg:grid-cols-12 gap-48 lg:gap-64 items-center">
+          <!-- Image Column -->
+          <div class="lg:col-span-5 relative order-2 lg:order-1">
+            <div class="rounded-xl overflow-hidden shadow-xl border border-neutral-border bg-brand-primary">
+              <img
+                src={whyUs.image_url || '/images/technician-furnace-inspection.jpg'}
+                alt={whyUs.image_alt || 'NorthStar HVAC inspection'}
+                class="w-full h-380 sm:h-440 object-cover"
+                loading="lazy"
+              />
+            </div>
+            <!-- Clean Badge Overlay -->
+            {whyUsExtra.badge_overlay && (
+              <div class="absolute -bottom-16 -right-16 bg-neutral-surface border border-neutral-border shadow-lg p-16 rounded-md hidden sm:flex items-center gap-12">
+                <div class="w-36 h-36 rounded-full bg-amber-100 text-brand-accent flex items-center justify-center font-bold">✓</div>
+                <div class="text-caption font-bold text-brand-primary">{whyUsExtra.badge_overlay}</div>
+              </div>
+            )}
+          </div>
+
+          <!-- Content Column -->
+          <div class="lg:col-span-7 space-y-24 order-1 lg:order-2">
+            {whyUs.badge && (
+              <span class="text-caption font-bold tracking-widest text-brand-accent uppercase block">
+                {whyUs.badge}
+              </span>
+            )}
+            <h2 class="text-h2 font-heading font-extrabold text-brand-primary">
+              {whyUs.title}
+            </h2>
+            <p class="text-body text-text-secondary leading-relaxed">
+              {whyUs.description}
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-20 pt-8">
+              {(whyUsExtra.features || []).map((feat: any) => (
+                <div class="p-20 bg-neutral-surface-alt border border-neutral-border rounded-md">
+                  <div class="font-heading font-bold text-body text-brand-primary mb-6">{feat.title}</div>
+                  <p class="text-small text-text-secondary">{feat.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {whyUs.primary_btn_text && (
+              <div class="pt-8">
+                <Button href={whyUs.primary_btn_url || '/about'} variant="outline" size="md">
+                  <span>{whyUs.primary_btn_text}</span>
+                  <Icon name="arrow-right" size={16} />
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         6. HOW IT WORKS (3 SIMPLE STEPS)
+         ===================================================================== -->
+    {howItWorks.is_enabled !== 0 && stepsList.length > 0 && (
+      <section class="py-80 container">
+        <div class="text-center max-w-2xl mx-auto mb-56">
+          {howItWorks.badge && (
+            <span class="text-caption font-bold tracking-widest text-brand-accent uppercase block mb-8">
+              {howItWorks.badge}
+            </span>
+          )}
+          <h2 class="text-h2 font-heading font-extrabold text-brand-primary">
+            {howItWorks.title}
+          </h2>
+          {howItWorks.subtitle && (
+            <p class="text-body text-text-secondary mt-8">
+              {howItWorks.subtitle}
+            </p>
+          )}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-32">
+          {stepsList.map(item => (
+            <StepCard
+              step={item.step}
+              title={item.title}
+              description={item.desc}
+              variant={item.variant}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         7. SERVICE AREAS
+         ===================================================================== -->
+    {serviceAreasSec.is_enabled !== 0 && serviceAreas.length > 0 && (
+      <section class="py-80 bg-neutral-surface border-y border-neutral-border">
+        <div class="container">
+          <div class="text-center max-w-2xl mx-auto mb-48">
+            {serviceAreasSec.badge && (
+              <span class="text-caption font-bold tracking-widest text-brand-accent uppercase block mb-8">
+                {serviceAreasSec.badge}
+              </span>
+            )}
+            <h2 class="text-h2 font-heading font-extrabold text-brand-primary">
+              {serviceAreasSec.title}
+            </h2>
+            {serviceAreasSec.subtitle && (
+              <p class="text-body text-text-secondary mt-8">
+                {serviceAreasSec.subtitle}
+              </p>
+            )}
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-16 mb-40">
+            {serviceAreas.map(area => (
+              <div class="p-16 rounded-md bg-neutral-surface-alt border border-neutral-border text-center hover:border-brand-accent transition-colors">
+                <Icon name="map-pin" size={18} class="text-brand-accent mx-auto mb-8" />
+                <span class="text-small font-bold text-brand-primary">{area}</span>
+              </div>
+            ))}
+          </div>
+
+          {serviceAreasSec.primary_btn_text && (
+            <div class="text-center">
+              <Button href={serviceAreasSec.primary_btn_url || '/service-areas'} variant="outline" size="md">
+                <span>{serviceAreasSec.primary_btn_text}</span>
+                <Icon name="arrow-right" size={16} />
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         8. CUSTOMER REVIEWS
+         ===================================================================== -->
+    {reviewsIntro.is_enabled !== 0 && reviews.length > 0 && (
+      <section class="py-80 container" id="reviews">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-48 gap-20">
+          <div>
+            {reviewsIntro.badge && (
+              <span class="text-caption font-bold tracking-widest text-brand-accent uppercase block mb-8">
+                {reviewsIntro.badge}
+              </span>
+            )}
+            <h2 class="text-h2 font-heading font-extrabold text-brand-primary">
+              {reviewsIntro.title}
+            </h2>
+            {reviewsIntro.subtitle && (
+              <p class="text-body text-text-secondary mt-8 max-w-2xl">
+                {reviewsIntro.subtitle}
+              </p>
+            )}
+          </div>
+          {reviewsIntro.primary_btn_text && (
+            <Button href={reviewsIntro.primary_btn_url || '/reviews'} variant="outline" size="md">
+              <span>{reviewsIntro.primary_btn_text}</span>
+              <Icon name="arrow-right" size={16} />
+            </Button>
+          )}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-32">
+          {reviews.slice(0, 3).map(rev => (
+            <ReviewCard
+              author={rev.author}
+              location={rev.location}
+              quote={rev.quote}
+              rating={rev.rating}
+              service={rev.service}
+              verified={rev.verified}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         9. FINANCING PROMO BANNER
+         ===================================================================== -->
+    {financingCta.is_enabled !== 0 && (
+      <section class="py-48 bg-neutral-surface border-y border-neutral-border">
+        <div class="container flex flex-col md:flex-row items-center justify-between gap-32">
+          <div>
+            {financingCta.badge && (
+              <span class="text-caption font-bold tracking-wider text-brand-accent uppercase block mb-4">
+                {financingCta.badge}
+              </span>
+            )}
+            <h3 class="text-h3 font-heading font-extrabold text-brand-primary">
+              {financingCta.title}
+            </h3>
+            {financingCta.subtitle && (
+              <p class="text-body text-text-secondary mt-4">
+                {financingCta.subtitle}
+              </p>
+            )}
+          </div>
+          {financingCta.primary_btn_text && (
+            <Button href={financingCta.primary_btn_url || '/financing'} variant="secondary" size="md" class="shrink-0">
+              <span>{financingCta.primary_btn_text}</span>
+              <Icon name="arrow-right" size={16} />
+            </Button>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- =====================================================================
+         10. FINAL CTA BANNER
+         ===================================================================== -->
+    {finalCta.is_enabled !== 0 && (
+      <CTABanner
+        variant="primary"
+        overline={finalCta.badge}
+        title={finalCta.title}
+        subtitle={finalCta.subtitle}
+        buttonText={finalCta.primary_btn_text || 'Book Service Online'}
+        buttonHref={finalCta.primary_btn_url || '/book'}
+        phoneText={finalCta.secondary_btn_text || siteSettings['phone_primary'] || 'Call (555) 014-7824'}
+      />
+    )}
+</Layout>

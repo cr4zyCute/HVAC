@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 834 1960" width="834" height="1960">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="834" height="1960" fill="#FFFFFF"/>
+  <!-- Tablet Header (834px) -->
+  <g id="Tablet-Header">
+    <rect width="834" height="40" fill="#0F2238"/>
+    <text x="32" y="25" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Serving Metro Region • 24/7 Emergency Dispatch Active</text>
+    <text x="802" y="25" fill="#F59E0B" font-family="'Inter', sans-serif" font-size="12" font-weight="700" text-anchor="end">(555) 014-7824</text>
+    
+    <rect y="40" width="834" height="74" fill="#FFFFFF"/>
+    <line x1="0" y1="114" x2="834" y2="114" stroke="#E2E8F0" stroke-width="1"/>
+    
+    <!-- Logo -->
+    <g transform="translate(32, 54)">
+      <rect width="36" height="36" rx="6" fill="#0F2238"/>
+      <polygon points="18 9 20.5 14.5 26.5 15.2 22 19 23.5 25 18 22 12.5 25 14 19 9.5 15.2 15.5 14.5 18 9" fill="#FFFFFF"/>
+      <text x="46" y="20" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="800">NorthStar HVAC</text>
+      <text x="46" y="33" fill="#E65100" font-family="'Inter', sans-serif" font-size="10" font-weight="600" letter-spacing="0.5">COMFORT YOU CAN COUNT ON</text>
+    </g>
+
+    <!-- Nav actions -->
+    <g transform="translate(560, 56)">
+      <rect width="140" height="40" rx="6" fill="#E65100"/>
+      <text x="70" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">Book Service</text>
+
+      <g transform="translate(160, 4)">
+        <rect width="32" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+        <line x1="8" y1="11" x2="24" y2="11" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+        <line x1="8" y1="16" x2="24" y2="16" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+        <line x1="8" y1="21" x2="24" y2="21" stroke="#0F2238" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+  <g id="Hero" transform="translate(32, 140)">
+    <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1">FULL SERVICE DIRECTORY</text>
+    <text x="0" y="52" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="800">HVAC Services Built Around Your Comfort</text>
+    <text x="0" y="86" fill="#475569" font-family="'Inter', sans-serif" font-size="15">
+      <tspan x="0" dy="0">Certified technical expertise with upfront flat-rate pricing</tspan>
+      <tspan x="0" dy="22">and zero surprise charges across all metro communities.</tspan>
+    </text>
+  </g>
+
+  <!-- 5 Service Rows (770px wide) -->
+  <g id="Service-Rows" transform="translate(32, 280)">
+    <!-- 1. Cooling -->
+    <g transform="translate(0, 0)">
+      <rect width="770" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, 24)">
+        <rect width="44" height="44" rx="8" fill="#EFF6FF"/>
+        <path d="M22 12V32M12 22H32M15 15L29 29M15 29L29 15" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+        <text x="60" y="28" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">Cooling &amp; Air Conditioning Services</text>
+        <text x="60" y="48" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">AC Repair • System Replacements • Ductless Mini-Splits</text>
+        <text x="0" y="90" fill="#334155" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="0" dy="0">Beat intense summer heatwaves with precision cooling diagnostics.</tspan>
+          <tspan x="0" dy="20">We repair frozen coils, failing compressors, and blown run capacitors.</tspan>
+        </text>
+        <g transform="translate(580, 120)">
+          <rect width="140" height="40" rx="6" fill="#0F2238"/>
+          <text x="70" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" text-anchor="middle">View Cooling →</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- 2. Heating -->
+    <g transform="translate(0, 255)">
+      <rect width="770" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, 24)">
+        <rect width="44" height="44" rx="8" fill="#FFF7ED"/>
+        <path d="M22 12C22 12 16 17 16 23C16 26.3 18.7 29 22 29C25.3 29 28 26.3 28 23C28 17 22 12 22 12Z" stroke="#EA580C" stroke-width="2"/>
+        <text x="60" y="28" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">Heating &amp; Furnace Solutions</text>
+        <text x="60" y="48" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Gas Furnaces • Heat Pumps • Heat Exchanger Safety</text>
+        <text x="0" y="90" fill="#334155" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="0" dy="0">Reliable winter heating performance. We fix ignitor failures,</tspan>
+          <tspan x="0" dy="20">failing blower motors, and thermocouple faults with digital testing.</tspan>
+        </text>
+        <g transform="translate(580, 120)">
+          <rect width="140" height="40" rx="6" fill="#0F2238"/>
+          <text x="70" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" text-anchor="middle">View Heating →</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- 3. Maintenance -->
+    <g transform="translate(0, 510)">
+      <rect width="770" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, 24)">
+        <rect width="44" height="44" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+        <path d="M25 15L29 19L19 29C18 30 17 30 16 29C15 28 15 27 16 26L25 15Z" stroke="#1E293B" stroke-width="2"/>
+        <text x="60" y="28" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">Preventive Maintenance &amp; Tune-Ups</text>
+        <text x="60" y="48" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">24-Point Comprehensive Check • Filter Replacements • Amp Testing</text>
+        <text x="0" y="90" fill="#334155" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="0" dy="0">Prevent over 80% of unexpected breakdowns with seasonal tune-ups.</tspan>
+          <tspan x="0" dy="20">We flush drains, calibrate thermostats, and protect warranties.</tspan>
+        </text>
+        <g transform="translate(580, 120)">
+          <rect width="140" height="40" rx="6" fill="#0F2238"/>
+          <text x="70" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" text-anchor="middle">View Tune-Ups →</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- 4. IAQ -->
+    <g transform="translate(0, 765)">
+      <rect width="770" height="230" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(24, 24)">
+        <rect width="44" height="44" rx="8" fill="#F0FDFA"/>
+        <path d="M15 22H27C29 22 31 20 31 18C31 16 29 14 27 14C27 11 24 9 21 9C18 9 16 11 15 13C13 13 11 15 11 17C11 19 13 22 15 22Z" stroke="#0D9488" stroke-width="2"/>
+        <text x="60" y="28" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">Indoor Air Quality (IAQ)</text>
+        <text x="60" y="48" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">MERV-13 Filters • Whole-Home Dehumidifiers • UV Purifiers</text>
+        <text x="0" y="90" fill="#334155" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="0" dy="0">Hospital-grade air filtration and germicidal UV-C coil lamps</tspan>
+          <tspan x="0" dy="20">clearing airborne dust, allergens, mold, and humidity.</tspan>
+        </text>
+        <g transform="translate(580, 120)">
+          <rect width="140" height="40" rx="6" fill="#0F2238"/>
+          <text x="70" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="600" text-anchor="middle">View IAQ →</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- 5. Emergency -->
+    <g transform="translate(0, 1020)">
+      <rect width="770" height="230" rx="12" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1"/>
+      <g transform="translate(24, 24)">
+        <rect width="44" height="44" rx="8" fill="#DC2626" fill-opacity="0.15"/>
+        <circle cx="22" cy="22" r="10" stroke="#DC2626" stroke-width="2"/>
+        <path d="M22 16V22M22 25V26" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/>
+        <text x="60" y="28" fill="#DC2626" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">24/7 Emergency HVAC Service</text>
+        <text x="60" y="48" fill="#991B1B" font-family="'Inter', sans-serif" font-size="12">Rapid Priority Dispatch • Under 45 Mins Average Arrival</text>
+        <text x="0" y="90" fill="#7F1D1D" font-family="'Inter', sans-serif" font-size="13">
+          <tspan x="0" dy="0">Sudden no-heat emergencies or total AC breakdowns in heatwaves.</tspan>
+          <tspan x="0" dy="20">Fully stocked service vans ready to fix issues on the spot.</tspan>
+        </text>
+        <g transform="translate(560, 120)">
+          <rect width="160" height="40" rx="6" fill="#DC2626"/>
+          <text x="80" y="25" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">Call Emergency →</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Tablet Footer (Y: 1620) -->
+  <g id="Tablet-Footer" transform="translate(0, 1620)">
+    <rect width="834" height="340" fill="#0A1829"/>
+    <g transform="translate(32, 40)">
+      <text x="0" y="22" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="800">NorthStar HVAC Services</text>
+      <text x="0" y="46" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="13">
+        <tspan x="0" dy="0">Professional residential and commercial HVAC service.</tspan>
+        <tspan x="0" dy="18">24/7 Emergency Dispatch: (555) 014-7824</tspan>
+      </text>
+
+      <line x1="0" y1="80" x2="770" y2="80" stroke="#1E293B" stroke-width="1"/>
+
+      <!-- 3 Columns -->
+      <g transform="translate(0, 110)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">Services</text>
+        <text x="0" y="42" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">AC Repair • AC Installation</text>
+        <text x="0" y="62" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Heating Repair • Maintenance</text>
+        <text x="0" y="82" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Indoor Air Quality • Emergency</text>
+      </g>
+
+      <g transform="translate(280, 110)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">Company</text>
+        <text x="0" y="42" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">About NorthStar</text>
+        <text x="0" y="62" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Service Areas</text>
+        <text x="0" y="82" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Financing • Reviews</text>
+      </g>
+
+      <g transform="translate(560, 110)">
+        <text x="0" y="16" fill="#FFFFFF" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700">Contact</text>
+        <text x="0" y="42" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="12" font-weight="600">(555) 014-7824</text>
+        <text x="0" y="62" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">hello@northstarhvac.example</text>
+        <text x="0" y="82" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="12">Mon-Sun 24/7 Dispatch</text>
+      </g>
+
+      <line x1="0" y1="220" x2="770" y2="220" stroke="#1E293B" stroke-width="1"/>
+      <text x="0" y="248" fill="#64748B" font-family="'Inter', sans-serif" font-size="11">© 2026 NorthStar HVAC Services. Fictional business website UI design project.</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,117 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 580" width="1440" height="580" fill="none">
+  <!-- Section: Customer Reviews (Desktop 1440px) -->
+  <g id="Customer-Reviews-Section">
+    <rect width="1440" height="580" fill="#F8FAFC"/>
+
+    <!-- Section Header -->
+    <g id="Section-Header" transform="translate(80, 60)">
+      <text x="0" y="16" fill="#E65100" font-family="'Inter', sans-serif" font-size="13" font-weight="700" letter-spacing="1">TRUSTED BY LOCAL HOMEOWNERS</text>
+      <text x="0" y="56" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="800">What Our Customers Say</text>
+      <text x="0" y="88" fill="#64748B" font-family="'Inter', sans-serif" font-size="16" font-weight="400">Sample verified reviews from homeowners who depend on NorthStar for indoor comfort.</text>
+    </g>
+
+    <!-- Overall Rating Aggregate Badge on Right -->
+    <g transform="translate(1080, 60)">
+      <rect width="280" height="80" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+      <g transform="translate(20, 16)">
+        <text x="0" y="24" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800">4.9</text>
+        <g transform="translate(56, 6)">
+          <path d="M6 0L8 4.5L12 5L9 8L10 12L6 9.5L2 12L3 8L0 5L4 4.5L6 0Z" fill="#F59E0B"/>
+          <path d="M18 0L20 4.5L24 5L21 8L22 12L18 9.5L14 12L15 8L12 5L16 4.5L18 0Z" fill="#F59E0B"/>
+          <path d="M30 0L32 4.5L36 5L33 8L34 12L30 9.5L26 12L27 8L24 5L28 4.5L30 0Z" fill="#F59E0B"/>
+          <path d="M42 0L44 4.5L48 5L45 8L46 12L42 9.5L38 12L39 8L36 5L40 4.5L42 0Z" fill="#F59E0B"/>
+          <path d="M54 0L56 4.5L60 5L57 8L58 12L54 9.5L50 12L51 8L48 5L52 4.5L54 0Z" fill="#F59E0B"/>
+        </g>
+        <text x="0" y="44" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Overall Rating • 650+ Reviews</text>
+      </g>
+    </g>
+
+    <!-- 3 Review Cards Row -->
+    <g id="Reviews-Row" transform="translate(80, 190)">
+      <!-- Card 1: Sarah M. -->
+      <g id="Review-1" transform="translate(0, 0)">
+        <rect width="400" height="310" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(28, 28)">
+          <!-- 5 Stars -->
+          <g>
+            <path d="M6 0L8 4.5L12 5L9 8L10 12L6 9.5L2 12L3 8L0 5L4 4.5L6 0Z" fill="#F59E0B"/>
+            <path d="M18 0L20 4.5L24 5L21 8L22 12L18 9.5L14 12L15 8L12 5L16 4.5L18 0Z" fill="#F59E0B"/>
+            <path d="M30 0L32 4.5L36 5L33 8L34 12L30 9.5L26 12L27 8L24 5L28 4.5L30 0Z" fill="#F59E0B"/>
+            <path d="M42 0L44 4.5L48 5L45 8L46 12L42 9.5L38 12L39 8L36 5L40 4.5L42 0Z" fill="#F59E0B"/>
+            <path d="M54 0L56 4.5L60 5L57 8L58 12L54 9.5L50 12L51 8L48 5L52 4.5L54 0Z" fill="#F59E0B"/>
+          </g>
+
+          <text x="0" y="48" fill="#1E293B" font-family="'Inter', sans-serif" font-size="14" font-weight="400" font-style="italic">
+            <tspan x="0" dy="0">&quot;The technician arrived on time, diagnosed the</tspan>
+            <tspan x="0" dy="24">issue within 20 minutes, and had our AC</tspan>
+            <tspan x="0" dy="24">running again before afternoon heat peaked.</tspan>
+            <tspan x="0" dy="24">Honest, upfront pricing with no upsells.&quot;</tspan>
+          </text>
+
+          <g transform="translate(0, 185)">
+            <circle cx="18" cy="18" r="18" fill="#0F2238"/>
+            <text x="18" y="23" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">SM</text>
+            <text x="48" y="16" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Sarah M.</text>
+            <text x="48" y="32" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Verified Homeowner • AC Repair</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- Card 2: David K. -->
+      <g id="Review-2" transform="translate(440, 0)">
+        <rect width="400" height="310" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(28, 28)">
+          <g>
+            <path d="M6 0L8 4.5L12 5L9 8L10 12L6 9.5L2 12L3 8L0 5L4 4.5L6 0Z" fill="#F59E0B"/>
+            <path d="M18 0L20 4.5L24 5L21 8L22 12L18 9.5L14 12L15 8L12 5L16 4.5L18 0Z" fill="#F59E0B"/>
+            <path d="M30 0L32 4.5L36 5L33 8L34 12L30 9.5L26 12L27 8L24 5L28 4.5L30 0Z" fill="#F59E0B"/>
+            <path d="M42 0L44 4.5L48 5L45 8L46 12L42 9.5L38 12L39 8L36 5L40 4.5L42 0Z" fill="#F59E0B"/>
+            <path d="M54 0L56 4.5L60 5L57 8L58 12L54 9.5L50 12L51 8L48 5L52 4.5L54 0Z" fill="#F59E0B"/>
+          </g>
+
+          <text x="0" y="48" fill="#1E293B" font-family="'Inter', sans-serif" font-size="14" font-weight="400" font-style="italic">
+            <tspan x="0" dy="0">&quot;Our furnace stopped igniting on a freezing</tspan>
+            <tspan x="0" dy="24">Saturday morning. NorthStar dispatched</tspan>
+            <tspan x="0" dy="24">within 35 minutes and replaced the faulty</tspan>
+            <tspan x="0" dy="24">ignitor from their truck. Excellent service.&quot;</tspan>
+          </text>
+
+          <g transform="translate(0, 185)">
+            <circle cx="18" cy="18" r="18" fill="#1E3A5F"/>
+            <text x="18" y="23" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">DK</text>
+            <text x="48" y="16" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">David K.</text>
+            <text x="48" y="32" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Verified Homeowner • Emergency Heating</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- Card 3: Elena R. -->
+      <g id="Review-3" transform="translate(880, 0)">
+        <rect width="400" height="310" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <g transform="translate(28, 28)">
+          <g>
+            <path d="M6 0L8 4.5L12 5L9 8L10 12L6 9.5L2 12L3 8L0 5L4 4.5L6 0Z" fill="#F59E0B"/>
+            <path d="M18 0L20 4.5L24 5L21 8L22 12L18 9.5L14 12L15 8L12 5L16 4.5L18 0Z" fill="#F59E0B"/>
+            <path d="M30 0L32 4.5L36 5L33 8L34 12L30 9.5L26 12L27 8L24 5L28 4.5L30 0Z" fill="#F59E0B"/>
+            <path d="M42 0L44 4.5L48 5L45 8L46 12L42 9.5L38 12L39 8L36 5L40 4.5L42 0Z" fill="#F59E0B"/>
+            <path d="M54 0L56 4.5L60 5L57 8L58 12L54 9.5L50 12L51 8L48 5L52 4.5L54 0Z" fill="#F59E0B"/>
+          </g>
+
+          <text x="0" y="48" fill="#1E293B" font-family="'Inter', sans-serif" font-size="14" font-weight="400" font-style="italic">
+            <tspan x="0" dy="0">&quot;Replaced our aging 18-year AC with a high-</tspan>
+            <tspan x="0" dy="24">efficiency heat pump. The crew was polite,</tspan>
+            <tspan x="0" dy="24">wore shoe covers, and kept our home clean.</tspan>
+            <tspan x="0" dy="24">Our monthly electric bills dropped by 25%.&quot;</tspan>
+          </text>
+
+          <g transform="translate(0, 185)">
+            <circle cx="18" cy="18" r="18" fill="#0F2238"/>
+            <text x="18" y="23" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="13" font-weight="700" text-anchor="middle">ER</text>
+            <text x="48" y="16" fill="#0F2238" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700">Elena R.</text>
+            <text x="48" y="32" fill="#64748B" font-family="'Inter', sans-serif" font-size="12">Verified Homeowner • Heat Pump Install</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
