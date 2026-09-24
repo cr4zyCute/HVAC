@@ -435,8 +435,80 @@ const initialCmsData = {
   </header>
 
   <!-- Main Visual Canvas (Full width, no side panel) -->
-  <main id="visual-canvas-viewport" class="w-full transition-all duration-300 pb-80">
-    <div id="visual-canvas-wrapper" class="w-full bg-white rounded-xl shadow-lg border border-neutral-border overflow-hidden transition-all duration-300 mx-auto">
+  <main id="visual-canvas-viewport" class="w-full transition-all duration-300 pb-80 flex flex-col items-center">
+    <!-- Device Mode Spec & Control Pill -->
+    <div id="device-spec-badge" class="hidden mb-16 items-center gap-12 px-14 py-6 rounded-full bg-slate-900 text-white text-caption font-semibold shadow-lg border border-slate-700 animate-fade-in">
+      <div class="flex items-center gap-8">
+        <span id="device-spec-icon">📱</span>
+        <span id="device-spec-label">Mobile Template — iPhone 15 Pro (390px)</span>
+      </div>
+      <div class="h-12 w-[1px] bg-slate-700"></div>
+      <button
+        type="button"
+        id="btn-toggle-device-height"
+        class="text-[11px] text-slate-300 hover:text-white px-8 py-2 rounded bg-slate-800 hover:bg-slate-700 transition-colors flex items-center gap-4 cursor-pointer"
+        title="Toggle between fixed device height and full page scroll"
+      >
+        <span>📏</span>
+        <span id="label-toggle-device-height">Fit Device Window</span>
+      </button>
+    </div>
+
+    <!-- Outer Device Frame Container -->
+    <div id="device-mockup-frame" class="w-full transition-all duration-300 mx-auto">
+      
+      <!-- Inner Screen Shell (Clips top bar, canvas, and bottom bar with smooth hardware corner radius) -->
+      <div id="device-screen-shell" class="w-full bg-slate-950 flex flex-col transition-all overflow-hidden rounded-none">
+        
+        <!-- Top Device Chrome Bar -->
+        <div id="device-mockup-top-bar" class="hidden w-full bg-slate-950 text-white select-none transition-all border-b border-white/5">
+          <!-- Mobile Top Chrome (iPhone Dynamic Island & Status Bar) -->
+          <div id="device-top-mobile-content" class="w-full px-20 pt-12 pb-10 flex items-center justify-between">
+            <div class="w-60 text-[13px] font-semibold tracking-tight text-white pl-4 select-none">9:41</div>
+            
+            <!-- Dynamic Island -->
+            <div class="h-[28px] px-10 bg-black rounded-full flex items-center justify-center gap-8 border border-white/10 shadow-sm">
+              <div class="w-[10px] h-[10px] rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center">
+                <div class="w-[3px] h-[3px] rounded-full bg-blue-950"></div>
+              </div>
+              <div class="w-[6px] h-[6px] rounded-full bg-slate-950"></div>
+            </div>
+
+            <!-- Status Icons -->
+            <div class="w-60 flex items-center justify-end gap-6 text-white pr-2 select-none">
+              <!-- Cellular -->
+              <svg class="w-[15px] h-[15px] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M2 17h3v4H2v-4zm5-4h3v8H7v-8zm5-4h3v12h-3V9zm5-5h3v17h-3V4z"/></svg>
+              <!-- WiFi -->
+              <svg class="w-[15px] h-[15px] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/></svg>
+              <!-- Battery (Horizontal) -->
+              <div class="w-[24px] h-[12px] border-[1.5px] border-white/90 rounded-[4px] p-[1.5px] flex items-center relative shrink-0">
+                <div class="h-full w-full bg-emerald-400 rounded-[1.5px]"></div>
+                <div class="w-[2px] h-[5px] bg-white/90 absolute -right-[3px] rounded-r-[1px]"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tablet Top Chrome (iPad Bezel with Camera Dot) -->
+          <div id="device-top-tablet-content" class="hidden w-full px-24 py-10 flex items-center justify-between">
+            <div class="text-[12px] font-medium text-slate-300 select-none">9:41 AM  Tue Sep 25</div>
+            
+            <!-- Front Facing Camera Lens -->
+            <div class="w-10 h-10 rounded-full bg-slate-950 border border-slate-700 flex items-center justify-center">
+              <div class="w-3 h-3 rounded-full bg-sky-900/60"></div>
+            </div>
+
+            <div class="flex items-center gap-8 text-[12px] text-slate-300 select-none">
+              <span>100%</span>
+              <div class="w-[24px] h-[12px] border-[1.5px] border-slate-400 rounded-[4px] p-[1.5px] flex items-center relative shrink-0">
+                <div class="h-full w-full bg-emerald-400 rounded-[1.5px]"></div>
+                <div class="w-[2px] h-[5px] bg-slate-400 absolute -right-[3px] rounded-r-[1px]"></div>
+              </div>
+              <svg class="w-[15px] h-[15px] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div id="visual-canvas-wrapper" class="w-full bg-white rounded-xl shadow-lg border border-neutral-border overflow-hidden transition-all duration-300 mx-auto">
 
       <!-- =====================================================================
            1. HERO SECTION
@@ -1312,7 +1384,16 @@ const initialCmsData = {
         </div>
       </section>
 
-    </div>
+      </div>
+
+      <!-- Bottom Device Chrome Bar (Home Indicator) -->
+      <div id="device-mockup-bottom-bar" class="hidden w-full bg-slate-950 py-10 flex items-center justify-center transition-all select-none border-t border-white/5">
+        <div id="device-home-indicator" class="w-32 h-[4px] bg-white/40 rounded-full"></div>
+      </div>
+
+      </div><!-- /device-screen-shell -->
+
+    </div><!-- /device-mockup-frame -->
   </main>
 </AdminLayout>
 
@@ -1357,24 +1438,112 @@ const initialCmsData = {
     box-shadow: 0 0 0 4px #0284c7 !important;
   }
 
+  /* Physical Device Mockup Chassis Styles */
+  #device-mockup-frame {
+    transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  }
+
+  /* Mobile Device Template (iPhone 15 Pro style) */
+  #device-mockup-frame.mode-mobile-device {
+    max-width: 414px !important;
+    background-color: #0f172a !important;
+    border: 12px solid #0f172a !important;
+    border-radius: 54px !important;
+    box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+    position: relative !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Side physical buttons for mobile template */
+  #device-mockup-frame.mode-mobile-device::before {
+    content: '';
+    position: absolute;
+    top: 100px;
+    left: -16px;
+    width: 4px;
+    height: 28px;
+    background: #475569;
+    border-radius: 3px 0 0 3px;
+    box-shadow: 0 44px 0 #475569, 0 94px 0 #475569;
+    z-index: 10;
+  }
+
+  #device-mockup-frame.mode-mobile-device::after {
+    content: '';
+    position: absolute;
+    top: 120px;
+    right: -16px;
+    width: 4px;
+    height: 52px;
+    background: #475569;
+    border-radius: 0 3px 3px 0;
+    z-index: 10;
+  }
+
+  /* Tablet Device Template (iPad style) */
+  #device-mockup-frame.mode-tablet-device {
+    max-width: 800px !important;
+    background-color: #0f172a !important;
+    border: 16px solid #0f172a !important;
+    border-radius: 44px !important;
+    box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+    position: relative !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Side lock button for tablet template */
+  #device-mockup-frame.mode-tablet-device::after {
+    content: '';
+    position: absolute;
+    top: 60px;
+    right: -20px;
+    width: 4px;
+    height: 44px;
+    background: #475569;
+    border-radius: 0 3px 3px 0;
+    z-index: 10;
+  }
+
+  /* Ensure canvas inside device frame has NO competing border-radiuses */
+  .mode-mobile-device #visual-canvas-wrapper,
+  .mode-tablet-device #visual-canvas-wrapper {
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Screen window fit mode */
+  .device-screen-window-mobile {
+    max-height: 740px !important;
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
+    border-radius: 0 !important;
+  }
+
+  .device-screen-window-tablet {
+    max-height: 820px !important;
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
+    border-radius: 0 !important;
+  }
+
+  /* Custom smooth scrollbar for inside device screen */
+  .device-screen-window-mobile::-webkit-scrollbar,
+  .device-screen-window-tablet::-webkit-scrollbar {
+    width: 5px;
+  }
+  .device-screen-window-mobile::-webkit-scrollbar-thumb,
+  .device-screen-window-tablet::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.4);
+    border-radius: 10px;
+  }
+
   /* Responsive viewport preview frames */
   #visual-canvas-wrapper {
     container-type: inline-size;
     container-name: canvas;
-  }
-
-  .preview-tablet-frame {
-    max-width: 768px !important;
-    border: 8px solid #334155 !important;
-    border-radius: 24px !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-  }
-
-  .preview-mobile-frame {
-    max-width: 390px !important;
-    border: 10px solid #1e293b !important;
-    border-radius: 36px !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3) !important;
   }
 
   /* Scoped mobile preview behaviors when desktop admin simulates mobile frame */
@@ -1487,26 +1656,98 @@ const initialCmsData = {
       }
     });
 
-    // Viewport Mode Switcher
+    // Viewport Mode Switcher & Device Mockup Frame Controls
     const btnDesktop = document.getElementById('btn-view-desktop');
     const btnTablet = document.getElementById('btn-view-tablet');
     const btnMobile = document.getElementById('btn-view-mobile');
 
+    const deviceMockupFrame = document.getElementById('device-mockup-frame');
+    const deviceScreenShell = document.getElementById('device-screen-shell');
+    const deviceSpecBadge = document.getElementById('device-spec-badge');
+    const deviceSpecIcon = document.getElementById('device-spec-icon');
+    const deviceSpecLabel = document.getElementById('device-spec-label');
+    const btnToggleDeviceHeight = document.getElementById('btn-toggle-device-height');
+    const labelToggleDeviceHeight = document.getElementById('label-toggle-device-height');
+    const deviceTopBar = document.getElementById('device-mockup-top-bar');
+    const deviceTopMobile = document.getElementById('device-top-mobile-content');
+    const deviceTopTablet = document.getElementById('device-top-tablet-content');
+    const deviceBottomBar = document.getElementById('device-mockup-bottom-bar');
+    const deviceHomeIndicator = document.getElementById('device-home-indicator');
+
+    let currentMode = 'desktop';
+    let isFitDeviceScreen = true;
+
+    function applyScreenHeightMode() {
+      if (!canvasWrapper) return;
+      canvasWrapper.classList.remove('device-screen-window-mobile', 'device-screen-window-tablet');
+      if (isFitDeviceScreen) {
+        if (currentMode === 'mobile') {
+          canvasWrapper.classList.add('device-screen-window-mobile');
+        } else if (currentMode === 'tablet') {
+          canvasWrapper.classList.add('device-screen-window-tablet');
+        }
+        if (labelToggleDeviceHeight) labelToggleDeviceHeight.textContent = 'Fit Device Window';
+      } else {
+        if (labelToggleDeviceHeight) labelToggleDeviceHeight.textContent = 'Full Length View';
+      }
+    }
+
+    btnToggleDeviceHeight?.addEventListener('click', () => {
+      isFitDeviceScreen = !isFitDeviceScreen;
+      applyScreenHeightMode();
+    });
+
     function setViewportMode(mode) {
+      currentMode = mode;
       [btnDesktop, btnTablet, btnMobile].forEach(b => {
-        b.className = 'px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all';
+        b.className = 'px-10 py-5 rounded text-caption font-semibold text-text-secondary hover:text-brand-primary hover:bg-neutral-surface flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
       });
 
-      canvasWrapper.classList.remove('preview-tablet-frame', 'preview-mobile-frame');
+      canvasWrapper.classList.remove('preview-tablet-frame', 'preview-mobile-frame', 'device-screen-window-mobile', 'device-screen-window-tablet');
+      deviceMockupFrame.classList.remove('mode-mobile-device', 'mode-tablet-device');
 
       if (mode === 'desktop') {
-        btnDesktop.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all';
+        btnDesktop.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        deviceSpecBadge?.classList.add('hidden');
+        deviceTopBar?.classList.add('hidden');
+        deviceBottomBar?.classList.add('hidden');
+        if (deviceScreenShell) deviceScreenShell.className = 'w-full bg-transparent overflow-visible rounded-none';
+        deviceMockupFrame.className = 'w-full transition-all duration-300 mx-auto';
+        canvasWrapper.className = 'w-full bg-white rounded-xl shadow-lg border border-neutral-border overflow-hidden transition-all duration-300 mx-auto';
       } else if (mode === 'tablet') {
-        btnTablet.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all';
-        canvasWrapper.classList.add('preview-tablet-frame');
+        btnTablet.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        if (deviceSpecBadge) {
+          deviceSpecBadge.classList.remove('hidden');
+          deviceSpecBadge.className = 'flex mb-16 items-center gap-12 px-14 py-6 rounded-full bg-slate-900 text-white text-caption font-semibold shadow-lg border border-slate-700 animate-fade-in';
+        }
+        if (deviceSpecIcon) deviceSpecIcon.textContent = '📟';
+        if (deviceSpecLabel) deviceSpecLabel.textContent = 'Tablet Template — iPad (768px)';
+        deviceTopBar?.classList.remove('hidden');
+        deviceTopMobile?.classList.add('hidden');
+        deviceTopTablet?.classList.remove('hidden');
+        deviceBottomBar?.classList.remove('hidden');
+        if (deviceHomeIndicator) deviceHomeIndicator.className = 'w-44 h-[4px] bg-white/40 rounded-full';
+        if (deviceScreenShell) deviceScreenShell.className = 'w-full bg-slate-950 flex flex-col transition-all overflow-hidden rounded-[28px]';
+        deviceMockupFrame.className = 'w-full mode-tablet-device transition-all duration-300 mx-auto';
+        canvasWrapper.className = 'w-full bg-white transition-all duration-300 mx-auto preview-tablet-frame';
+        applyScreenHeightMode();
       } else if (mode === 'mobile') {
-        btnMobile.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all';
-        canvasWrapper.classList.add('preview-mobile-frame');
+        btnMobile.className = 'px-10 py-5 rounded text-caption font-semibold bg-brand-primary text-white shadow-sm flex items-center gap-6 transition-all whitespace-nowrap shrink-0';
+        if (deviceSpecBadge) {
+          deviceSpecBadge.classList.remove('hidden');
+          deviceSpecBadge.className = 'flex mb-16 items-center gap-12 px-14 py-6 rounded-full bg-slate-900 text-white text-caption font-semibold shadow-lg border border-slate-700 animate-fade-in';
+        }
+        if (deviceSpecIcon) deviceSpecIcon.textContent = '📱';
+        if (deviceSpecLabel) deviceSpecLabel.textContent = 'Mobile Template — iPhone 15 Pro (390px)';
+        deviceTopBar?.classList.remove('hidden');
+        deviceTopMobile?.classList.remove('hidden');
+        deviceTopTablet?.classList.add('hidden');
+        deviceBottomBar?.classList.remove('hidden');
+        if (deviceHomeIndicator) deviceHomeIndicator.className = 'w-32 h-[4px] bg-white/40 rounded-full';
+        if (deviceScreenShell) deviceScreenShell.className = 'w-full bg-slate-950 flex flex-col transition-all overflow-hidden rounded-[42px]';
+        deviceMockupFrame.className = 'w-full mode-mobile-device transition-all duration-300 mx-auto';
+        canvasWrapper.className = 'w-full bg-white transition-all duration-300 mx-auto preview-mobile-frame';
+        applyScreenHeightMode();
       }
     }
 
