@@ -23,13 +23,13 @@ import reviews from '@/content/reviews.json';
           See what your neighbors have to say about our fast dispatch times, honest mechanical diagnostics, upfront flat-rate pricing, and respectful in-home service.
         </p>
 
-        <div class="flex flex-wrap items-center gap-16 pt-8">
-          <Button href="#write-review" variant="primary" size="lg">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 pt-8">
+          <Button href="#write-review" variant="primary" size="lg" class="w-full sm:w-auto justify-center">
             <Icon name="star" size={18} />
-            Write a Review
+            <span>Write a Review</span>
           </Button>
-          <Button href="/book" variant="outline" size="lg">
-            Book Your Service
+          <Button href="/book" variant="outline" size="lg" class="w-full sm:w-auto justify-center">
+            <span>Book Your Service</span>
           </Button>
         </div>
       </div>
@@ -39,7 +39,7 @@ import reviews from '@/content/reviews.json';
   <!-- Review Breakdown & Trust Scorecard -->
   <section class="py-64 bg-neutral-surface border-b border-neutral-border">
     <div class="container">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-32 items-center bg-neutral-bg p-32 md:p-48 rounded-xl border border-neutral-border shadow-sm">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-32 items-center bg-neutral-bg p-20 sm:p-32 md:p-48 rounded-xl border border-neutral-border shadow-sm">
         <!-- Big Rating Score -->
         <div class="lg:col-span-4 text-center lg:text-left space-y-8 border-b lg:border-b-0 lg:border-r border-neutral-border pb-24 lg:pb-0 lg:pr-32">
           <div class="text-[64px] font-heading font-extrabold text-brand-primary leading-none">4.9</div>
@@ -182,13 +182,13 @@ import reviews from '@/content/reviews.json';
         </p>
       </div>
 
-      <form id="review-form" class="bg-neutral-surface p-32 md:p-48 rounded-xl border border-neutral-border shadow-sm space-y-24">
+      <form id="review-form" class="bg-neutral-surface p-20 sm:p-32 md:p-48 rounded-xl border border-neutral-border shadow-sm space-y-24">
         <!-- Star Rating Picker -->
         <div class="space-y-8">
           <label class="block text-small font-heading font-bold text-brand-primary">
             Overall Rating:
           </label>
-          <div class="flex items-center gap-8 text-neutral-border cursor-pointer" id="star-picker">
+          <div class="flex flex-wrap items-center gap-8 text-neutral-border cursor-pointer" id="star-picker">
             {[1, 2, 3, 4, 5].map((star) => (
               <button 
                 type="button" 
@@ -199,7 +199,7 @@ import reviews from '@/content/reviews.json';
                 <Icon name="star" size={28} />
               </button>
             ))}
-            <span id="star-rating-label" class="text-small font-bold text-brand-primary ml-12">
+            <span id="star-rating-label" class="text-small font-bold text-brand-primary w-full sm:w-auto sm:ml-12 mt-4 sm:mt-0">
               5 Stars (Exceptional Service)
             </span>
           </div>

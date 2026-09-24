@@ -29,19 +29,19 @@ const isOwner = user?.role === 'owner';
 <body class="min-h-full font-body antialiased text-text-primary bg-neutral-background flex flex-col md:flex-row overflow-x-hidden">
 
   <!-- Mobile Topbar (< md) -->
-  <header class="md:hidden bg-brand-primary text-white px-16 py-12 flex items-center justify-between border-b border-brand-secondary z-30 sticky top-0">
-    <div class="flex items-center gap-10">
+  <header class="md:hidden bg-brand-primary text-white px-16 py-12 flex items-center justify-between border-b border-brand-secondary z-30 sticky top-0 min-h-[56px]">
+    <div class="flex items-center gap-10 min-w-0">
       <div class="w-32 h-32 rounded-md bg-brand-secondary flex items-center justify-center text-brand-accent shadow-sm shrink-0">
         <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
         </svg>
       </div>
-      <div>
-        <span class="text-small font-bold font-heading text-white block leading-tight">NorthStar HVAC</span>
-        <span class="text-[10px] text-slate-400 block leading-tight">Control Center</span>
+      <div class="min-w-0">
+        <span class="text-small font-bold font-heading text-white block leading-tight truncate">NorthStar HVAC</span>
+        <span class="text-[10px] text-slate-400 block leading-tight truncate">Control Center</span>
       </div>
     </div>
-    <button id="mobile-menu-toggle" class="p-8 rounded-md text-slate-300 hover:text-white hover:bg-brand-secondary transition-colors" aria-label="Toggle Navigation">
+    <button id="mobile-menu-toggle" class="p-10 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-slate-300 hover:text-white hover:bg-brand-secondary transition-colors" aria-label="Toggle Navigation">
       <svg class="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
@@ -260,26 +260,26 @@ const isOwner = user?.role === 'owner';
   <div class="flex-1 flex flex-col min-w-0 bg-neutral-background min-h-screen overflow-x-hidden">
 
     <!-- Top Navigation Bar -->
-    <header class="h-64 bg-neutral-surface border-b border-neutral-border px-24 flex items-center justify-between sticky top-0 z-20 shrink-0">
+    <header class="h-56 sm:h-64 bg-neutral-surface border-b border-neutral-border px-16 sm:px-24 flex items-center justify-between sticky top-0 z-20 shrink-0">
       <!-- Breadcrumbs -->
-      <nav class="flex items-center gap-8 text-small font-medium text-text-muted">
-        <a href="/admin" class="hover:text-brand-primary transition-colors">Admin</a>
+      <nav class="flex items-center gap-6 sm:gap-8 text-caption sm:text-small font-medium text-text-muted min-w-0 truncate">
+        <a href="/admin" class="hover:text-brand-primary transition-colors shrink-0">Admin</a>
         {breadcrumbs.map((crumb) => (
           <>
-            <span class="text-neutral-border">/</span>
+            <span class="text-neutral-border shrink-0">/</span>
             {crumb.href ? (
-              <a href={crumb.href} class="hover:text-brand-primary transition-colors">{crumb.label}</a>
+              <a href={crumb.href} class="hover:text-brand-primary transition-colors truncate">{crumb.label}</a>
             ) : (
-              <span class="text-text-primary font-semibold">{crumb.label}</span>
+              <span class="text-text-primary font-semibold truncate">{crumb.label}</span>
             )}
           </>
         ))}
       </nav>
 
       <!-- Right Area: User identity, Role badge & Logout -->
-      <div class="flex items-center gap-16">
+      <div class="flex items-center gap-10 sm:gap-16 shrink-0">
         <div class="flex items-center gap-10">
-          <div class="w-36 h-36 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-caption shadow-sm shrink-0">
+          <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-caption shadow-sm shrink-0">
             {user?.name ? user.name.slice(0, 1).toUpperCase() : 'A'}
           </div>
           <div class="hidden sm:block text-left">
@@ -297,7 +297,7 @@ const isOwner = user?.role === 'owner';
 
         <button
           id="logout-btn"
-          class="inline-flex items-center gap-6 h-36 px-12 border border-neutral-border rounded-md text-caption font-semibold text-text-secondary hover:text-brand-emergency hover:border-brand-emergency hover:bg-red-50 transition-all cursor-pointer"
+          class="inline-flex items-center gap-6 h-36 px-10 sm:px-12 border border-neutral-border rounded-md text-caption font-semibold text-text-secondary hover:text-brand-emergency hover:border-brand-emergency hover:bg-red-50 transition-all cursor-pointer"
           title="Sign out securely"
         >
           <svg class="w-16 h-16 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -309,7 +309,7 @@ const isOwner = user?.role === 'owner';
     </header>
 
     <!-- Page Content Container -->
-    <main class="flex-1 p-20 sm:p-28 lg:p-32 max-w-7xl w-full mx-auto">
+    <main class="flex-1 p-16 sm:p-24 lg:p-32 max-w-7xl w-full mx-auto">
       <slot />
     </main>
 

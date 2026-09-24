@@ -90,13 +90,13 @@ const faqs = [
           An unexpected heating failure or AC breakdown shouldn't deplete your family's savings. We partner with top-rated financial institutions to offer low rates, 0% APR promotional periods, and fast approvals.
         </p>
 
-        <div class="flex flex-wrap items-center gap-16 pt-8">
-          <Button href="#calculator" variant="primary" size="lg">
-            Estimate Monthly Payment
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 pt-8">
+          <Button href="#calculator" variant="primary" size="lg" class="w-full sm:w-auto justify-center">
+            <span>Estimate Monthly Payment</span>
             <Icon name="chevron-right" size={18} />
           </Button>
-          <Button href="/contact" variant="outline" size="lg">
-            Speak to a Specialist
+          <Button href="/contact" variant="outline" size="lg" class="w-full sm:w-auto justify-center">
+            <span>Speak to a Specialist</span>
           </Button>
         </div>
       </div>
@@ -168,7 +168,7 @@ const faqs = [
         </p>
       </div>
 
-      <div class="bg-neutral-surface p-32 md:p-48 rounded-xl border border-neutral-border shadow-md space-y-32">
+      <div class="bg-neutral-surface p-20 sm:p-32 md:p-48 rounded-xl border border-neutral-border shadow-md space-y-32">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-32">
           <!-- Inputs -->
           <div class="space-y-24">
@@ -188,7 +188,7 @@ const faqs = [
                 value="4500"
                 class="w-full h-8 bg-neutral-border rounded-lg appearance-none cursor-pointer accent-brand-primary"
               />
-              <div class="flex justify-between text-caption text-text-muted mt-4">
+              <div class="flex flex-wrap justify-between gap-4 text-caption text-text-muted mt-4">
                 <span>$1,000 (Repair)</span>
                 <span>$7,500 (AC/Furnace)</span>
                 <span>$15,000 (Full Heat Pump)</span>
@@ -212,11 +212,11 @@ const faqs = [
           </div>
 
           <!-- Result Display Box -->
-          <div class="bg-brand-primary text-white p-32 rounded-lg flex flex-col justify-between space-y-20">
+          <div class="bg-brand-primary text-white p-24 sm:p-32 rounded-lg flex flex-col justify-between space-y-20">
             <div>
               <span class="text-caption font-bold tracking-wider text-brand-accent uppercase block">Estimated Payment</span>
               <div class="flex items-baseline gap-8 mt-8">
-                <span id="monthly-payment" class="text-[44px] font-heading font-extrabold text-white">$250</span>
+                <span id="monthly-payment" class="text-[36px] sm:text-[44px] font-heading font-extrabold text-white">$250</span>
                 <span class="text-small text-text-muted">/ month</span>
               </div>
               <p class="text-caption text-text-muted mt-8 leading-relaxed">
@@ -238,7 +238,7 @@ const faqs = [
   <!-- Rebates & Incentives Spotlight -->
   <section class="py-80 bg-neutral-surface">
     <div class="container">
-      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-32 md:p-48 grid grid-cols-1 lg:grid-cols-12 gap-32 items-center">
+      <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-20 sm:p-32 md:p-48 grid grid-cols-1 lg:grid-cols-12 gap-32 items-center">
         <div class="lg:col-span-8 space-y-16">
           <span class="inline-flex items-center gap-6 text-[12px] font-bold text-emerald-800 bg-emerald-100 px-8 py-4 rounded-sm">
             FEDERAL &amp; LOCAL TAX CREDITS
@@ -249,14 +249,14 @@ const faqs = [
           <p class="text-body text-emerald-900 leading-relaxed">
             High-efficiency heat pumps and ENERGY STAR rated inverter air conditioners qualify for up to $2,000 under the Inflation Reduction Act (IRA Section 25C) plus up to $1,500 in local utility incentives.
           </p>
-          <div class="flex items-center gap-16 text-small text-emerald-900 font-semibold pt-4">
+          <div class="flex flex-col sm:flex-row sm:items-center gap-10 sm:gap-16 text-small text-emerald-900 font-semibold pt-4">
             <span class="flex items-center gap-6"><Icon name="check" size={16} class="text-emerald-700" /> Instant paperwork assistance</span>
             <span class="flex items-center gap-6"><Icon name="check" size={16} class="text-emerald-700" /> AHRI certified efficiency ratings</span>
           </div>
         </div>
         <div class="lg:col-span-4 text-center lg:text-right">
-          <Button href="/contact" variant="primary" size="lg">
-            Check Your Rebate Eligibility
+          <Button href="/contact" variant="primary" size="lg" class="w-full sm:w-auto justify-center">
+            <span>Check Your Rebate Eligibility</span>
           </Button>
         </div>
       </div>

@@ -8,10 +8,27 @@
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
   }
 
   body {
     @apply font-body bg-neutral-background text-text-primary;
+    min-height: 100vh;
+  }
+
+  /* Responsive media defaults: never exceed parent container */
+  img, svg, video, canvas, picture {
+    max-width: 100%;
+  }
+
+  /* Prevent text from forcing unexpected horizontal viewport overflow */
+  h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  p, span, a, li, label, td, th {
+    overflow-wrap: break-word;
   }
 
   /* Accessible focus states matching tokens */

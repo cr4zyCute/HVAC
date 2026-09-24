@@ -66,14 +66,14 @@ const faqs = [
           From emergency midnight compressor troubleshooting to high-efficiency seasonal tune-ups, our certified HVAC technicians arrive in fully equipped rolling warehouses ready to solve problems on the spot.
         </p>
 
-        <div class="flex flex-wrap items-center gap-16 pt-8">
-          <Button href="/book" variant="primary" size="lg">
-            Schedule a Service
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 pt-8">
+          <Button href="/book" variant="primary" size="lg" class="w-full sm:w-auto justify-center">
+            <span>Schedule a Service</span>
             <Icon name="calendar" size={18} />
           </Button>
-          <Button href="/emergency" variant="emergency" size="lg">
+          <Button href="/emergency" variant="emergency" size="lg" class="w-full sm:w-auto justify-center">
             <Icon name="alert-triangle" size={18} />
-            24/7 Emergency Dispatch
+            <span>24/7 Emergency Dispatch</span>
           </Button>
         </div>
       </div>

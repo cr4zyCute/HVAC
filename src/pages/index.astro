@@ -249,19 +249,19 @@ const finalCta = sections['final_cta'] || {
               <img
                 src={hero.image_url || '/images/hero-technician-ac.jpg'}
                 alt={hero.image_alt || 'NorthStar HVAC technician at work'}
-                class="w-full h-400 sm:h-480 lg:h-520 object-cover"
+                class="w-full h-280 xs:h-340 sm:h-440 lg:h-520 object-cover"
                 loading="eager"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent"></div>
               <!-- Floating Trust Card -->
               {heroExtra.trust_card_title && (
-                <div class="absolute bottom-20 left-20 right-20 bg-brand-primary/90 backdrop-blur-md border border-white/15 p-16 rounded-md flex items-center gap-16">
-                  <div class="w-40 h-40 rounded-full bg-feedback-success/20 text-feedback-success flex items-center justify-center shrink-0">
-                    <Icon name="check" size={20} />
+                <div class="absolute bottom-12 left-12 right-12 sm:bottom-20 sm:left-20 sm:right-20 bg-brand-primary/90 backdrop-blur-md border border-white/15 p-12 sm:p-16 rounded-md flex items-center gap-12 sm:gap-16">
+                  <div class="w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-feedback-success/20 text-feedback-success flex items-center justify-center shrink-0">
+                    <Icon name="check" size={18} />
                   </div>
-                  <div class="text-caption">
-                    <div class="font-bold text-white">{heroExtra.trust_card_title}</div>
-                    <div class="text-text-muted">{heroExtra.trust_card_desc}</div>
+                  <div class="text-caption min-w-0">
+                    <div class="font-bold text-white truncate">{heroExtra.trust_card_title}</div>
+                    <div class="text-text-muted truncate">{heroExtra.trust_card_desc}</div>
                   </div>
                 </div>
               )}
@@ -275,15 +275,15 @@ const finalCta = sections['final_cta'] || {
          2. TRUST SIGNALS BAR
          ===================================================================== -->
     {trustSection.is_enabled !== 0 && trustSignals.length > 0 && (
-      <section class="bg-neutral-surface border-b border-neutral-border py-32">
+      <section class="bg-neutral-surface border-b border-neutral-border py-24 sm:py-32">
         <div class="container">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-24 lg:gap-32">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 sm:gap-24 lg:gap-32">
             {trustSignals.map(signal => (
-              <div class="flex items-center gap-16">
-                <div class="w-44 h-44 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center shrink-0">
-                  <Icon name={signal.icon} size={22} class="text-brand-accent" />
+              <div class="flex items-center gap-12 sm:gap-16">
+                <div class="w-40 h-40 sm:w-44 sm:h-44 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center shrink-0">
+                  <Icon name={signal.icon} size={20} class="text-brand-accent" />
                 </div>
-                <div>
+                <div class="min-w-0">
                   <div class="text-small font-heading font-bold text-brand-primary">{signal.title}</div>
                   <div class="text-caption text-text-muted">{signal.text}</div>
                 </div>

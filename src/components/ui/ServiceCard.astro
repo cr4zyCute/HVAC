@@ -5,7 +5,8 @@ import Icon from '@/components/ui/Icon.astro';
 
 interface Props {
   title: string;
-  description: string;
+  description?: string;
+  shortDescription?: string;
   slug: string;
   category?: string;
   badge?: string;
@@ -14,19 +15,20 @@ interface Props {
 
 const {
   title,
-  description,
   slug,
   category,
   badge,
-  icon = 'fan',
+  icon = 'wrench',
 } = Astro.props;
+
+const desc = Astro.props.description || Astro.props.shortDescription || '';
 ---
 
-<div class="card flex flex-col justify-between h-full bg-neutral-surface border border-neutral-border rounded-lg p-24 md:p-32 hover:border-neutral-border-focus hover:shadow-md transition-all duration-200 group">
+<div class="card flex flex-col justify-between h-full bg-neutral-surface border border-neutral-border rounded-lg p-20 sm:p-24 md:p-32 hover:border-neutral-border-focus hover:shadow-md transition-all duration-200 group">
   <div>
     <div class="flex items-center justify-between mb-20">
-      <div class="w-48 h-48 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center group-hover:bg-brand-accent group-hover:text-white transition-colors duration-200">
-        <Icon name={icon} size={24} />
+      <div class="w-44 h-44 sm:w-48 sm:h-48 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center group-hover:bg-brand-accent group-hover:text-white transition-colors duration-200">
+        <Icon name={icon} size={22} />
       </div>
       {badge && <Badge variant="info" size="sm">{badge}</Badge>}
     </div>
@@ -44,11 +46,11 @@ const {
     </h3>
 
     <p class="text-body text-text-secondary line-clamp-3 leading-relaxed mb-24">
-      {description}
+      {desc}
     </p>
   </div>
 
-  <div class="pt-20 border-t border-neutral-divider flex items-center justify-between gap-12">
+  <div class="pt-20 border-t border-neutral-divider flex flex-wrap items-center justify-between gap-10">
     <a href={`/services/${slug}`} class="text-small font-bold text-brand-primary hover:text-brand-accent inline-flex items-center gap-6 transition-colors">
       <span>Service Scope</span>
       <Icon name="arrow-right" size={14} />

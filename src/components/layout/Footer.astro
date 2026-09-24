@@ -125,11 +125,11 @@ const company = {
     </div>
 
     <!-- Bottom Copyright & Legal Row -->
-    <div class="pt-32 border-t border-brand-primary flex flex-col sm:flex-row items-center justify-between gap-16 text-caption text-text-muted">
+    <div class="pt-32 border-t border-brand-primary flex flex-col sm:flex-row items-center justify-between gap-16 text-caption text-text-muted text-center sm:text-left">
       <div>
         &copy; {new Date().getFullYear()} {company.copyright} {company.license}
       </div>
-      <div class="flex items-center gap-24">
+      <div class="flex flex-wrap items-center justify-center gap-16 sm:gap-24">
         <a href="/admin" class="hover:text-brand-accent transition-colors">Admin Login</a>
         <a href="/privacy" class="hover:text-brand-accent transition-colors">Privacy Policy</a>
         <a href="/terms" class="hover:text-brand-accent transition-colors">Terms of Service</a>

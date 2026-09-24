@@ -65,20 +65,20 @@ function isActive(href: string) {
   </div>
 
   <!-- 2. Main Navigation Bar -->
-  <div class="container h-80 md:h-88 flex items-center justify-between gap-16">
+  <div class="container h-72 sm:h-80 md:h-88 flex items-center justify-between gap-12 sm:gap-16">
     <!-- Brand Logo -->
-    <a href="/" class="flex items-center gap-12 group focus-visible:rounded-sm shrink-0">
-      <div class="w-44 h-44 rounded-md bg-brand-primary flex items-center justify-center text-white shadow-sm group-hover:bg-brand-secondary transition-colors shrink-0">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <a href="/" class="flex items-center gap-10 sm:gap-12 group focus-visible:rounded-sm shrink-0 min-w-0">
+      <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-md bg-brand-primary flex items-center justify-center text-white shadow-sm group-hover:bg-brand-secondary transition-colors shrink-0">
+        <svg class="w-20 h-20 sm:w-24 sm:h-24" viewBox="0 0 24 24" fill="none">
           <path d="M12 2L13.5 9.5L21 11L13.5 12.5L12 20L10.5 12.5L3 11L10.5 9.5L12 2Z" fill="#FFFFFF"/>
           <circle cx="12" cy="11" r="2" fill="#E65100"/>
         </svg>
       </div>
-      <div>
-        <div class="font-heading font-extrabold text-[20px] text-brand-primary leading-tight tracking-tight">
+      <div class="min-w-0">
+        <div class="font-heading font-extrabold text-[17px] sm:text-[20px] text-brand-primary leading-tight tracking-tight truncate">
           {company.brandFirst}<span class="text-brand-accent">{company.brandAccent}</span>
         </div>
-        <div class="text-[10px] font-bold tracking-widest text-text-muted uppercase">
+        <div class="hidden xs:block text-[9px] sm:text-[10px] font-bold tracking-widest text-text-muted uppercase truncate">
           {company.tagline}
         </div>
       </div>
@@ -107,14 +107,25 @@ function isActive(href: string) {
       })}
     </nav>
 
-    <!-- Header Actions (CTA) -->
-    <div class="flex items-center gap-12 shrink-0">
+    <!-- Header Actions (CTA & Mobile Menu Trigger) -->
+    <div class="flex items-center gap-8 sm:gap-12 shrink-0">
+      <!-- Mobile Quick Phone Call Button (< sm) -->
+      <a
+        href={`tel:${company.phoneRaw}`}
+        class="sm:hidden p-10 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-brand-primary hover:text-brand-accent hover:bg-neutral-surface-alt transition-colors"
+        aria-label={`Call Dispatch at ${company.phone}`}
+      >
+        <Icon name="phone" size={20} class="text-brand-accent" />
+      </a>
+
+      <!-- Desktop / Tablet Phone Link -->
       <a href={`tel:${company.phoneRaw}`} class="hidden sm:inline-flex items-center gap-8 text-small font-bold text-brand-primary hover:text-brand-accent px-12 py-8 rounded-sm transition-colors whitespace-nowrap">
         <Icon name="phone" size={16} class="text-brand-accent" />
         <span class="hidden xl:inline">{company.phone}</span>
       </a>
 
-      <Button href={ctaUrl} variant="primary" size="md" class="whitespace-nowrap">
+      <!-- Primary CTA Button (Visible on sm+ screens, in drawer on mobile) -->
+      <Button href={ctaUrl} variant="primary" size="md" class="hidden sm:inline-flex whitespace-nowrap">
         <span>{ctaText}</span>
         <Icon name="arrow-right" size={16} />
       </Button>
@@ -122,8 +133,9 @@ function isActive(href: string) {
       <!-- Mobile Hamburger Button -->
       <button
         id="mobile-nav-toggle"
-        class="lg:hidden p-8 rounded-md text-brand-primary hover:bg-neutral-surface-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
-        aria-label="Toggle mobile menu"
+        type="button"
+        class="lg:hidden p-10 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-brand-primary hover:bg-neutral-surface-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary transition-colors cursor-pointer"
+        aria-label="Toggle navigation menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
@@ -138,14 +150,18 @@ function isActive(href: string) {
   </div>
 
   <!-- Mobile Drawer Menu -->
-  <div id="mobile-menu" class="hidden lg:hidden bg-neutral-surface border-t border-neutral-border px-24 py-20 shadow-lg animate-fadeIn">
-    <nav class="flex flex-col gap-12" aria-label="Mobile Navigation">
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden bg-neutral-surface border-t border-neutral-border px-16 sm:px-24 py-20 shadow-xl max-h-[calc(100vh-80px)] overflow-y-auto"
+    aria-label="Mobile Navigation Drawer"
+  >
+    <nav class="flex flex-col gap-6" aria-label="Mobile Navigation">
       {navItems.map(item => {
         const active = isActive(item.href);
         return (
           <a
             href={item.href}
-            class={`py-10 px-12 rounded-sm text-body font-medium transition-colors ${
+            class={`mobile-nav-link min-h-[44px] flex items-center py-10 px-14 rounded-md text-body font-medium transition-colors ${
               active
                 ? 'bg-brand-accent/10 text-brand-accent font-bold'
                 : 'text-text-primary hover:bg-neutral-surface-alt'
@@ -156,13 +172,14 @@ function isActive(href: string) {
           </a>
         );
       })}
-      <div class="pt-16 border-t border-neutral-border flex flex-col gap-12">
-        <a href={`tel:${company.phoneRaw}`} class="flex items-center gap-10 py-10 px-12 text-small font-bold text-brand-primary bg-neutral-surface-alt rounded-sm">
-          <Icon name="phone" size={16} class="text-brand-accent" />
+      <div class="pt-16 mt-8 border-t border-neutral-border flex flex-col gap-12">
+        <a href={`tel:${company.phoneRaw}`} class="min-h-[48px] flex items-center justify-center gap-10 py-12 px-16 text-small font-bold text-brand-primary bg-neutral-surface-alt hover:bg-neutral-border/50 rounded-md transition-colors">
+          <Icon name="phone" size={18} class="text-brand-accent" />
           <span>Call Dispatch: {company.phone}</span>
         </a>
-        <Button href={ctaUrl} variant="primary" size="md" class="w-full">
-          {ctaText}
+        <Button href={ctaUrl} variant="primary" size="lg" class="w-full justify-center">
+          <span>{ctaText}</span>
+          <Icon name="arrow-right" size={18} />
         </Button>
       </div>
     </nav>
@@ -174,14 +191,49 @@ function isActive(href: string) {
   const menu = document.getElementById('mobile-menu');
   const hamburger = document.getElementById('hamburger-icon');
   const close = document.getElementById('close-icon');
+  const navLinks = document.querySelectorAll('.mobile-nav-link');
 
-  if (toggleBtn && menu && hamburger && close) {
-    toggleBtn.addEventListener('click', () => {
-      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-      menu.classList.toggle('hidden');
-      hamburger.classList.toggle('hidden');
-      close.classList.toggle('hidden');
-    });
+  function closeMenu() {
+    if (!menu || !toggleBtn || !hamburger || !close) return;
+    menu.classList.add('hidden');
+    hamburger.classList.remove('hidden');
+    close.classList.add('hidden');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   }
+
+  function toggleMenu() {
+    if (!menu || !toggleBtn || !hamburger || !close) return;
+    const isHidden = menu.classList.contains('hidden');
+    if (isHidden) {
+      menu.classList.remove('hidden');
+      hamburger.classList.add('hidden');
+      close.classList.remove('hidden');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    } else {
+      closeMenu();
+    }
+  }
+
+  toggleBtn?.addEventListener('click', toggleMenu);
+
+  // Close menu on navigation link click
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close menu on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu && !menu.classList.contains('hidden')) {
+      closeMenu();
+    }
+  });
+
+  // Reset body overflow when window resizes to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024 && menu && !menu.classList.contains('hidden')) {
+      closeMenu();
+    }
+  });
 </script>

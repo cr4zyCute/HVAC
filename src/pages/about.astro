@@ -70,13 +70,13 @@ const team = [
             Over the past 15 years, we've grown from a single service van into one of the region's most trusted residential heating and air conditioning providers—servicing over 4,800 local households while maintaining a 4.9-star average.
           </p>
 
-          <div class="flex flex-wrap items-center gap-16 pt-8">
-            <Button href="/services" variant="primary" size="lg">
-              Explore Our Services
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 pt-8">
+            <Button href="/services" variant="primary" size="lg" class="w-full sm:w-auto justify-center">
+              <span>Explore Our Services</span>
               <Icon name="arrow-right" size={18} />
             </Button>
-            <Button href="/book" variant="outline" size="lg">
-              Schedule an Appointment
+            <Button href="/book" variant="outline" size="lg" class="w-full sm:w-auto justify-center">
+              <span>Schedule an Appointment</span>
             </Button>
           </div>
         </div>
@@ -86,7 +86,7 @@ const team = [
             <img 
               src="/images/hvac-hero-technician.jpg" 
               alt="NorthStar HVAC Master Technician inspecting residential heating equipment" 
-              class="w-full h-400 object-cover"
+              class="w-full h-280 xs:h-340 sm:h-400 object-cover"
               loading="lazy"
             />
           </div>
@@ -101,9 +101,9 @@ const team = [
   </section>
 
   <!-- Company Stats Bar -->
-  <section class="bg-brand-primary text-white py-48 border-b border-brand-secondary">
+  <section class="bg-brand-primary text-white py-36 sm:py-48 border-b border-brand-secondary">
     <div class="container">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-32 text-center">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-16 sm:gap-24 md:gap-32 text-center">
         <div class="space-y-4">
           <div class="text-h1 font-heading font-extrabold text-brand-accent">15+</div>
           <div class="text-caption uppercase tracking-wider text-text-muted">Years in Service</div>

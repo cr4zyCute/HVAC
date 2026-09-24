@@ -118,9 +118,9 @@ const regions = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-32">
         {regions.map((region) => (
-          <div class="bg-neutral-bg p-32 rounded-lg border border-neutral-border space-y-20 flex flex-col justify-between hover:border-brand-primary transition-colors">
+          <div class="bg-neutral-bg p-20 sm:p-24 md:p-32 rounded-lg border border-neutral-border space-y-20 flex flex-col justify-between hover:border-brand-primary transition-colors">
             <div class="space-y-16">
-              <div class="flex items-center justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-8">
                 <span class="inline-flex items-center gap-6 text-[12px] font-bold text-emerald-700 bg-emerald-50 px-8 py-4 rounded-sm border border-emerald-200">
                   <span class="w-6 h-6 rounded-full bg-emerald-600 animate-pulse"></span>
                   {region.status}

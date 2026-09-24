@@ -72,21 +72,24 @@ const { company, booking } = siteConfig;
         <div class="lg:col-span-7">
           <!-- Stepper Progress Header -->
           <div class="mb-24">
-            <div class="grid grid-cols-3 gap-8 text-center text-small font-bold">
+            <div class="grid grid-cols-3 gap-6 sm:gap-8 text-center text-caption sm:text-small font-bold">
               <div id="step-tab-1" class="border-b-4 border-brand-primary pb-8 text-brand-primary">
-                1. Service &amp; Urgency
+                <span class="sm:hidden">1. Service</span>
+                <span class="hidden sm:inline">1. Service &amp; Urgency</span>
               </div>
               <div id="step-tab-2" class="border-b-4 border-neutral-border pb-8 text-text-muted">
-                2. Date &amp; Window
+                <span class="sm:hidden">2. Date</span>
+                <span class="hidden sm:inline">2. Date &amp; Window</span>
               </div>
               <div id="step-tab-3" class="border-b-4 border-neutral-border pb-8 text-text-muted">
-                3. Address &amp; Info
+                <span class="sm:hidden">3. Contact</span>
+                <span class="hidden sm:inline">3. Address &amp; Info</span>
               </div>
             </div>
           </div>
 
           <!-- Booking Card Container -->
-          <div class="bg-neutral-bg border border-neutral-border rounded-xl p-24 sm:p-36 shadow-md">
+          <div class="bg-neutral-bg border border-neutral-border rounded-xl p-16 sm:p-24 md:p-36 shadow-md">
             <!-- STEP 1: Service & Urgency -->
             <div id="step-pane-1" class="space-y-28">
               <div>
@@ -150,7 +153,7 @@ const { company, booking } = siteConfig;
                 <button 
                   id="to-step-2-btn" 
                   type="button"
-                  class="px-32 py-14 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors text-small flex items-center gap-8 shadow-sm"
+                  class="w-full sm:w-auto px-32 py-14 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors text-small flex items-center justify-center gap-8 shadow-sm"
                 >
                   <span>Next: Choose Time Window</span>
                   <Icon name="arrow-right" size={16} />
@@ -210,18 +213,18 @@ const { company, booking } = siteConfig;
                 </div>
               </div>
 
-              <div class="flex justify-between pt-16 border-t border-neutral-border">
+              <div class="flex flex-col-reverse sm:flex-row justify-between gap-12 pt-16 border-t border-neutral-border">
                 <button 
                   id="back-to-step-1-btn" 
                   type="button"
-                  class="px-24 py-12 border border-neutral-border text-brand-primary font-bold rounded-md hover:bg-neutral-surface transition-colors text-small"
+                  class="w-full sm:w-auto px-24 py-12 border border-neutral-border text-brand-primary font-bold rounded-md hover:bg-neutral-surface transition-colors text-small flex items-center justify-center"
                 >
                   &larr; Back
                 </button>
                 <button 
                   id="to-step-3-btn" 
                   type="button"
-                  class="px-32 py-14 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors text-small flex items-center gap-8 shadow-sm"
+                  class="w-full sm:w-auto px-32 py-14 bg-brand-primary text-white font-bold rounded-md hover:bg-brand-secondary transition-colors text-small flex items-center justify-center gap-8 shadow-sm"
                 >
                   <span>Next: Property &amp; Contact Info</span>
                   <Icon name="arrow-right" size={16} />
@@ -340,17 +343,17 @@ const { company, booking } = siteConfig;
                 </div>
               </div>
 
-              <div class="flex justify-between pt-16 border-t border-neutral-border">
+              <div class="flex flex-col-reverse sm:flex-row justify-between gap-12 pt-16 border-t border-neutral-border">
                 <button 
                   id="back-to-step-2-btn" 
                   type="button"
-                  class="px-24 py-12 border border-neutral-border text-brand-primary font-bold rounded-md hover:bg-neutral-surface transition-colors text-small"
+                  class="w-full sm:w-auto px-24 py-12 border border-neutral-border text-brand-primary font-bold rounded-md hover:bg-neutral-surface transition-colors text-small flex items-center justify-center"
                 >
                   &larr; Back
                 </button>
                 <button 
                   type="submit"
-                  class="px-32 py-14 bg-brand-accent text-white font-bold rounded-md hover:bg-brand-accent-hover transition-colors text-small flex items-center gap-8 shadow-sm"
+                  class="w-full sm:w-auto px-32 py-14 bg-brand-accent text-white font-bold rounded-md hover:bg-brand-accent-hover transition-colors text-small flex items-center justify-center gap-8 shadow-sm"
                 >
                   <span>Confirm &amp; Book Dispatch</span>
                   <Icon name="check" size={16} />

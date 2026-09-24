@@ -20,13 +20,15 @@ export default {
       },
     },
     screens: {
-      'sm': '390px',      // Mobile Artboard
+      'xs': '375px',      // Small Mobile
+      'sm': '640px',      // Large Mobile / Phablet
       'md': '768px',      // Tablet Portrait
       'tablet': '834px',  // Tablet Artboard
       'lg': '1024px',     // Small Laptop / Large Tablet
       'xl': '1280px',     // Standard Laptop
       'desktop': '1440px',// Desktop Artboard (Figma Primary)
       '2xl': '1920px',    // Wide Display
+      '3xl': '2560px',    // Ultrawide / Large Desktop
     },
     extend: {
       colors: {
@@ -105,10 +107,10 @@ export default {
         small: ['14px', { lineHeight: '20px' }],
         body: ['16px', { lineHeight: '24px' }],
         'body-large': ['18px', { lineHeight: '28px' }],
-        h3: ['24px', { lineHeight: '32px' }],
-        h2: ['32px', { lineHeight: '40px' }],
-        h1: ['40px', { lineHeight: '48px' }],
-        display: ['56px', { lineHeight: '64px' }],
+        h3: ['clamp(1.25rem, 1.2vw + 1rem, 1.5rem)', { lineHeight: '1.3' }],
+        h2: ['clamp(1.5rem, 2vw + 1rem, 2rem)', { lineHeight: '1.25' }],
+        h1: ['clamp(1.75rem, 3vw + 1rem, 2.5rem)', { lineHeight: '1.2' }],
+        display: ['clamp(2rem, 4.5vw + 1rem, 3.5rem)', { lineHeight: '1.15' }],
       },
     },
   },
