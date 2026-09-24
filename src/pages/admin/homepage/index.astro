@@ -325,11 +325,11 @@ const initialCmsData = {
   <header class="sticky top-0 z-40 bg-neutral-surface/95 backdrop-blur-md border-b border-neutral-border px-16 lg:px-24 py-12 mb-20 shadow-sm">
     <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-12">
       <!-- Title & Live Status -->
-      <div class="flex flex-wrap items-center gap-12">
-        <h1 class="text-h3 font-heading font-extrabold text-brand-primary tracking-tight whitespace-nowrap">
+      <div class="flex flex-wrap items-center gap-10 sm:gap-12 min-w-0">
+        <h1 class="text-h4 sm:text-h3 font-heading font-extrabold text-brand-primary tracking-tight break-words">
           Homepage Content Management
         </h1>
-        <span class="inline-flex px-8 py-2 rounded-full text-caption font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 whitespace-nowrap">
+        <span class="hidden xs:inline-flex px-8 py-2 rounded-full text-caption font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 whitespace-nowrap">
           DIRECT INLINE VISUAL EDITOR
         </span>
         <div class="hidden sm:inline-flex items-center gap-6 text-caption text-text-muted">
@@ -494,7 +494,7 @@ const initialCmsData = {
               <button
                 type="button"
                 id="canvas-hero-primary-btn"
-                class="direct-button-editable h-48 px-24 bg-brand-accent hover:bg-brand-accent/90 text-white font-bold rounded-md flex items-center justify-between gap-12 shadow-lg"
+                class="direct-button-editable h-48 px-24 bg-brand-accent hover:bg-brand-accent/90 text-white font-bold rounded-md flex items-center justify-center sm:justify-between gap-12 shadow-lg w-full sm:w-auto"
                 data-section="hero"
                 data-btn-type="primary"
                 data-label-field="primary_btn_text"
@@ -511,7 +511,7 @@ const initialCmsData = {
               <button
                 type="button"
                 id="canvas-hero-secondary-btn"
-                class="direct-button-editable h-48 px-24 bg-transparent border border-white/20 text-white font-semibold rounded-md flex items-center justify-between gap-12 hover:bg-white/10"
+                class="direct-button-editable h-48 px-24 bg-transparent border border-white/20 text-white font-semibold rounded-md flex items-center justify-center sm:justify-between gap-12 hover:bg-white/10 w-full sm:w-auto"
                 data-section="hero"
                 data-btn-type="secondary"
                 data-label-field="secondary_btn_text"
@@ -534,7 +534,7 @@ const initialCmsData = {
                 <Icon name="star" size={14} class="fill-current text-amber-400" />
                 <Icon name="star" size={14} class="fill-current text-amber-400" />
               </div>
-              <span>
+              <span class="min-w-0">
                 <strong
                   id="canvas-hero-rating-score"
                   class="direct-inline-editable"
@@ -568,7 +568,7 @@ const initialCmsData = {
                 id="canvas-hero-img"
                 src={hero.image_url || '/images/hero-technician-ac.jpg'}
                 alt={hero.image_alt || 'NorthStar HVAC technician at work'}
-                class="w-full h-380 sm:h-460 object-cover group-hover:opacity-95 transition-opacity"
+                class="w-full h-280 xs:h-340 sm:h-440 lg:h-520 object-cover group-hover:opacity-95 transition-opacity"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent"></div>
 
@@ -578,14 +578,14 @@ const initialCmsData = {
               </div>
 
               <!-- Floating Workmanship Guarantee Card -->
-              <div class="absolute bottom-16 left-16 right-16 bg-brand-primary/95 backdrop-blur-md border border-white/15 p-16 rounded-lg flex items-center gap-14">
-                <div class="w-38 h-38 rounded-full bg-feedback-success/20 text-feedback-success flex items-center justify-center shrink-0">
+              <div class="absolute bottom-12 left-12 right-12 sm:bottom-20 sm:left-20 sm:right-20 bg-brand-primary/95 backdrop-blur-md border border-white/15 p-12 sm:p-16 rounded-lg flex items-center gap-12 sm:gap-16">
+                <div class="w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-feedback-success/20 text-feedback-success flex items-center justify-center shrink-0">
                   <Icon name="check" size={18} />
                 </div>
-                <div class="text-caption">
+                <div class="text-caption min-w-0">
                   <div
                     id="canvas-hero-card-title"
-                    class="direct-inline-editable font-bold text-white"
+                    class="direct-inline-editable font-bold text-white truncate"
                     contenteditable="true"
                     data-section="hero"
                     data-extra-field="trust_card_title"
@@ -593,7 +593,7 @@ const initialCmsData = {
                   >{heroExtra.trust_card_title || 'Full 90-Day Workmanship Guarantee'}</div>
                   <div
                     id="canvas-hero-card-desc"
-                    class="direct-inline-editable text-slate-300"
+                    class="direct-inline-editable text-slate-300 truncate"
                     contenteditable="true"
                     data-section="hero"
                     data-extra-field="trust_card_desc"
@@ -611,17 +611,17 @@ const initialCmsData = {
            ===================================================================== -->
       <section
         id="section-trust"
-        class="visual-section bg-neutral-surface border-b border-neutral-border py-28"
+        class="visual-section bg-neutral-surface border-b border-neutral-border py-24 sm:py-32"
         data-section-key="trust_signals"
       >
         <div class="container mx-auto px-16 lg:px-32">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-20">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 sm:gap-24 lg:gap-32">
             {trustSignals.map((signal, idx) => (
-              <div class="flex items-center gap-14 p-8 rounded-md hover:bg-neutral-surface-alt transition-colors">
-                <div class="w-40 h-40 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center shrink-0 border border-neutral-border">
+              <div class="flex items-center gap-12 sm:gap-16 p-8 rounded-md hover:bg-neutral-surface-alt transition-colors">
+                <div class="w-40 h-40 sm:w-44 sm:h-44 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center shrink-0 border border-neutral-border">
                   <Icon name={signal.icon} size={20} class="text-brand-accent" />
                 </div>
-                <div>
+                <div class="min-w-0">
                   <div
                     class="direct-inline-editable text-small font-heading font-bold text-brand-primary"
                     contenteditable="true"
@@ -689,11 +689,11 @@ const initialCmsData = {
             </div>
           </div>
 
-          <div>
+          <div class="w-full md:w-auto">
             <button
               type="button"
               id="canvas-services-primary-btn"
-              class="direct-button-editable h-40 px-18 bg-neutral-surface border border-neutral-border text-brand-primary font-semibold rounded-md flex items-center gap-8 shadow-sm"
+              class="direct-button-editable h-40 px-18 bg-neutral-surface border border-neutral-border text-brand-primary font-semibold rounded-md flex items-center justify-center gap-8 shadow-sm w-full sm:w-auto"
               data-section="services_intro"
               data-btn-type="primary"
               data-label-field="primary_btn_text"
@@ -711,7 +711,7 @@ const initialCmsData = {
         <!-- Services Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24">
           {services.slice(0, 6).map((s) => (
-            <div class="bg-neutral-surface border border-neutral-border rounded-lg p-24 flex flex-col justify-between hover:border-brand-accent transition-all group">
+            <div class="bg-neutral-surface border border-neutral-border rounded-lg p-20 sm:p-24 flex flex-col justify-between hover:border-brand-accent transition-all group">
               <div>
                 <div class="flex items-center justify-between mb-16">
                   <div class="w-40 h-40 rounded-md bg-neutral-surface-alt text-brand-primary flex items-center justify-center">
@@ -741,12 +741,12 @@ const initialCmsData = {
            ===================================================================== -->
       <section
         id="section-emergency"
-        class="visual-section bg-brand-primary text-white py-48"
+        class="visual-section bg-brand-primary text-white py-48 md:py-64"
         data-section-key="emergency_cta"
       >
         <div class="container mx-auto px-16 lg:px-32">
-          <div class="bg-brand-secondary/90 border border-brand-accent/30 rounded-xl p-32 lg:p-40 flex flex-col lg:flex-row items-center justify-between gap-28">
-            <div class="space-y-10 max-w-2xl">
+          <div class="bg-gradient-to-r from-red-950 to-brand-primary border border-red-900/40 rounded-xl p-24 sm:p-32 md:p-64 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-32 shadow-xl">
+            <div class="space-y-12 max-w-2xl">
               <div>
                 <span
                   id="canvas-emergency-badge"
@@ -761,7 +761,7 @@ const initialCmsData = {
               <div>
                 <h3
                   id="canvas-emergency-title"
-                  class="direct-inline-editable text-h2 font-heading font-extrabold text-white"
+                  class="direct-inline-editable text-h2 md:text-h1 font-heading font-extrabold text-white leading-tight"
                   contenteditable="true"
                   data-section="emergency_cta"
                   data-field="title"
@@ -772,7 +772,7 @@ const initialCmsData = {
               <div>
                 <p
                   id="canvas-emergency-subtitle"
-                  class="direct-inline-editable text-slate-300 text-body"
+                  class="direct-inline-editable text-slate-300 text-body md:text-body-large leading-relaxed"
                   contenteditable="true"
                   data-section="emergency_cta"
                   data-field="subtitle"
@@ -782,10 +782,10 @@ const initialCmsData = {
             </div>
 
             <!-- Buttons -->
-            <div class="flex flex-col sm:flex-row gap-12 shrink-0 w-full lg:w-auto">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-16 shrink-0 w-full lg:w-auto">
               <button
                 type="button"
-                class="direct-button-editable h-44 px-20 bg-brand-accent text-white font-bold rounded-md flex items-center justify-center gap-8 shadow"
+                class="direct-button-editable h-48 px-24 bg-brand-accent text-white font-bold rounded-md flex items-center justify-center gap-8 shadow w-full sm:w-auto"
                 data-section="emergency_cta"
                 data-btn-type="primary"
                 data-label-field="primary_btn_text"
@@ -800,7 +800,7 @@ const initialCmsData = {
 
               <button
                 type="button"
-                class="direct-button-editable h-44 px-20 bg-transparent border border-white/30 text-white font-semibold rounded-md flex items-center justify-center gap-8 hover:bg-white/10"
+                class="direct-button-editable h-48 px-24 bg-transparent border border-white/30 text-white font-semibold rounded-md flex items-center justify-center gap-8 hover:bg-white/10 w-full sm:w-auto"
                 data-section="emergency_cta"
                 data-btn-type="secondary"
                 data-label-field="secondary_btn_text"
@@ -825,9 +825,9 @@ const initialCmsData = {
         class="visual-section py-64 container mx-auto px-16 lg:px-32"
         data-section-key="why_us"
       >
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-48 items-center">
-          <!-- Left Info -->
-          <div class="lg:col-span-7 space-y-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-48 lg:gap-64 items-center">
+          <!-- Left Info (Order-1 on mobile, Order-2 on lg desktop) -->
+          <div class="lg:col-span-7 space-y-20 order-1 lg:order-2">
             <div>
               <span
                 id="canvas-why-us-badge"
@@ -864,7 +864,7 @@ const initialCmsData = {
             <!-- 4 Features -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-16 pt-12">
               {whyUsExtra.features.map((feat: any, idx: number) => (
-                <div class="p-14 bg-neutral-surface-alt rounded-lg border border-neutral-border">
+                <div class="p-16 bg-neutral-surface-alt rounded-lg border border-neutral-border">
                   <div
                     class="direct-inline-editable font-heading font-bold text-small text-brand-primary mb-4"
                     contenteditable="true"
@@ -888,7 +888,7 @@ const initialCmsData = {
             <div class="pt-8">
               <button
                 type="button"
-                class="direct-button-editable h-42 px-20 bg-brand-primary text-white font-semibold rounded-md flex items-center gap-8 shadow-sm"
+                class="direct-button-editable h-44 px-20 bg-brand-primary text-white font-semibold rounded-md flex items-center justify-center gap-8 shadow-sm w-full sm:w-auto"
                 data-section="why_us"
                 data-btn-type="primary"
                 data-label-field="primary_btn_text"
@@ -903,8 +903,8 @@ const initialCmsData = {
             </div>
           </div>
 
-          <!-- Right Image -->
-          <div class="lg:col-span-5 relative">
+          <!-- Right Image (Order-2 on mobile, Order-1 on lg desktop) -->
+          <div class="lg:col-span-5 relative order-2 lg:order-1">
             <div
               class="direct-image-editable relative rounded-xl overflow-hidden shadow-xl border border-neutral-border group cursor-pointer"
               data-section="why_us"
@@ -916,16 +916,16 @@ const initialCmsData = {
                 id="canvas-why-us-img"
                 src={whyUs.image_url || '/images/technician-furnace-inspection.jpg'}
                 alt={whyUs.image_alt || 'Licensed HVAC technician inspecting furnace'}
-                class="w-full h-380 sm:h-440 object-cover group-hover:opacity-95 transition-opacity"
+                class="w-full h-280 xs:h-340 sm:h-440 object-cover group-hover:opacity-95 transition-opacity"
               />
               <div class="absolute top-16 right-16 px-12 py-6 bg-brand-primary/90 text-white rounded-md text-caption font-bold flex items-center gap-6 shadow-md border border-white/20">
                 <span>📷 Click to change image</span>
               </div>
-              <div class="absolute bottom-16 left-16 right-16 bg-brand-primary/95 text-white p-14 rounded-lg text-caption font-semibold flex items-center gap-10">
+              <div class="absolute bottom-12 left-12 right-12 sm:bottom-16 sm:left-16 sm:right-16 bg-brand-primary/95 text-white p-12 sm:p-14 rounded-lg text-caption font-semibold flex items-center gap-10">
                 <Icon name="check" size={18} class="text-emerald-400 shrink-0" />
                 <span
                   id="canvas-why-us-badge-overlay"
-                  class="direct-inline-editable"
+                  class="direct-inline-editable truncate"
                   contenteditable="true"
                   data-section="why_us"
                   data-extra-field="badge_overlay"
@@ -1020,7 +1020,7 @@ const initialCmsData = {
         class="visual-section py-56 container mx-auto px-16 lg:px-32"
         data-section-key="service_areas"
       >
-        <div class="bg-neutral-surface-alt border border-neutral-border rounded-xl p-32 lg:p-40 flex flex-col lg:flex-row items-center justify-between gap-24">
+        <div class="bg-neutral-surface-alt border border-neutral-border rounded-xl p-24 sm:p-32 lg:p-40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-24">
           <div class="space-y-6 max-w-xl">
             <div>
               <span
@@ -1065,10 +1065,10 @@ const initialCmsData = {
             </div>
           </div>
 
-          <div>
+          <div class="w-full lg:w-auto">
             <button
               type="button"
-              class="direct-button-editable h-44 px-22 bg-brand-primary text-white font-semibold rounded-md flex items-center gap-8 shadow-sm"
+              class="direct-button-editable h-44 px-22 bg-brand-primary text-white font-semibold rounded-md flex items-center justify-center gap-8 shadow-sm w-full lg:w-auto"
               data-section="service_areas"
               data-btn-type="primary"
               data-label-field="primary_btn_text"
@@ -1128,10 +1128,10 @@ const initialCmsData = {
             </div>
           </div>
 
-          <div>
+          <div class="w-full md:w-auto">
             <button
               type="button"
-              class="direct-button-editable h-40 px-18 bg-neutral-surface border border-neutral-border text-brand-primary font-semibold rounded-md flex items-center gap-8 shadow-sm"
+              class="direct-button-editable h-40 px-18 bg-neutral-surface border border-neutral-border text-brand-primary font-semibold rounded-md flex items-center justify-center gap-8 shadow-sm w-full md:w-auto"
               data-section="reviews_intro"
               data-btn-type="primary"
               data-label-field="primary_btn_text"
@@ -1149,7 +1149,7 @@ const initialCmsData = {
         <!-- Reviews Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-24">
           {reviews.slice(0, 3).map((r) => (
-            <div class="bg-neutral-surface border border-neutral-border rounded-lg p-24 flex flex-col justify-between hover:border-brand-accent transition-all group">
+            <div class="bg-neutral-surface border border-neutral-border rounded-lg p-20 sm:p-24 flex flex-col justify-between hover:border-brand-accent transition-all group">
               <div>
                 <div class="flex items-center gap-4 text-amber-400 mb-14">
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -1179,7 +1179,7 @@ const initialCmsData = {
            ===================================================================== -->
       <section
         id="section-financing"
-        class="visual-section bg-neutral-surface-alt border-y border-neutral-border py-48"
+        class="visual-section bg-neutral-surface-alt border-y border-neutral-border py-48 sm:py-64"
         data-section-key="financing_cta"
       >
         <div class="container mx-auto px-16 lg:px-32 text-center max-w-3xl space-y-12">
@@ -1219,7 +1219,7 @@ const initialCmsData = {
           <div class="pt-4">
             <button
               type="button"
-              class="direct-button-editable h-44 px-24 bg-brand-primary text-white font-bold rounded-md flex items-center gap-8 shadow-sm mx-auto"
+              class="direct-button-editable h-44 px-24 bg-brand-primary text-white font-bold rounded-md flex items-center justify-center gap-8 shadow-sm mx-auto w-full sm:w-auto"
               data-section="financing_cta"
               data-btn-type="primary"
               data-label-field="primary_btn_text"
@@ -1278,10 +1278,10 @@ const initialCmsData = {
           </div>
 
           <!-- Buttons Row -->
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-16 pt-8">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-16 pt-8 w-full max-w-md sm:max-w-none mx-auto">
             <button
               type="button"
-              class="direct-button-editable h-48 px-24 bg-brand-accent text-white font-bold rounded-md flex items-center gap-8 shadow-lg"
+              class="direct-button-editable h-48 px-24 bg-brand-accent text-white font-bold rounded-md flex items-center justify-center gap-8 shadow-lg w-full sm:w-auto"
               data-section="final_cta"
               data-btn-type="primary"
               data-label-field="primary_btn_text"
@@ -1296,7 +1296,7 @@ const initialCmsData = {
 
             <button
               type="button"
-              class="direct-button-editable h-48 px-24 bg-transparent border border-white/20 text-white font-semibold rounded-md flex items-center gap-8 hover:bg-white/10"
+              class="direct-button-editable h-48 px-24 bg-transparent border border-white/20 text-white font-semibold rounded-md flex items-center justify-center gap-8 hover:bg-white/10 w-full sm:w-auto"
               data-section="final_cta"
               data-btn-type="secondary"
               data-label-field="secondary_btn_text"
@@ -1358,15 +1358,64 @@ const initialCmsData = {
   }
 
   /* Responsive viewport preview frames */
+  #visual-canvas-wrapper {
+    container-type: inline-size;
+    container-name: canvas;
+  }
+
   .preview-tablet-frame {
     max-width: 768px !important;
     border: 8px solid #334155 !important;
     border-radius: 24px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
   }
+
   .preview-mobile-frame {
     max-width: 390px !important;
     border: 10px solid #1e293b !important;
     border-radius: 36px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Scoped mobile preview behaviors when desktop admin simulates mobile frame */
+  .preview-mobile-frame [class*="lg:grid-cols-12"],
+  .preview-mobile-frame [class*="md:grid-cols-"],
+  .preview-mobile-frame [class*="lg:grid-cols-"],
+  .preview-mobile-frame [class*="sm:grid-cols-"] {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+
+  .preview-mobile-frame [class*="lg:col-span-"] {
+    grid-column: span 1 / span 1 !important;
+  }
+
+  .preview-mobile-frame [class*="lg:flex-row"],
+  .preview-mobile-frame [class*="md:flex-row"],
+  .preview-mobile-frame [class*="sm:flex-row"] {
+    flex-direction: column !important;
+  }
+
+  .preview-mobile-frame .direct-button-editable {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .preview-mobile-frame #canvas-hero-img,
+  .preview-mobile-frame #canvas-why-us-img {
+    height: 280px !important;
+  }
+
+  /* Scoped tablet preview behaviors when desktop admin simulates tablet frame */
+  .preview-tablet-frame [class*="lg:grid-cols-12"] {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+
+  .preview-tablet-frame [class*="lg:col-span-"] {
+    grid-column: span 1 / span 1 !important;
+  }
+
+  .preview-tablet-frame [class*="lg:flex-row"] {
+    flex-direction: column !important;
   }
 </style>
 
@@ -1534,8 +1583,10 @@ const initialCmsData = {
 
         // Position popover directly above or below button
         const rect = btn.getBoundingClientRect();
+        const popoverWidth = btnPopover.offsetWidth || 320;
+        const leftPos = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, rect.left));
         btnPopover.style.top = Math.max(20, rect.bottom + 8) + 'px';
-        btnPopover.style.left = Math.min(window.innerWidth - 340, Math.max(20, rect.left)) + 'px';
+        btnPopover.style.left = leftPos + 'px';
         btnPopover.classList.remove('hidden');
         btnPopoverText.focus();
       });
@@ -1584,8 +1635,10 @@ const initialCmsData = {
         imgPopoverAlt.value = currentAlt;
 
         const rect = imgWrapper.getBoundingClientRect();
+        const popoverWidth = imgPopover.offsetWidth || 320;
+        const leftPos = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, rect.left + 20));
         imgPopover.style.top = Math.max(20, rect.top + 20) + 'px';
-        imgPopover.style.left = Math.min(window.innerWidth - 370, Math.max(20, rect.left + 20)) + 'px';
+        imgPopover.style.left = leftPos + 'px';
         imgPopover.classList.remove('hidden');
       });
     });
